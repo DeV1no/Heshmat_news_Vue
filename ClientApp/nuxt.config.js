@@ -68,6 +68,11 @@ export default {
         //host: '0.0.0.0', // default: localhost,
         timing: false
     },
+    proxy: {
+        '/api': {
+            target: 'http://localhost:5000',
+        }
+    },
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {}
 }

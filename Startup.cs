@@ -15,6 +15,7 @@ namespace HeshmastNews
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -50,6 +51,15 @@ namespace HeshmastNews
             {
                 opt.UseMySql(Configuration.GetConnectionString("MariaDbConnection"),
                     new MariaDbServerVersion(new System.Version(10, 5, 0)));
+            });
+            services.AddCors(c => 
+            {
+                c.AddPolicy(name: MyAllowSpecificOrigins, opt =>  
+                    opt.WithOrigins("http://localhost:5000",
+                            "http://localhost:8080")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials());
             });
 
             services.AddAutoMapper(typeof(Startup));
@@ -100,6 +110,8 @@ namespace HeshmastNews
          //   dbContext.Database.EnsureCreated();
        //  app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
          app.UseAuthentication();
+         app.UseCors(MyAllowSpecificOrigins);
+
             app.UseMvc();
             app.UseRouting();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
