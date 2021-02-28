@@ -12,13 +12,19 @@
     --tech-color: #009cff;
 }
 
+@font-face {
+    font-family: IranSans;
+    src: url(../Fonts/IRANSans.woff);
+}
+
 * {
     direction: rtl !important;
-    font-family: 'IRANSens';
-    src: url('./IRANSans.woff') format('woff');
+    font-family: 'IranSans' !important;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-align: right !important;
+    /* overflow-x: hidden; */
 }
 
 body {
@@ -210,7 +216,8 @@ h6 {
 
 /* Navigation */
 
-#main-nav {
+
+/* #main-nav {
     background: #fff;
     position: sticky;
     top: 0;
@@ -255,7 +262,7 @@ h6 {
 #main-nav .social i {
     color: #777;
     margin-right: .5rem;
-}
+} */
 
 
 /* Showcase */
