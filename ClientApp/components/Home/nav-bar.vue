@@ -1,6 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light" dir="rtl">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <img
+      src="http://localhost:5000/Logo/logo.png"
+      alt=""
+      class="nav-logo mr-4"
+    />
     <button
       class="navbar-toggler"
       type="button"
@@ -14,14 +18,14 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-3 ml-auto">
+      <ul class="navbar-nav mr-5 ml-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#"
-            >Home <span class="sr-only">(current)</span></a
-          >
+          <nuxt-link class="nav-link" active-class="active" to="/home"
+            >خانه
+          </nuxt-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="#">داغ ترین ها </a>
         </li>
         <li class="nav-item dropdown">
           <a
@@ -33,7 +37,45 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            Dropdown
+            ویدئوها
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            سیاسی
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            فناوری
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Action</a>
@@ -50,11 +92,11 @@
         <input
           class="form-control mr-sm-2"
           type="search"
-          placeholder="Search"
+          placeholder="جست و جو"
           aria-label="Search"
         />
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-          Search
+          جست و جو
         </button>
       </form>
     </div>
@@ -75,6 +117,12 @@ export default {
 </script>
 
 <style scoped>
+.nav-logo {
+  width: 180px;
+}
+.active {
+  color: brown !important;
+}
 /* .dropdown-menu.show {
   z-index: 999999;
   position: relative !important;
