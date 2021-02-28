@@ -1,7 +1,10 @@
+using AutoMapper;
+using HeshmastNews.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,6 +46,13 @@ namespace HeshmastNews
                     options.Authority = Configuration["Okta:Authority"];
                     options.Audience = "api://default";
                 });*/
+            services.AddDbContext<ApplicationDbContext>( opt =>
+            {
+                opt.UseMySql(Configuration.GetConnectionString("MariaDbConnection"),
+                    new MariaDbServerVersion(new System.Version(10, 5, 0)));
+            });
+
+            services.AddAutoMapper(typeof(Startup));
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddSwaggerGen( c => 
             {
@@ -88,7 +98,8 @@ namespace HeshmastNews
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie API ");
             });
          //   dbContext.Database.EnsureCreated();
-            app.UseAuthentication();
+       //  app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+         app.UseAuthentication();
             app.UseMvc();
             app.UseRouting();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
