@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gsW+Fmo2zyFVsT/gXaxJaX47g3kHoD/x3nuwSjRkQtooPzDdOnY0A7g7nwLBHyPfN/480Xj7+pOtXudRedkQTQ==",
+  "dgSpecHash": "+Gr+U8v6dofJhkoCsnY7X3B2eEhPPX2IB3mcJ4EJypWfcJtxdJHVukZAOX95AQ95UEtBi9FCPKENukSQbC0eOA==",
   "success": true,
-  "projectFilePath": "/home/dev1/Desktop/HeshmatNews/HeshmastNews/HeshmastNews/HeshmastNews.csproj",
+  "projectFilePath": "/home/dev1/Desktop/Heshmat_news_Vue/HeshmastNews.csproj",
   "expectedPackageFiles": [
     "/home/dev1/.nuget/packages/automapper/10.1.0/automapper.10.1.0.nupkg.sha512",
     "/home/dev1/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/8.1.0/automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",
@@ -72,7 +72,7 @@
     "/home/dev1/.nuget/packages/nlog.extensions.logging/1.7.0/nlog.extensions.logging.1.7.0.nupkg.sha512",
     "/home/dev1/.nuget/packages/pomelo.entityframeworkcore.mysql/5.0.0-alpha.2/pomelo.entityframeworkcore.mysql.5.0.0-alpha.2.nupkg.sha512",
     "/home/dev1/.nuget/packages/swashbuckle.aspnetcore/5.6.3/swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
-    "/home/dev1/.nuget/packages/swashbuckle.aspnetcore.swagger/5.6.3/swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "/home/dev1/.nuget/packages/swashbuckle.aspnetcore.swagger/6.0.7/swashbuckle.aspnetcore.swagger.6.0.7.nupkg.sha512",
     "/home/dev1/.nuget/packages/swashbuckle.aspnetcore.swaggergen/5.6.3/swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
     "/home/dev1/.nuget/packages/swashbuckle.aspnetcore.swaggerui/5.6.3/swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512",
     "/home/dev1/.nuget/packages/system.collections/4.3.0/system.collections.4.3.0.nupkg.sha512",

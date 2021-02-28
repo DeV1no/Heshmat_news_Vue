@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/dev1/Desktop/HeshmatNews/HeshmastNews/HeshmastNews/HeshmastNews.csproj": {}
+    "/home/dev1/Desktop/Heshmat_news_Vue/HeshmastNews.csproj": {}
   },
   "projects": {
-    "/home/dev1/Desktop/HeshmatNews/HeshmastNews/HeshmastNews/HeshmastNews.csproj": {
+    "/home/dev1/Desktop/Heshmat_news_Vue/HeshmastNews.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/dev1/Desktop/HeshmatNews/HeshmastNews/HeshmastNews/HeshmastNews.csproj",
+        "projectUniqueName": "/home/dev1/Desktop/Heshmat_news_Vue/HeshmastNews.csproj",
         "projectName": "HeshmastNews",
-        "projectPath": "/home/dev1/Desktop/HeshmatNews/HeshmastNews/HeshmastNews/HeshmastNews.csproj",
+        "projectPath": "/home/dev1/Desktop/Heshmat_news_Vue/HeshmastNews.csproj",
         "packagesPath": "/home/dev1/.nuget/packages/",
-        "outputPath": "/home/dev1/Desktop/HeshmatNews/HeshmastNews/HeshmastNews/obj/",
+        "outputPath": "/home/dev1/Desktop/Heshmat_news_Vue/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/dev1/.nuget/NuGet/NuGet.Config"
@@ -87,6 +87,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[6.0.7, )"
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
