@@ -53,6 +53,12 @@ namespace HeshmastNews.Controllers
             return new CreatedAtRouteResult("GetSubCat", new {id = SubCategory.Id}, categoryDTO);
         }
 
+        [HttpPut("{id}", Name = "putSubCategory")]
+        public async Task<ActionResult> Put(int id, [FromBody] SubCategoryCreationDTO subCategoryCreationDto)
+        {
+            return await Put<SubCategoryCreationDTO, SubCategory>(id, subCategoryCreationDto);
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
