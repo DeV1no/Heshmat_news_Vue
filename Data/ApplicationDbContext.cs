@@ -8,9 +8,18 @@ namespace HeshmastNews.Data
     {
         public ApplicationDbContext([NotNullAttribute] DbContextOptions options) : base(options)
         {
-            //  base.OnModelCreating(modelBuilder);
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SubToCat>().HasKey(x => new {x.CategoryId, x.SubCategoryId});
+            
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<SubToCat> SubToCat { get; set; }
     }
 }

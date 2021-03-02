@@ -2,14 +2,16 @@
 using HeshmastNews.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace dadachMovie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210301061021_SubCatRell")]
+    partial class SubCatRell
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,13 +66,13 @@ namespace dadachMovie.Migrations
             modelBuilder.Entity("HeshmastNews.Entities.SubToCat", b =>
                 {
                     b.HasOne("HeshmastNews.Entities.Category", "Category")
-                        .WithMany("SubToCat")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HeshmastNews.Entities.SubCategory", "SubCategory")
-                        .WithMany("SubToCat")
+                        .WithMany()
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -78,16 +80,6 @@ namespace dadachMovie.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("SubCategory");
-                });
-
-            modelBuilder.Entity("HeshmastNews.Entities.Category", b =>
-                {
-                    b.Navigation("SubToCat");
-                });
-
-            modelBuilder.Entity("HeshmastNews.Entities.SubCategory", b =>
-                {
-                    b.Navigation("SubToCat");
                 });
 #pragma warning restore 612, 618
         }

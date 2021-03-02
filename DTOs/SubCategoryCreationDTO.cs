@@ -1,17 +1,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using HeshmastNews.Entities;
 using HeshmastNews.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HeshmastNews.DTOs
 {
-    public class CategoryCreationDTO
+    public class SubCategoryCreationDTO
     {
         [Key] public int Id { get; set; }
         [Required] public string Name { get; set; }
-
-        [ModelBinder(BinderType = typeof(TypeBinder<List<int>>))]
-        public List<int> CategoryId { get; set; }
+    //    [ModelBinder(BinderType = typeof(TypeBinder<List<int>>))]
+     //   public List<int> CategoryId { get; set; }
     }
 }

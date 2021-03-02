@@ -1,24 +1,24 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
+      <Logo/>
       <h1 class="title">
         Heshmat-news
       </h1>
       <div class="links">
         <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
+            href="https://nuxtjs.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button--green"
         >
           Documentation
         </a>
         <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
+            href="https://github.com/nuxt/nuxt.js"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button--grey"
         >
           GitHub
         </a>
@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  fetch({ redirect }) {
+  fetch({redirect}) {
     redirect('/home');
   }
 };
@@ -47,7 +47,7 @@ export default {
 
 .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;

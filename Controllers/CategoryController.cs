@@ -39,7 +39,12 @@ namespace HeshmastNews.Controllers
         //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult> Post([FromBody] CategoryCreationDTO categoryCreationDto)
         {
-            return await Post<CategoryCreationDTO, Category, CategoriesDTO>(categoryCreationDto, "getCategory");
+            var category = _mapper.Map<Category>(categoryCreationDto);
+        
+            _context.Add(category);
+            await _context.SaveChangesAsync();
+            var categoryDTO = _mapper.Map<CategoriesDTO>(category);
+            return new CreatedAtRouteResult("getCategory", new {id = category.Id}, categoryDTO);
         }
 
         [HttpPut("{id}", Name = "putCategories")]
