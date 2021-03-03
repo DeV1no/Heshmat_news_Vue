@@ -61,6 +61,7 @@ export default {
     // Modules: https://go.nuxtjs.dev/config-modules
     modules: [
         // https://go.nuxtjs.dev/bootstrap
+        '@nuxtjs/proxy',
         'bootstrap-vue/nuxt',
     ],
     server: {
