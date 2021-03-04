@@ -294,3 +294,4 @@
 /home/dev1/Desktop/Heshmat_news_Vue/obj/Debug/net5.0/ref/HeshmastNews.dll
 /home/dev1/Desktop/Heshmat_news_Vue/obj/Debug/net5.0/HeshmastNews.pdb
 /home/dev1/Desktop/Heshmat_news_Vue/obj/Debug/net5.0/HeshmastNews.genruntimeconfig.cache
+/home/dev1/Desktop/Heshmat_news_Vue/bin/Debug/net5.0/package-lock.json

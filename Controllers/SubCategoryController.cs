@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Gridify;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;
@@ -24,9 +25,11 @@ namespace HeshmastNews.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<SubCategoriesDTO>>> Get()
+        [Produces(typeof(Paging<SubCategory>))]
+        public  Paging<SubCategory> Get([FromQuery] GridifyQuery gQuery)
         {
-            return await Get<SubCategory, SubCategoriesDTO>();
+            return  _context.SubCategories.Gridify(gQuery);
+
         }
 
         [HttpGet("{id}", Name = "GetSubCat")]

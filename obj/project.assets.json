@@ -5317,6 +5317,7 @@
     "net5.0": [
       "AutoMapper >= 10.1.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.1.0",
+      "Gridify >= 1.1.0",
       "Gridify.EntityFramework >= 1.1.0",
       "HtmlAgilityPack >= 1.11.30",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.1",
@@ -5377,6 +5378,10 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",
             "version": "[8.1.0, )"
+          },
+          "Gridify": {
+            "target": "Package",
+            "version": "[1.1.0, )"
           },
           "Gridify.EntityFramework": {
             "target": "Package",
