@@ -1,18 +1,18 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light" dir="rtl">
     <img
-        src="http://localhost:5000/Logo/logo.png"
-        alt=""
-        class="nav-logo mr-4"
+      src="http://localhost:5000/Logo/logo.png"
+      alt=""
+      class="nav-logo mr-4"
     />
     <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -21,40 +21,42 @@
       <ul class="navbar-nav mr-5 ml-auto">
         <li class="nav-item active">
           <nuxt-link class="nav-link" active-class="active" to="/home"
-          >خانه
+            >خانه
           </nuxt-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">داغ ترین ها </a>
         </li>
-        <li class="nav-item dropdown" v-for="s in subCat" :key="s.id">
+        <li class="nav-item dropdown" v-for="s in subCatDetails" :key="s.id">
           <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
           >
             {{ s.name }}
           </a>
+
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a
+              v-for="dt in s.category"
+              :key="dt.id"
+              class="dropdown-item"
+              href="#"
+              >{{ dt.name }}</a
+            >
           </div>
         </li>
-
-
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="جست و جو"
-            aria-label="Search"
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="جست و جو"
+          aria-label="Search"
         />
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
           جست و جو
@@ -68,19 +70,29 @@
 import axios from 'axios';
 
 export default {
+  data() {
+    return {
+      subCatLength: '',
+      subCatDetails: []
+    };
+  },
   methods: {
-    data() {
-      return {
-        subCat: []
-      }
-    },
-    getSubCat() {
-      axios.get("/api/SubCategory").then(res => {
-        this.subCat = res.data;
-        console.log(this.subCat)
-      })
-    },
+    async getSubCat() {
+      await axios.get(`/api/SubCategory/`).then(res => {
+        this.subCatLength = res.data.totalItems;
+        console.log(this.subCatLength);
+      });
 
+      this.subCatDetail();
+    },
+    async subCatDetail() {
+      for (let i = 2; i <= 4; i++) {
+        await axios.get(`/api/SubCategory/${i}`).then(res => {
+          this.subCatDetails.push(res.data);
+        });
+      }
+      console.log(this.subCatDetails);
+    },
     logOut() {
       this.$store.dispatch('logOut');
       this.$store.state.auth.isAuth = false;
@@ -88,10 +100,15 @@ export default {
       console.log(this.$store.state.auth.isAuth);
     }
   },
-  mounted() {
-    this.getSubCat();
+  computed: {
+    subCat: function() {
+      return this.$store.getters.GetSubCategory;
+    }
+  },
+  async mounted() {
+    await this.getSubCat();
+    this.$store.dispatch('GetSubcategoryAction');
   }
-
 };
 </script>
 

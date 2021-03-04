@@ -1,45 +1,36 @@
 // import Vue from 'vue'
+import axios from "axios";
 const state = {
-    Groups: [
-        { id: 9999, title: 'ورزشی' },
-        { id: 99999, title: 'سرگرمی' },
-        { id: 9999999, title: 'تکنولوژی' },
-        { id: 999999999, title: 'سیاسی' }
-    ],
-    id: 1
+    subCategory: [],
 };
 
 
 const getters = {
-    GetGroups(state) {
-        return state.Groups;
-    },
-    GroupsList: state => {
-        return state.Groups
-    },
-    group: state => id => {
-        return state.Groups.find(group => group.id === id)
-    },
+    GetSubCategory(state) {
+        return state.subCategory;
+    }
+    /* group: state => id => {
+         return state.Groups.find(group => group.id === id)
+     },*/
 
 
 };
 
 const mutations = {
-
-    AddGroups(state, newGroup) {
-        state.Groups.push(newGroup)
+    SET_SUBCATEGORY(state, SubCategory) {
+        state.subCategory = SubCategory
     }
+
 };
 
 
 const actions = {
-    AddAysyncGroup({
-        commit
-    }, newGroup) {
-        commit('AddGroups',
-            newGroup
-        )
-    }
+    GetSubcategoryAction({commit}) {
+        axios.get('/api/SubCategory')
+            .then(response => {
+                commit('SET_SUBCATEGORY', response.data)
+            })
+    },
 }
 
 export default {
