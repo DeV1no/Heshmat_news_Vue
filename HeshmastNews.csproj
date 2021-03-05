@@ -68,5 +68,8 @@
             </ResolvedFileToPublish>
         </ItemGroup>
     </Target>
+    <ItemGroup>
+        <Folder Include="wwwroot\" />
+    </ItemGroup>
 
 </Project>

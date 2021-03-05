@@ -1,5 +1,6 @@
 using AutoMapper;
 using HeshmastNews.Data;
+using HeshmastNews.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,7 +29,9 @@ namespace HeshmastNews
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             //     services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
+            services.AddTransient<IFileStorageService, InAppStorageService>();
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
+            services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddCors(options =>
             {
@@ -47,14 +50,14 @@ namespace HeshmastNews
                     options.Authority = Configuration["Okta:Authority"];
                     options.Audience = "api://default";
                 });*/
-            services.AddDbContext<ApplicationDbContext>( opt =>
+            services.AddDbContext<ApplicationDbContext>(opt =>
             {
                 opt.UseMySql(Configuration.GetConnectionString("MariaDbConnection"),
                     new MariaDbServerVersion(new System.Version(10, 5, 0)));
             });
-            services.AddCors(c => 
+            services.AddCors(c =>
             {
-                c.AddPolicy(name: MyAllowSpecificOrigins, opt =>  
+                c.AddPolicy(name: MyAllowSpecificOrigins, opt =>
                     opt.WithOrigins("http://localhost:5000",
                             "http://localhost:8080")
                         .AllowAnyHeader()
@@ -64,7 +67,7 @@ namespace HeshmastNews
 
             services.AddAutoMapper(typeof(Startup));
             services.AddMvc(option => option.EnableEndpointRouting = false);
-            services.AddSwaggerGen( c => 
+            services.AddSwaggerGen(c =>
             {
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -93,7 +96,7 @@ namespace HeshmastNews
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env )
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -103,14 +106,12 @@ namespace HeshmastNews
             app.UseCors("VueCorsPolicy");
             app.UseSwagger();
 
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie API ");
-            });
-         //   dbContext.Database.EnsureCreated();
-       //  app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-         app.UseAuthentication();
-         app.UseCors(MyAllowSpecificOrigins);
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie API "); });
+            //   dbContext.Database.EnsureCreated();
+            //  app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseAuthentication();
+            app.UseCors(MyAllowSpecificOrigins);
+            app.UseStaticFiles();
 
             app.UseMvc();
             app.UseRouting();
