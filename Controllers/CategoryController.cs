@@ -32,7 +32,7 @@ namespace HeshmastNews.Controllers
         [HttpGet("{Id:int}", Name = "getCategory")]
         public async Task<ActionResult<CategoriesDTO>> Get(int id)
         {
-            return await Get<Category, CategoriesDTO>(id);
+           return await Get<Category, CategoriesDTO>(id);
         }
 
         [HttpPost]

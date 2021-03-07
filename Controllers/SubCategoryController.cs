@@ -26,8 +26,21 @@ namespace HeshmastNews.Controllers
 
         [HttpGet]
         [Produces(typeof(Paging<SubCategory>))]
-        public  Paging<SubCategory> Get([FromQuery] GridifyQuery gQuery)
-        {
+       public  Paging<SubCategory> Get([FromQuery] GridifyQuery gQuery)
+     // public async Task<ActionResult<SubCategoriesDTO>> Get()
+
+      {
+            /*var subCategory = await _context.SubCategories
+                .Include(x => x.SubToCat).ThenInclude(x => x.Category)
+                .ToArrayAsync();
+            /*if (subCategory == null)
+            {
+                return NotFound();
+            }#1#
+            */
+
+           // return _mapper.Map<SubCategoryDetailDTO>(subCategory);
+            
             return  _context.SubCategories.Gridify(gQuery);
 
         }

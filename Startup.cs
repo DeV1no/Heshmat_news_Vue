@@ -65,7 +65,11 @@ namespace HeshmastNews
                         .AllowCredentials());
             });
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddMaps("HeshmastNews");
+                cfg.AddProfile<Helpers.AutoMapperProfile>();
+            });
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddSwaggerGen(c =>
             {

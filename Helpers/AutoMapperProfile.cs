@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using dadachMovie.DTOs;
 using HeshmastNews.DTOs;
@@ -16,9 +17,17 @@ namespace HeshmastNews.Helpers
             //    CreateMap<SubCategory, SubCategoriesDTO>().ReverseMap();
             CreateMap<SubCategory, SubCategoriesDTO>().ReverseMap();
             CreateMap<SubCategoryCreationDTO, SubCategory>();
-            CreateMap<SubCategory, SubCategoryDetailDTO>()
-                .ForMember(x => x.Category,
-                    options => options.MapFrom(MapSubToCat));
+            CreateMap<SubCategory, SubCategoryDetailDTO>().ConvertUsing((entitiy, dto, context) =>
+                new SubCategoryDetailDTO
+                {
+                    Id = entitiy.Id,
+                    Name = entitiy.Name,
+                    Category = entitiy.SubToCat.Select(c => c.Category)
+                        .Select(c => context.Mapper.Map<CategoriesDTO>(c))
+                        .ToList()
+                });
+            /*.ForMember(x => x.Category,
+                 options => options.MapFrom(MapSubToCat));*/
 
             CreateMap<CategoryCreationDTO, Category>()
                 .ForMember(x => x.SubToCat, options
@@ -74,11 +83,12 @@ namespace HeshmastNews.Helpers
             var result = new List<CategoryNews>();
             foreach (var category in newsCreationDto.Categories)
             {
-                result.Add(new CategoryNews() {CategoryId =category.Id,Character = category.Name});
+                result.Add(new CategoryNews() {CategoryId = category.Id, Character = category.Name});
             }
 
             return result;
         }
+
         /*private List<SubToCat> MapSubToCats(CategoryCreationDTO categoryCreationDto, Category category)
         {
             var result = new List<SubToCat>();
@@ -99,8 +109,5 @@ namespace HeshmastNews.Helpers
 
             return result;
         }*/
-
-        
-        
     }
 }

@@ -14,7 +14,7 @@ namespace HeshmastNews.Controllers
 {
     [ApiController]
     [Route("api/news")]
-    public class NewsController
+    public class NewsController : ControllerBase
     {
         private ApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -68,7 +68,7 @@ namespace HeshmastNews.Controllers
                 }
             }
 
-             AnnotateActorsOrder(news);
+            AnnotateActorsOrder(news);
             _context.Add(news);
             await _context.SaveChangesAsync();
             var newsDTO = _mapper.Map<NewsDTO>(news);
@@ -84,6 +84,42 @@ namespace HeshmastNews.Controllers
                     news.CategoryNews[i].Order = i;
                 }
             }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(int id, [FromForm] NewsCreationDTO newsCreationDto)
+        {
+            var newsDB = await _context.News.FirstOrDefaultAsync(m => m.Id == id);
+            if (newsDB == null)
+            {
+//                return NotFound();
+            }
+
+            newsDB = _mapper.Map(newsCreationDto, newsDB);
+            if (newsCreationDto.Poster != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await newsCreationDto.Poster.CopyToAsync(memoryStream);
+                    var content = memoryStream.ToArray();
+                    var extension = Path.GetExtension(newsCreationDto.Poster.FileName);
+                    /*newsCreationDto.Poster =
+                        await _fileStorageService.EditFile(content, extension, containerName, newsDB.Poster,
+                            newsCreationDto.Poster.ContentType);*/
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var news = await _context.News.FirstOrDefaultAsync(n => n.Id == id);
+            _context.Remove(news);
+            _context.SaveChanges();
+            return new CreatedAtRouteResult("getNews", new {id = news.Id}, news);
         }
     }
 }
