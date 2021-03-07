@@ -28,11 +28,11 @@
               <div class="category category-tech">{{ post.badge }}</div>
               <h3>
                 <router-link :to="{ name: 'Article', params: { id: post.id } }"
-                  >{{ post.title }}
+                  >{{ post.name }}
                 </router-link>
               </h3>
               <p>
-                {{ post.shortPara }}
+                {{ post.newsBody }}
               </p>
             </div>
           </article>
@@ -56,6 +56,9 @@ export default {
     Posts() {
       return this.$store.getters.GetPosts;
     }
+  },
+  mounted() {
+    this.$store.dispatch('GetPostAction');
   }
 };
 </script>
