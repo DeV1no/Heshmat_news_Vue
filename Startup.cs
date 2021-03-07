@@ -1,15 +1,22 @@
+using System;
+using System.Text;
 using AutoMapper;
 using HeshmastNews.Data;
 using HeshmastNews.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SpaServices;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using VueCliMiddleware;
 
 namespace HeshmastNews
 {
@@ -33,6 +40,22 @@ namespace HeshmastNews
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
             services.AddHttpContextAccessor();
             services.AddControllers();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["jwt:key"])),
+                        ClockSkew = TimeSpan.Zero
+                    }
+                );
             services.AddCors(options =>
             {
                 options.AddPolicy("VueCorsPolicy", builder =>
@@ -44,12 +67,7 @@ namespace HeshmastNews
                         .WithOrigins("https://localhost:5001");
                 });
             });
-            /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-  .AddJwtBearer(options =>
-                {
-                    options.Authority = Configuration["Okta:Authority"];
-                    options.Audience = "api://default";
-                });*/
+
             services.AddDbContext<ApplicationDbContext>(opt =>
             {
                 opt.UseMySql(Configuration.GetConnectionString("MariaDbConnection"),
@@ -100,34 +118,54 @@ namespace HeshmastNews
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
 
-            app.UseCors("VueCorsPolicy");
+            // app.UseHttpsRedirection ();
+            if ((!env.IsEnvironment("Backend")))
+            {
+                app.UseSpaStaticFiles();
+            }
+
             app.UseSwagger();
 
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie API "); });
-            //   dbContext.Database.EnsureCreated();
-            //  app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            app.UseAuthentication();
-            app.UseCors(MyAllowSpecificOrigins);
-            app.UseStaticFiles();
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
-            app.UseMvc();
+            app.UseResponseCaching();
+
             app.UseRouting();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            app.UseSpaStaticFiles();
-            app.UseSpa(configuration: builder =>
+
+            app.UseCors(MyAllowSpecificOrigins);
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                if (env.IsDevelopment())
+                endpoints.MapControllers();
+                if ((!env.IsEnvironment("Backend")))
                 {
-                    builder.UseProxyToSpaDevelopmentServer("http://localhost:8080");
+                    endpoints.MapToVueCliProxy(
+                        "{*path}",
+                        new SpaOptions {SourcePath = "ClientApp"},
+                        npmScript: (env.IsEnvironment("Backend") ? null : "serve"),
+                        regex: "Compiled successfully",
+                        forceKill: true
+                    );
                 }
             });
+
+            //     ServiceExtensions.CreateDefaultRolesAndUser(serviceProvider).Wait();
         }
     }
 }

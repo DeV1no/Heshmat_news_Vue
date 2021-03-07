@@ -295,3 +295,11 @@
 /home/dev1/Desktop/Heshmat_news_Vue/obj/Debug/net5.0/HeshmastNews.pdb
 /home/dev1/Desktop/Heshmat_news_Vue/obj/Debug/net5.0/HeshmastNews.genruntimeconfig.cache
 /home/dev1/Desktop/Heshmat_news_Vue/bin/Debug/net5.0/package-lock.json
+/home/dev1/Desktop/Heshmat_news_Vue/bin/Debug/net5.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/dev1/Desktop/Heshmat_news_Vue/bin/Debug/net5.0/Microsoft.Extensions.Logging.dll
+/home/dev1/Desktop/Heshmat_news_Vue/bin/Debug/net5.0/Microsoft.Extensions.Logging.Abstractions.dll
+/home/dev1/Desktop/Heshmat_news_Vue/bin/Debug/net5.0/Microsoft.Extensions.Options.dll
+/home/dev1/Desktop/Heshmat_news_Vue/bin/Debug/net5.0/Microsoft.Extensions.Primitives.dll
+/home/dev1/Desktop/Heshmat_news_Vue/bin/Debug/net5.0/System.ComponentModel.Annotations.dll
+/home/dev1/Desktop/Heshmat_news_Vue/bin/Debug/net5.0/System.Diagnostics.DiagnosticSource.dll
+/home/dev1/Desktop/Heshmat_news_Vue/bin/Debug/net5.0/System.Runtime.CompilerServices.Unsafe.dll

@@ -4,6 +4,7 @@ using AutoMapper;
 using dadachMovie.DTOs;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HeshmastNews.Helpers
@@ -42,6 +43,9 @@ namespace HeshmastNews.Helpers
                 .ForMember(x => x.Categories, options
                     => options.MapFrom(MapNewsCategory));
             CreateMap<News, NewsPatchDTO>();
+            CreateMap<IdentityUser, UserDTO>()
+                .ForMember(x => x.EmailAddress, options => options.MapFrom(x => x.Email))
+                .ForMember(x => x.UserId, options => options.MapFrom(x => x.Id));
         }
 
         private List<CategoriesDTO> MapSubToCat(SubCategory subCategory, SubCategoryDetailDTO subCategoryDetailDto)

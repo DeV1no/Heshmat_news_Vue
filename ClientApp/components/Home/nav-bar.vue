@@ -50,6 +50,9 @@
             >
           </div>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">داشبورد مدیر </a>
+        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input
