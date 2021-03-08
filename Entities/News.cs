@@ -14,6 +14,7 @@ namespace HeshmastNews.Entities
 
         //  public List<Tags> Tags { get; set; }
         public List<CategoryNews> CategoryNews { get; set; }
+        public List<ComentNews> ComentNews { get; set; }
 
         public News()
         {

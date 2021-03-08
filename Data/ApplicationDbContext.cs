@@ -15,6 +15,7 @@ namespace HeshmastNews.Data
         {
             modelBuilder.Entity<SubToCat>().HasKey(x => new {x.CategoryId, x.SubCategoryId});
             modelBuilder.Entity<CategoryNews>().HasKey(x => new {x.CategoryId, x.NewsId});
+            modelBuilder.Entity<ComentNews>().HasKey(x => new {x.CommentId, x.NewsId});
             base.OnModelCreating(modelBuilder);
         }
 
@@ -23,5 +24,7 @@ namespace HeshmastNews.Data
         public DbSet<SubToCat> SubToCat { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<CategoryNews> CategoryNews { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<ComentNews> ComentNews { get; set; }
     }
 }

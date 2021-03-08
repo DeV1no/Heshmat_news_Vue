@@ -6,5 +6,6 @@ namespace HeshmastNews.Entities
     public class NewsDetailDTO : NewsDTO
     {
         public List<CategoriesDTO> Categories { get; set; }
+      //  public  Type { get; set; }
     }
 }
