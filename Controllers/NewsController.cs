@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using dadachMovie.DTOs;
 using Gridify;
+using HeshmastNews.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;
@@ -20,13 +21,15 @@ namespace HeshmastNews.Controllers
         private readonly IMapper _mapper;
         private readonly IFileStorageService _fileStorageService;
         private readonly string containerName = "news";
-
-        public NewsController(ApplicationDbContext context, IMapper mapper, IFileStorageService fileStorageService)
+        private INewsService _newsService;
+        public NewsController(
+            ApplicationDbContext context, IMapper mapper, IFileStorageService fileStorageService, INewsService newsService)
 
         {
             _context = context;
             _mapper = mapper;
             _fileStorageService = fileStorageService;
+            _newsService = newsService;
         }
 
         [HttpGet]
@@ -39,16 +42,10 @@ namespace HeshmastNews.Controllers
         [HttpGet("{id}", Name = "getNews")]
         public async Task<ActionResult<NewsDetailDTO>> Get(int id)
         {
-            var news = await _context.News
-                .Include(n => n.CategoryNews)
-                .ThenInclude(n => n.Category)
-                .FirstOrDefaultAsync(n => n.Id == id);
-            if (news == null)
-            {
-                // return NoContentResult;
-            }
+           
+          
 
-            return _mapper.Map<NewsDetailDTO>(news);
+            return null;
         }
 
         [HttpPost]
@@ -72,30 +69,22 @@ namespace HeshmastNews.Controllers
             _context.Add(news);
             await _context.SaveChangesAsync();
             var newsDTO = _mapper.Map<NewsDTO>(news);
-            return new CreatedAtRouteResult("getNews", new {id = news.Id}, newsDTO);
+            return null;
+            //new CreatedAtRouteResult("getNews", new {id = news.Id}, newsDTO);
         }
 
         private static void AnnotateActorsOrder(News news)
         {
-            if (news.CategoryNews != null)
-            {
-                for (int i = 0; i < news.CategoryNews.Count; i++)
-                {
-                    news.CategoryNews[i].Order = i;
-                }
-            }
+          
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromForm] NewsCreationDTO newsCreationDto)
         {
-            var newsDB = await _context.News.FirstOrDefaultAsync(m => m.Id == id);
-            if (newsDB == null)
-            {
-//                return NotFound();
-            }
+          // var newsDB = await _context.News.FirstOrDefaultAsync;
+            
 
-            newsDB = _mapper.Map(newsCreationDto, newsDB);
+            /*newsDB = _mapper.Map(newsCreationDto, newsDB);
             if (newsCreationDto.Poster != null)
             {
                 using (var memoryStream = new MemoryStream())
@@ -105,21 +94,46 @@ namespace HeshmastNews.Controllers
                     var extension = Path.GetExtension(newsCreationDto.Poster.FileName);
                     /*newsCreationDto.Poster =
                         await _fileStorageService.EditFile(content, extension, containerName, newsDB.Poster,
-                            newsCreationDto.Poster.ContentType);*/
+                            newsCreationDto.Poster.ContentType);#1#
                 }
-            }
+            }*/
 
-            await _context.SaveChangesAsync();
-            return NoContent();
+     //       await _context.SaveChangesAsync();
+            return null;
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var news = await _context.News.FirstOrDefaultAsync(n => n.Id == id);
-            _context.Remove(news);
-            _context.SaveChanges();
-            return new CreatedAtRouteResult("getNews", new {id = news.Id}, news);
+          
+            return null;
+        }
+        [HttpPost("AddUserComment")]
+        /*[Authorize]
+        [ValidateModel]*/
+        public async Task<ActionResult> AddComment([FromBody] CommentCreationDTO commentCreationDTO)
+        {
+            var result = await _newsService.AddUserCommentAsync(commentCreationDTO);
+            if (result == -1)
+                return NotFound();
+            else if (result == 0)
+                return BadRequest("Failed to save changes.");
+
+            return NoContent();
+        }
+
+        [HttpDelete("RemoveUserComment/{id:int}")]
+        /*[Authorize(Roles = "Admin")]
+        [ValidateModel]*/
+        public async Task<ActionResult> RemoveComment(int id)
+        {
+            var result = await _newsService.DeleteUserCommentAsync(id);
+            if (result == -1)
+                return NotFound();
+            else if (result == 0)
+                return BadRequest("Failed to save changes.");
+
+            return NoContent();
         }
     }
 }

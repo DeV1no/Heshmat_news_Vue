@@ -13,8 +13,11 @@ namespace HeshmastNews.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<Category, CategoriesDTO>().ReverseMap();
+            /*CreateMap<Category, CategoriesDTO>().ReverseMap();
             CreateMap<CategoryCreationDTO, Category>();
+            //comment map 
+            CreateMap<Comment, CommentDTO>().ReverseMap();
+            CreateMap<CommentCreationDTO, Comment>();
             //    CreateMap<SubCategory, SubCategoriesDTO>().ReverseMap();
             CreateMap<SubCategory, SubCategoriesDTO>().ReverseMap();
             CreateMap<SubCategoryCreationDTO, SubCategory>();
@@ -28,7 +31,7 @@ namespace HeshmastNews.Helpers
                         .ToList()
                 });
             /*.ForMember(x => x.Category,
-                 options => options.MapFrom(MapSubToCat));*/
+                 options => options.MapFrom(MapSubToCat));#1#
 
             CreateMap<CategoryCreationDTO, Category>()
                 .ForMember(x => x.SubToCat, options
@@ -39,9 +42,11 @@ namespace HeshmastNews.Helpers
                 .ForMember(x => x.Poster, options => options.Ignore())
                 .ForMember(x => x.CategoryNews, options =>
                     options.MapFrom(MapNewsCategores));
-            CreateMap<News, NewsDetailDTO>()
+            reateMap<News, NewsDetailDTO>()
                 .ForMember(x => x.Categories, options
-                    => options.MapFrom(MapNewsCategory));
+                    => options.MapFrom(MapNewsCategory))
+                .ForMember(x => x.Comment, options =>
+                    options.MapFrom(MapNewsComment));
             CreateMap<News, NewsPatchDTO>();
             CreateMap<IdentityUser, UserDTO>()
                 .ForMember(x => x.EmailAddress, options => options.MapFrom(x => x.Email))
@@ -93,25 +98,53 @@ namespace HeshmastNews.Helpers
             return result;
         }
 
-        /*private List<SubToCat> MapSubToCats(CategoryCreationDTO categoryCreationDto, Category category)
+        /*private List<CommentDTO> MapNewsComment(News news, NewsCreationDTO newsCreationDto)
         {
-            var result = new List<SubToCat>();
-            foreach (var id in categoryCreationDto.CategoryId)
+            var result = new List<CommentDTO>();
+            foreach (var nTc in news.ComentNews)
             {
-                result.Add(new SubToCat() {SubCategoryId = id});
+                result.Add(new CommentDTO()
+                {
+                    Id = nTc.CommentId,
+                    Content = nTc.Comment.Content,
+                    rate = nTc.Comment.rate,
+                    DateCreated = nTc.Comment.DateCreated
+                });
             }
 
             return result;
-        }*/
-        /*private List<MovieGenres> MapMoviesGenres(MovieCreationDTO movieCreationDTO, Movie movie)
+        }
+        #1#
+
+        private List<CommentDTO> MapNewsComment(News news, NewsDetailDTO newsDetailDto)
         {
-            var result = new List<MovieGenres>();
-            foreach (var id in movieCreationDTO.GenresIds)
+            var result = new List<CommentDTO>();
+            foreach (var nTc in news.ComentNews)
             {
-                result.Add(new MovieGenres() {GenresId = id});
+                result.Add(new CommentDTO()
+                {
+                    Id = nTc.CommentId,
+                    Content = nTc.Comment.Content,
+                    rate = nTc.Comment.rate,
+                    DateCreated = nTc.Comment.DateCreated
+                });
             }
 
             return result;
-        }*/
+        }
+
+        /*private List<ComentNews> MapNewsComment(CommentCreationDTO commentCreationDto, Comment comment)
+        {
+            var result = new List<ComentNews>();
+
+            foreach (var id in commentCreationDto.NewsId)
+            {
+                result.Add(new ComentNews() {NewsId = id});
+            }
+
+            return result;
+        }#1#
+    }*/
+        }
     }
 }

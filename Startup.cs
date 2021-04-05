@@ -37,6 +37,7 @@ namespace HeshmastNews
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             //     services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
             services.AddTransient<IFileStorageService, InAppStorageService>();
+            services.AddTransient<ICategoryService, CategoryService>();
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
             services.AddHttpContextAccessor();
             services.AddControllers();

@@ -1,12 +1,19 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HeshmastNews.Entities
 {
-    public class Category : IId
+    public class Category 
     {
-        [Key] public int Id { get; set; }
-        [Required] public string Name { get; set; }
-        public List<SubToCat> SubToCat { get; set; }
+        
+        [Key] public int CategoryId { get; set; }
+        [Required] public string CateGoryName { get; set; }
+        public int? ParentId { get; set; }
+
+        // RelationShip
+        [ForeignKey("ParentId")] public List<Category> Categories { get; set; }
+        [InverseProperty("Category")] public List<News> News { get; set; }
+        public List<News> SubGroups { get; set; }
     }
 }

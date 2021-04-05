@@ -12,5 +12,7 @@ namespace dadachMovie.DTOs
 
         [ModelBinder(BinderType = typeof(TypeBinder<List<CategoriesDTO>>))]
         public List<CategoriesDTO> Categories { get; set; }
+
+       
     }
 }

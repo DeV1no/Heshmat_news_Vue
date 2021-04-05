@@ -8,5 +8,7 @@ namespace dadachMovie.DTOs
         public string Content { get; set; }
         public int rate { get; set; }
         public DateTime DateCreated { get; set; }
+
+        
     }
 }

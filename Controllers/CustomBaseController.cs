@@ -37,25 +37,8 @@ namespace HeshmastNews.Controllers
             var entities = await queryable.Paginate(paginationDto).ToListAsync();
             return _mapper.Map<List<TDTO>>(entities);
         }
-        protected async Task<ActionResult<TDTO>> Get<TEntity, TDTO>(int id) where TEntity : class, IId
-        {
-            var entity = await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-            if (entity == null)
-            {
-                return NotFound();
-            }
-
-            return _mapper.Map<TDTO>(entity);
-        }
-        protected async Task<ActionResult> Post<TCreation, TEntity, TRead>(TCreation creation, string routeName)
-            where TEntity : class, IId
-        {
-            var entity = _mapper.Map<Category>(creation);
-            _context.Add(entity);
-            await _context.SaveChangesAsync();
-            var readDTO = _mapper.Map<TRead>(entity);
-            return new CreatedAtRouteResult(routeName, new {entity.Id}, readDTO);
-        }
+       
+        
 
         protected async Task<ActionResult> Put<TCreation, TEntity>(int id, TCreation creation)
             where TEntity : class, IId

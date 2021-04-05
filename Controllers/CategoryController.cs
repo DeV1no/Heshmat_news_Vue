@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using dadachMovie.DTOs.Category;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;
+using HeshmastNews.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,52 +13,46 @@ namespace HeshmastNews.Controllers
 {
     [Route("api/categories")]
     [ApiController]
-    public class CategoryController : CustomBaseController
+    public class CategoryController
     {
         private ApplicationDbContext _context;
-        private IMapper _mapper;
+        private ICategoryService _categoryService;
 
-        public CategoryController(ApplicationDbContext context, IMapper mapper)
-            : base(context, mapper)
+        public CategoryController(ICategoryService categoryService, ApplicationDbContext context)
         {
+            _categoryService = categoryService;
             _context = context;
-            _mapper = mapper;
         }
+
 
         [HttpGet(Name = "getCategories")]
-        public async Task<ActionResult<List<CategoriesDTO>>> Get()
+        public List<Category> Get()
         {
-            return await Get<Category, CategoriesDTO>();
+            return _categoryService.GetAllCategories();
         }
 
-        [HttpGet("{Id:int}", Name = "getCategory")]
-        public async Task<ActionResult<CategoriesDTO>> Get(int id)
+        [HttpGet("{categoryId:int}", Name = "getCategory")]
+        public Category Get(int categoryId)
         {
-           return await Get<Category, CategoriesDTO>(id);
+            return _categoryService.GetCategoryById(categoryId);
         }
 
         [HttpPost]
-        //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        public async Task<ActionResult> Post([FromBody] CategoryCreationDTO categoryCreationDto)
+        public Category Post([FromBody] CategoryCreationDTO category)
         {
-            var category = _mapper.Map<Category>(categoryCreationDto);
-        
-            _context.Add(category);
-            await _context.SaveChangesAsync();
-            var categoryDTO = _mapper.Map<CategoriesDTO>(category);
-            return new CreatedAtRouteResult("getCategory", new {id = category.Id}, categoryDTO);
+            return _categoryService.AddCategory(category);
         }
 
-        [HttpPut("{id}", Name = "putCategories")]
-        public async Task<ActionResult> Put(int id, [FromBody] CategoryCreationDTO categoryCreationDto)
+        [HttpPut("{categoryId}", Name = "putCategories")]
+        public Category Put(int categoryId, [FromBody] CategoryCreationDTO category)
         {
-            return await Put<CategoryCreationDTO, Category>(id, categoryCreationDto);
+            return _categoryService.UpdateCategory(categoryId,category);
         }
 
         [HttpDelete("{id}", Name = "deleteCategoires")]
-        public async Task<ActionResult> Delete(int id)
+        public int Delete(int id)
         {
-            return await Delete<Category>(id);
+            return _categoryService.DeleteCategory(id);
         }
     }
 }

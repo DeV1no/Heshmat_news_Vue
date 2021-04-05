@@ -1,24 +1,29 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HeshmastNews.Entities
 {
-    public class News : IId
+    public class News
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int NewsId { get; set; }
+        [Required] public int CategoryId { get; set; }
+        public int? SubGroups { get; set; }
+        public string NewsTitle { get; set; }
         public string NewsBody { get; set; }
         public DateTime CreatedDate { get; set; }
-
         public string Poster { get; set; }
-
-        //  public List<Tags> Tags { get; set; }
-        public List<CategoryNews> CategoryNews { get; set; }
-        public List<ComentNews> ComentNews { get; set; }
+        public string Tags { get; set; }
+        public DateTime? UpdateTime { get; set; }
 
         public News()
         {
             this.CreatedDate = DateTime.Now;
         }
+
+        //RelationShip
+        [ForeignKey("CategoryId")] public Category Category { get; set; }
+        [ForeignKey("SubGroup")] public Category Group { get; set; }
     }
 }

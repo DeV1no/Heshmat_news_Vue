@@ -8,10 +8,7 @@ namespace HeshmastNews.DTOs
 {
     public class CategoryCreationDTO
     {
-        [Key] public int Id { get; set; }
-        [Required] public string Name { get; set; }
-
-        [ModelBinder(BinderType = typeof(TypeBinder<List<int>>))]
-        public List<int> CategoryId { get; set; }
+        public string CateGoryName { get; set; }
+        public int? ParentId { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using HeshmastNews.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dadachMovie.DTOs
@@ -9,9 +10,6 @@ namespace dadachMovie.DTOs
         [Key] public int Id { get; set; }
         [Required] public string content { get; set; }
         public int rate { get; set; }
-
-        [ModelBinder(BinderType = typeof(int))]
-
         public int NewsId { get; set; }
     }
 }
