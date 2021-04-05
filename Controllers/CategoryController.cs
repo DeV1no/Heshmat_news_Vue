@@ -29,7 +29,14 @@ namespace HeshmastNews.Controllers
         {
             return _categoryService.GetAllCategories();
         }
+        
+        [HttpGet("getSubCategories")]
+        public List<Category> GetCategories()
+        {
+            return _categoryService.GetAllSubCategory();
+        }
 
+      
         [HttpGet("{categoryId:int}", Name = "getCategory")]
         public Category Get(int categoryId)
         {

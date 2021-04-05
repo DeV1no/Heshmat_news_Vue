@@ -80,22 +80,12 @@ export default {
     };
   },
   methods: {
-    async getSubCat() {
-      await axios.get(`/api/SubCategory/`).then(res => {
-        this.subCatLength = res.data.totalItems;
-        console.log(this.subCatLength);
+    async GetCategories() {
+      await axios.get(`/api/categories/`).then(res => {
+        console.log(res.data);
       });
+    },
 
-      this.subCatDetail();
-    },
-    async subCatDetail() {
-      for (let i = 2; i <= 4; i++) {
-        await axios.get(`/api/SubCategory/${i}`).then(res => {
-          this.subCatDetails.push(res.data);
-        });
-      }
-      console.log(this.subCatDetails);
-    },
     logOut() {
       this.$store.dispatch('logOut');
       this.$store.state.auth.isAuth = false;
@@ -103,14 +93,9 @@ export default {
       console.log(this.$store.state.auth.isAuth);
     }
   },
-  computed: {
-    subCat: function() {
-      return this.$store.getters.GetSubCategory;
-    }
-  },
+  computed: {},
   async mounted() {
-    await this.getSubCat();
-    this.$store.dispatch('GetSubcategoryAction');
+    await this.GetCategories();
   }
 };
 </script>

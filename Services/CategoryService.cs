@@ -3,6 +3,7 @@ using System.Linq;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HeshmastNews.Services
 {
@@ -18,6 +19,13 @@ namespace HeshmastNews.Services
         public List<Category> GetAllCategories()
         {
             return _context.Categories.ToList();
+        }
+
+        public List<Category> GetAllSubCategory()
+        {
+          return  _context.Categories.Where(c=>c.ParentId==null)
+              .Include(c=> c.Categories)
+              .ToList();
         }
 
         public Category GetCategoryById(int categoryId)

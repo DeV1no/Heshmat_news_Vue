@@ -5318,6 +5318,7 @@
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 5.0.1",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 5.0.0",
       "Microsoft.AspNetCore.SpaServices.Extensions >= 5.0.0",
+      "Microsoft.EntityFrameworkCore >= 5.0.1",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.0",
       "Microsoft.Extensions.Identity.Core >= 6.0.0-preview.1.21103.6",
       "Microsoft.Extensions.Identity.Stores >= 5.0.1",
@@ -5402,6 +5403,10 @@
           "Microsoft.AspNetCore.SpaServices.Extensions": {
             "target": "Package",
             "version": "[5.0.0, )"
+          },
+          "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[5.0.1, )"
           },
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

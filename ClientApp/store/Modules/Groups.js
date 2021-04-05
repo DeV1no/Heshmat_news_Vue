@@ -25,8 +25,8 @@ const mutations = {
 
 
 const actions = {
-    GetSubcategoryAction({commit}) {
-        axios.get('/api/SubCategory')
+    GetSubcategoryAction({ commit }) {
+        axios.get('/api/categories')
             .then(response => {
                 commit('SET_SUBCATEGORY', response.data)
             })
