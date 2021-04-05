@@ -35,9 +35,16 @@ namespace HeshmastNews
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            //     services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
+          //IOC
             services.AddTransient<IFileStorageService, InAppStorageService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<INewsService, NewsService>();
+            
+            
+            
+            
+            
+            
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
             services.AddHttpContextAccessor();
             services.AddControllers();
@@ -89,6 +96,10 @@ namespace HeshmastNews
                 cfg.AddMaps("HeshmastNews");
                 cfg.AddProfile<Helpers.AutoMapperProfile>();
             });
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddSwaggerGen(c =>
             {

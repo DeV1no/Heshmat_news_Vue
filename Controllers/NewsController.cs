@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -22,8 +23,10 @@ namespace HeshmastNews.Controllers
         private readonly IFileStorageService _fileStorageService;
         private readonly string containerName = "news";
         private INewsService _newsService;
+
         public NewsController(
-            ApplicationDbContext context, IMapper mapper, IFileStorageService fileStorageService, INewsService newsService)
+            ApplicationDbContext context, IMapper mapper, IFileStorageService fileStorageService,
+            INewsService newsService)
 
         {
             _context = context;
@@ -34,55 +37,31 @@ namespace HeshmastNews.Controllers
 
         [HttpGet]
         [Produces(typeof(Paging<News>))]
-        public Paging<News> Get([FromQuery] GridifyQuery gQuery)
+        public List<NewsViewModelDTO> Get([FromQuery] GridifyQuery gQuery)
         {
-            return _context.News.Gridify(gQuery);
+            return _newsService.GetAllNews();
+           
         }
 
-        [HttpGet("{id}", Name = "getNews")]
-        public async Task<ActionResult<NewsDetailDTO>> Get(int id)
+        [HttpGet("{newsId}", Name = "getNews")]
+        public News Get(int newsId)
         {
-           
-          
-
-            return null;
+            return _newsService.GetNewsById(newsId);;
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromForm] NewsCreationDTO newsCreationDto)
+        public News Post([FromForm] NewsCreationDTO newsCreationDto)
         {
-            var news = _mapper.Map<News>(newsCreationDto);
-            if (newsCreationDto.Poster != null)
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    await newsCreationDto.Poster.CopyToAsync(memoryStream);
-                    var content = memoryStream.ToArray();
-                    var extension = Path.GetExtension(newsCreationDto.Poster.FileName);
-                    news.Poster =
-                        await _fileStorageService.SaveFile(content, extension, containerName,
-                            newsCreationDto.Poster.ContentType);
-                }
-            }
-
-            AnnotateActorsOrder(news);
-            _context.Add(news);
-            await _context.SaveChangesAsync();
-            var newsDTO = _mapper.Map<NewsDTO>(news);
-            return null;
-            //new CreatedAtRouteResult("getNews", new {id = news.Id}, newsDTO);
+            return _newsService.AddNews(newsCreationDto);
         }
 
-        private static void AnnotateActorsOrder(News news)
-        {
-          
-        }
+      
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromForm] NewsCreationDTO newsCreationDto)
         {
-          // var newsDB = await _context.News.FirstOrDefaultAsync;
-            
+            // var newsDB = await _context.News.FirstOrDefaultAsync;
+
 
             /*newsDB = _mapper.Map(newsCreationDto, newsDB);
             if (newsCreationDto.Poster != null)
@@ -98,42 +77,14 @@ namespace HeshmastNews.Controllers
                 }
             }*/
 
-     //       await _context.SaveChangesAsync();
+            //       await _context.SaveChangesAsync();
             return null;
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        [HttpDelete("{newsId}")]
+        public int Delete(int newsId)
         {
-          
-            return null;
-        }
-        [HttpPost("AddUserComment")]
-        /*[Authorize]
-        [ValidateModel]*/
-        public async Task<ActionResult> AddComment([FromBody] CommentCreationDTO commentCreationDTO)
-        {
-            var result = await _newsService.AddUserCommentAsync(commentCreationDTO);
-            if (result == -1)
-                return NotFound();
-            else if (result == 0)
-                return BadRequest("Failed to save changes.");
-
-            return NoContent();
-        }
-
-        [HttpDelete("RemoveUserComment/{id:int}")]
-        /*[Authorize(Roles = "Admin")]
-        [ValidateModel]*/
-        public async Task<ActionResult> RemoveComment(int id)
-        {
-            var result = await _newsService.DeleteUserCommentAsync(id);
-            if (result == -1)
-                return NotFound();
-            else if (result == 0)
-                return BadRequest("Failed to save changes.");
-
-            return NoContent();
+            return _newsService.DeleteNews(newsId);
         }
     }
 }

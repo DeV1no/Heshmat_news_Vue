@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using dadachMovie.DTOs.Category;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;

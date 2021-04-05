@@ -9,7 +9,7 @@ namespace HeshmastNews.Entities
     {
         public int NewsId { get; set; }
         [Required] public int CategoryId { get; set; }
-        public int? SubGroups { get; set; }
+        public int? SubGroup { get; set; }
         public string NewsTitle { get; set; }
         public string NewsBody { get; set; }
         public DateTime CreatedDate { get; set; }
