@@ -17,6 +17,11 @@
     src: url(../Fonts/IRANSans.woff);
 }
 
+.dropdown-menu {
+    top: 87% !important;
+    left: -91px !important;
+}
+
 * {
     direction: rtl !important;
     font-family: 'IranSans' !important;
@@ -209,7 +214,7 @@ h6 {
     grid-gap: 1.5rem;
 }
 
-.page-container>*:first-child {
+.page-container > *:first-child {
     grid-row: 1 / span 3;
 }
 
@@ -306,7 +311,7 @@ h6 {
     grid-gap: 1rem;
 }
 
-#home-articles .articles-container>*:first-child {
+#home-articles .articles-container > *:first-child {
     display: grid;
     grid-template-columns: (2, 1fr);
     grid-gap: 1rem;
@@ -314,7 +319,7 @@ h6 {
     grid-column: 1 /span 2;
 }
 
-#home-articles .articles-container>*:last-child {
+#home-articles .articles-container > *:last-child {
     display: grid;
     grid-template-columns: (2, 1fr);
     grid-gap: 1rem;
@@ -404,15 +409,15 @@ h6 {
     grid-gap: 1.5rem;
 }
 
-#main-footer>*:last-child {
+#main-footer > *:last-child {
     background-color: #444;
     grid-column: 1 /span 4;
     padding: 0.5rem;
     text-align: center;
-    font-size: 0.7 rem;
+    font-size: 0.7rem;
 }
 
-.footer-contgainer>*:last-child {
+.footer-contgainer > *:last-child {
     background-color: #444;
     grid-column: 1 /span 4;
 }
