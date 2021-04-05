@@ -28,7 +28,7 @@ namespace HeshmastNews.Services
                     NewsId = n.NewsId,
                     NewsTitle = n.NewsTitle,
                     NewsBody = n.NewsBody,
-                    Poster =$"/news/image/{n.Poster}",
+                    Poster =$"http://localhost:5000/news/image/{n.Poster}",
                     Tags = n.Tags,
                     Category = n.CategoryId,
                 }).ToList();

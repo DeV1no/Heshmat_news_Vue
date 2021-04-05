@@ -20,6 +20,7 @@
 .dropdown-menu {
     top: 87% !important;
     left: -91px !important;
+    background-color:#333;
 }
 
 * {
@@ -101,40 +102,12 @@ h6 {
     background: var(--tech-color)
 }
 
-.btn {
-    display: inline-block;
-    border: none;
-    background: var(--dark-color);
-    color: #fff;
-    padding: 0.5rem 1.5rem;
-}
-
-.btn-light {
-    background: var(--light-color)
-}
-
-.btn-primary {
-    background: var(--primary-color)
-}
-
-.btn-secondary {
-    background: var(--secondary-color)
-}
-
-.btn-block {
-    display: block;
-    width: 100%;
-    text-align: center;
-}
 
 .btn:hover {
     opacity: 0.9;
 }
 
-.card {
-    background: #fff;
-    padding: 1rem;
-}
+
 
 .bg-dark {
     background: var(--dark-color);
@@ -311,21 +284,9 @@ h6 {
     grid-gap: 1rem;
 }
 
-#home-articles .articles-container > *:first-child {
-    display: grid;
-    grid-template-columns: (2, 1fr);
-    grid-gap: 1rem;
-    align-items: center;
-    grid-column: 1 /span 2;
-}
 
-#home-articles .articles-container > *:last-child {
-    display: grid;
-    grid-template-columns: (2, 1fr);
-    grid-gap: 1rem;
-    align-items: center;
-    grid-column: 2 /span 2;
-}
+
+
 
 .bg-dark {
     background: var(--dark-color);
@@ -438,7 +399,7 @@ p {
 
 .list li {
     padding: 0.5rem 0;
-    border-bottom: #555 doted 1px;
+    
     width: 90%;
 }
 
