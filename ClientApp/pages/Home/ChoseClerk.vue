@@ -3,15 +3,15 @@
     <section id="home-articles" class="py-2">
       <div class="container">
         <h4 class="text-info mt-4">انتخاب سردبیر</h4>
-        <hr>
+        <hr />
         <div class="row mt-5">
           <div
-              class="card article-card col-md-4 mx-1"
-              v-for="news in clerkNews"
-              :key="news.newsId"
+            class="card article-card col-md-3 mx-1"
+            v-for="news in clerkNews"
+            :key="news.newsId"
           >
             <div class="card-img">
-              <img :src="news.poster" height="310px" alt="">
+              <img :src="news.poster" height="270px" alt="" />
             </div>
             <div class="card-header ">
               <h6 class="text-muted">
@@ -21,12 +21,13 @@
             <div class="cart-body mt-2">
               {{ news.newsBody }}
             </div>
-            <button class="btn btn-outline-info text-center my-3">مشاهده خبر</button>
+            <button class="btn btn-outline-info text-center my-3">
+              مشاهده خبر
+            </button>
           </div>
         </div>
       </div>
     </section>
-
   </div>
 </template>
 
@@ -34,24 +35,24 @@
 import axios from 'axios';
 
 export default {
-  name: "ChoseClerk",
+  name: 'ChoseClerk',
   data() {
     return {
       clerkNews: []
-    }
+    };
   },
   methods: {
     GetClerkNews() {
-      axios.get("/api/news?PageSize=6").then(res => {
+      axios.get('/api/news?PageSize=6').then(res => {
         this.clerkNews = res.data;
-        console.log(this.clerkNews)
-      })
+        console.log(this.clerkNews);
+      });
     }
   },
   mounted() {
     this.GetClerkNews();
   }
-}
+};
 </script>
 
 <style scoped>
