@@ -418,3 +418,29 @@ p {
 .mr-01 {
     margin-right: 0.1rem;
 }
+
+.customTitle {
+    position: relative;
+    display: inline-block;
+    background-color: #ee2d58;
+    color: #fff !important;
+    padding: 8px 32px 0;
+    font-size: 1.1em;
+    margin-bottom: 7px;
+    height: 40px;
+}
+
+.customTitle:after {
+    content: '';
+    position: absolute;
+    left: -33px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 40px solid #ee2d58;
+    border-left: 34px solid transparent;
+}
+
+.bg-gray {
+    background-color: #8888;
+}
