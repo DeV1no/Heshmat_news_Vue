@@ -1,3 +1,4 @@
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 :root {
     --primary-color: #c72727 !important;
     --secondary-color: #f99500;
@@ -25,7 +26,7 @@
 
 * {
     direction: rtl !important;
-    font-family: 'IranSans' !important;
+    font-family: 'IranSans';
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -443,4 +444,24 @@ p {
 
 .bg-gray {
     background-color: #8888;
+}
+
+.topicCategories {
+    position: absolute;
+    bottom: 8px;
+    right: 3px;
+    /* padding: 0 3px;
+    width: 100%;
+    height: 21px; */
+    z-index: 9;
+    overflow: hidden;
+}
+
+.topicCategories>a {
+    /* display: inline-block; */
+    background: #ff7830;
+    color: aliceblue;
+    transition: 0.5s;
+    border-radius: 5px;
+    padding: 0 0.5rem;
 }

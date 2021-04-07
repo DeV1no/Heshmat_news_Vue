@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" dir="rtl">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" dir="rtl">
     <img
       src="http://localhost:5000/Logo/logo.png"
       alt=""
