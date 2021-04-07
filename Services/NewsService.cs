@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using dadachMovie.DTOs;
+using HeshmastNews.Convertor;
 using HeshmastNews.Data;
 using HeshmastNews.Entities;
 using HeshmastNews.Generator;
@@ -31,6 +32,7 @@ namespace HeshmastNews.Services
                     Poster =$"http://localhost:5000/news/image/{n.Poster}",
                     Tags = n.Tags,
                     Category = n.CategoryId,
+                    CreatedDate = n.CreatedDate.ToShamsi(),
                 }).ToList();
             return new List<NewsViewModelDTO>(query);
         }

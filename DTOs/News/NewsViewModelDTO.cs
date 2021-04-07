@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using HeshmastNews.Entities;
 
@@ -11,6 +12,7 @@ namespace dadachMovie.DTOs
         public string Tags { get; set; }
         public string Poster { get; set; }
         public int Category { get; set; }
+        public string CreatedDate { get; set; }
        
     }
 }
