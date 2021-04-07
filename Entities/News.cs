@@ -16,7 +16,6 @@ namespace HeshmastNews.Entities
         public string Poster { get; set; }
         public string Tags { get; set; }
         public DateTime? UpdateTime { get; set; }
-
         public News()
         {
             this.CreatedDate = DateTime.Now;

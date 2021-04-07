@@ -22,7 +22,9 @@ namespace HeshmastNews.Services
 
         public List<NewsViewModelDTO> GetAllNews()
         {
-            IQueryable<News> result = _context.News;
+            IQueryable<News> result = _context.News
+                .Include(n=>n.Category);
+            
             var query = result
                 .Select(n => new NewsViewModelDTO()
                 {
@@ -33,6 +35,8 @@ namespace HeshmastNews.Services
                     Tags = n.Tags,
                     Category = n.CategoryId,
                     CreatedDate = n.CreatedDate.ToShamsi(),
+                    Categories = n.Category
+                    
                 }).ToList();
             return new List<NewsViewModelDTO>(query);
         }
@@ -41,6 +45,7 @@ namespace HeshmastNews.Services
         {
             var news = _context.News
                 .Single(n => n.NewsId == newsId);
+            
             news.Category = _context.Categories
                 .Single(c => c.CategoryId==news.CategoryId);
             return news;

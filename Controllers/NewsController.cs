@@ -37,7 +37,7 @@ namespace HeshmastNews.Controllers
 
         [HttpGet]
         [Produces(typeof(Paging<News>))]
-        public List<NewsViewModelDTO> Get([FromQuery] GridifyQuery gQuery)
+        public List<NewsViewModelDTO> Get()
         {
             return _newsService.GetAllNews();
            

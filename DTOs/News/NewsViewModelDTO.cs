@@ -13,6 +13,9 @@ namespace dadachMovie.DTOs
         public string Poster { get; set; }
         public int Category { get; set; }
         public string CreatedDate { get; set; }
+        
+        public Category Categories { get; set; }
+
        
     }
 }
