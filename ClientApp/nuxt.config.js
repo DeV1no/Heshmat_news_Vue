@@ -13,6 +13,7 @@ export default {
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
             { rel: "stylesheet", type: "text/css", href: "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" },
+            { rel: "stylesheet", type: "text/css", href: "https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css" },
 
         ],
         script: [
@@ -35,6 +36,12 @@ export default {
             {
                 src: '//code.jquery.com/jquery-1.11.1.min.js'
             },
+            {
+                src: '~/assets/JS/main.js',
+
+            },
+            { src: '~/assets/JS/moment.js' },
+            { src: '~/assets/JS/bootstrap-datetimepicker.js' }
 
 
         ],
@@ -49,6 +56,7 @@ export default {
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
         "~/assets/css/style.css",
+
         //   "~/assets/css/mobile.css",
     ],
 
