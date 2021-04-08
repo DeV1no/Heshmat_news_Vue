@@ -6,25 +6,20 @@
     <div class="post-card">
       <div class="row">
         <div class="col-12 mt-1">
-          <div class="card">
+          <div class="card mt-1" v-for="news in newsPost" :key="news.newsId">
             <div class="card-horizontal">
               <div class="img-square-wrapper">
-                <img
-                  class=""
-                  src="https://cdn.zoomg.ir/2021/2/outriders-game-400x267.jpg"
-                  alt=""
-                />
+                <img class="thumbnail-img" :src="news.poster" alt="" />
                 <div class="topicCategories">
                   <a href=""
-                    ><label style="cursor:pointer">اخبار بازی</label></a
-                  >
-                  <a href=""
-                    ><label style="cursor:pointer">پلی استیشن</label></a
+                    ><label style="cursor:pointer">{{
+                      news.categories.cateGoryName
+                    }}</label></a
                   >
                 </div>
               </div>
               <div class="card-body">
-                <h4 class="card-title">عنوان خبر</h4>
+                <h4 class="card-title">{{ news.newsTitle }}</h4>
 
                 <div class="d-flex news-info text-muted">
                   <span>
@@ -34,7 +29,7 @@
 
                   <span class="mr-2">
                     <i class="fa fa-calendar "></i>
-                    1400/02/05
+                    {{ news.createdDate }}
                   </span>
                   <span class="mr-auto ml-3">
                     <i class="fa fa-comment"></i>
@@ -43,8 +38,7 @@
                 </div>
                 <hr />
                 <p class="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  {{ news.newsBody }}
                 </p>
               </div>
             </div>
@@ -52,11 +46,29 @@
         </div>
       </div>
     </div>
+    <div class="overflow-auto"></div>
   </div>
 </template>
 
 <script>
-export default {};
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      newsPost: []
+    };
+  },
+  methods: {
+    GetNewstNews() {
+      axios.get('/api/news').then(res => {
+        this.newsPost = res.data;
+      });
+    }
+  },
+  mounted() {
+    this.GetNewstNews();
+  }
+};
 </script>
 
 <style scoped>
@@ -73,5 +85,9 @@ export default {};
 }
 .card {
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.thumbnail-img {
+  width: 250px !important;
+  height: 250px !important;
 }
 </style>

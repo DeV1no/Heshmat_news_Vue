@@ -41,7 +41,6 @@ export default {
     GetClerkNews() {
       axios.get('/api/news?PageSize=6').then(res => {
         this.clerkNews = res.data;
-        console.log(this.clerkNews);
       });
     }
   },
