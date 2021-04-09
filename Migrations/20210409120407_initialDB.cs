@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dadachMovie.Migrations
 {
-    public partial class initialDb : Migration
+    public partial class initialDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,20 +29,38 @@ namespace dadachMovie.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
+                    Email = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
+                    NameFamily = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
+                    Password = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
+                    UserAvatar = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
+                    RegisterDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    IsDelete = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "News",
                 columns: table => new
                 {
                     NewsId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    SubGroups = table.Column<int>(type: "int", nullable: true),
+                    SubGroup = table.Column<int>(type: "int", nullable: true),
                     NewsTitle = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     NewsBody = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Poster = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     Tags = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    SubGroup = table.Column<int>(type: "int", nullable: true)
+                    UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,6 +99,9 @@ namespace dadachMovie.Migrations
         {
             migrationBuilder.DropTable(
                 name: "News");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Categories");

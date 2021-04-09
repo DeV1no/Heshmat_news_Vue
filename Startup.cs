@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using AutoMapper;
+using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,16 +36,13 @@ namespace HeshmastNews
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-          //IOC
+            //IOC
             services.AddTransient<IFileStorageService, InAppStorageService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<INewsService, NewsService>();
-            
-            
-            
-            
-            
-            
+            services.AddTransient<IUserService, UserService>();
+
+
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
             services.AddHttpContextAccessor();
             services.AddControllers();
