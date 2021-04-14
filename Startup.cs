@@ -74,11 +74,13 @@ namespace HeshmastNews
                 });
             });
 
-            services.AddDbContext<ApplicationDbContext>(opt =>
+            /*services.AddDbContext<ApplicationDbContext>(opt =>
             {
                 opt.UseMySql(Configuration.GetConnectionString("MariaDbConnection"),
                     new MariaDbServerVersion(new System.Version(10, 5, 0)));
-            });
+            });*/
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseMySQL(Configuration.GetConnectionString("MariaDbConnection")));
             services.AddCors(c =>
             {
                 c.AddPolicy(name: MyAllowSpecificOrigins, opt =>
