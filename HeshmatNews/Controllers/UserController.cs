@@ -15,18 +15,18 @@ namespace HeshmastNews.Controllers
     public class UserController : ControllerBase
     {
         private IUserService _userService;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private ApplicationDbContext _context;
 
-        public UserController(IUserService userService, SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager, ApplicationDbContext context)
+        public UserController(IUserService userService, UserManager<User> userManager, SignInManager<User> signInManager, ApplicationDbContext context)
         {
             _userService = userService;
-            _signInManager = signInManager;
             _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
         }
+
 
         [HttpPost("/Register")]
         public User Post(UserRegisterViewModelDTO user)
@@ -39,7 +39,9 @@ namespace HeshmastNews.Controllers
         public async Task<ActionResult<UserTokenDTO>> Login([FromBody] UserLoginViewModelDTO model)
         {
             var result =
-                _context.Users.SingleOrDefault(u => u.Email == model.Email && u.PasswordHash == model.Password);
+                _context.Users.SingleOrDefault(u => u.Email == model.Email && u.Password == model.Password);
+            
+            
             /*
             var result =
                 _context.User.SingleOrDefault(u => u.Email == model.Email && u.Password == model.Password);

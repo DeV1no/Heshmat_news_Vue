@@ -302,3 +302,16 @@
 /home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/obj/Debug/netcoreapp3.1/HeshmatNews.dll
 /home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/obj/Debug/netcoreapp3.1/HeshmatNews.pdb
 /home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/obj/Debug/netcoreapp3.1/HeshmatNews.genruntimeconfig.cache
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/AspNet.Identity.Samples.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/Audit.EntityFramework.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/Audit.NET.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/EntityFramework.SqlServer.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/EntityFramework.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/System.CodeDom.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/System.Data.SqlClient.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll
+/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/bin/Debug/netcoreapp3.1/Microsoft.AspNet.Identity.Core.dll

@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HeshmastNews.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<User, Role, int>
+
+
     {
         public ApplicationDbContext([NotNullAttribute] DbContextOptions options) : base(options)
         {
@@ -18,7 +20,10 @@ namespace HeshmastNews.Data
         }
 
         public DbSet<Category> Categories { get; set; }
+
         public DbSet<News> News { get; set; }
+
         public DbSet<User> User { get; set; }
+        public DbSet<NewsComment> NewsComments { get; set; }
     }
 }

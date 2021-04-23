@@ -7,16 +7,20 @@
         <IsPackable>false</IsPackable>
         <SpaRoot>ClientApp\</SpaRoot>
         <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-
+ 
         <!-- Set this to true if you enable server-side prerendering -->
         <BuildServerSideRenderer>false</BuildServerSideRenderer>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Aggregates.NET.NewtonsoftJson" Version="0.15.69.920" />
+        <PackageReference Include="AspNet.Identity.Samples" Version="1.0.2" />
+        <PackageReference Include="Audit.EntityFramework" Version="17.0.1" />
         <PackageReference Include="AutoMapper" Version="10.1.1" />
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
         <PackageReference Include="Gridify" Version="1.1.0" />
+        <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.13" />
         <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.13" />
@@ -40,16 +44,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+        <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
     <ItemGroup>
         <!-- Don't publish the SPA source files, but do show them in the project files list -->
         <Content Remove="$(SpaRoot)**" />
         <None Remove="$(SpaRoot)**" />
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Data\Migrations" />
     </ItemGroup>
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Pages\Shared\_LoginPartial.cshtml" />

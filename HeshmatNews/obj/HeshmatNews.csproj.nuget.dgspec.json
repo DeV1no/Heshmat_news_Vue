@@ -40,6 +40,14 @@
               "target": "Package",
               "version": "[0.15.69.920, )"
             },
+            "AspNet.Identity.Samples": {
+              "target": "Package",
+              "version": "[1.0.2, )"
+            },
+            "Audit.EntityFramework": {
+              "target": "Package",
+              "version": "[17.0.1, )"
+            },
             "AutoMapper": {
               "target": "Package",
               "version": "[10.1.1, )"
@@ -52,6 +60,10 @@
               "target": "Package",
               "version": "[1.1.0, )"
             },
+            "Microsoft.AspNet.Identity.Core": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": {
               "target": "Package",
               "version": "[3.1.13, )"
@@ -59,6 +71,10 @@
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.13, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",

@@ -22,16 +22,19 @@ namespace HeshmastNews.Services
     public class UserService : IUserService
     {
         private ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+
+         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly SignInManager<User> _signInManager;
 
-
-        public UserService(ApplicationDbContext context, UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public UserService(ApplicationDbContext context, UserManager<User> userManager, IConfiguration configuration, SignInManager<User> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _configuration = configuration;
+            _signInManager = signInManager;
         }
+
 
         public User RegisterUser(UserRegisterViewModelDTO user)
         {
@@ -46,7 +49,7 @@ namespace HeshmastNews.Services
                 IsDelete = false
             };
 
-            _context.User.Add(userVR);
+              _context.User.Add(userVR);
             _context.SaveChanges();
             return userVR;
         }
@@ -61,12 +64,12 @@ namespace HeshmastNews.Services
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
             
-        //    HttpContext.SignInAsync(principal);
+       //     HttpContext.SignInAsync(principal);
 
             var identityUser = await _userManager.FindByEmailAsync(userInfo.Email);
-         //   var claimsDB = await _userManager.GetClaimsAsync(identityUser);
+           var claimsDB = await _userManager.GetClaimsAsync(identityUser);
 
-          //  claims.AddRange(claimsDB);
+            claims.AddRange(claimsDB);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -85,6 +88,7 @@ namespace HeshmastNews.Services
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = expiration
             };
+          //  return null;
         }
     }
 }

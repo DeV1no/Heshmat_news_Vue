@@ -3,6 +3,7 @@ using System.Text;
 using AutoMapper;
 using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
+using HeshmastNews.Entities;
 using HeshmastNews.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -46,9 +47,9 @@ namespace HeshmastNews
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
             services.AddHttpContextAccessor();
             services.AddControllers();
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<User, Role>(options => { options.User.RequireUniqueEmail = true; }
+            ).AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -111,7 +112,6 @@ namespace HeshmastNews
                     Scheme = "bearer",
                     Description = "Please insert JWT token into field"
                 });
-
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -159,7 +159,6 @@ namespace HeshmastNews
             app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
