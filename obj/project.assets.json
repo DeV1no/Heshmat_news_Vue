@@ -5332,19 +5332,19 @@
     ]
   },
   "packageFolders": {
-    "/home/dev1/.nuget/packages/": {}
+    "/home/oem/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/dev1/Desktop/Heshmat_news_Vue/HeshmastNews.csproj",
+      "projectUniqueName": "/home/oem/Desktop/Heshmat_news_Vue/HeshmastNews.csproj",
       "projectName": "HeshmastNews",
-      "projectPath": "/home/dev1/Desktop/Heshmat_news_Vue/HeshmastNews.csproj",
-      "packagesPath": "/home/dev1/.nuget/packages/",
-      "outputPath": "/home/dev1/Desktop/Heshmat_news_Vue/obj/",
+      "projectPath": "/home/oem/Desktop/Heshmat_news_Vue/HeshmastNews.csproj",
+      "packagesPath": "/home/oem/.nuget/packages/",
+      "outputPath": "/home/oem/Desktop/Heshmat_news_Vue/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/dev1/.nuget/NuGet/NuGet.Config"
+        "/home/oem/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -5469,7 +5469,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.103/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.203/RuntimeIdentifierGraph.json"
       }
     }
   }
