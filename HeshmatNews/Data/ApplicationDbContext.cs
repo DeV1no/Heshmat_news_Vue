@@ -22,11 +22,7 @@ namespace HeshmastNews.Data
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<News> News { get; set; }
-<<<<<<< HEAD:Data/ApplicationDbContext.cs
-=======
-
         public DbSet<User> User { get; set; }
         public DbSet<NewsComment> NewsComments { get; set; }
->>>>>>> 9f08e2fd1eec00c0994c3060f020ea4e0894d1ae:HeshmatNews/Data/ApplicationDbContext.cs
     }
 }

@@ -1,29 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/HeshmatNews.csproj": {}
+    "/home/oem/Desktop/Heshmat_news_Vue/HeshmatNews/HeshmatNews.csproj": {}
   },
   "projects": {
-    "/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/HeshmatNews.csproj": {
+    "/home/oem/Desktop/Heshmat_news_Vue/HeshmatNews/HeshmatNews.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/HeshmatNews.csproj",
+        "projectUniqueName": "/home/oem/Desktop/Heshmat_news_Vue/HeshmatNews/HeshmatNews.csproj",
         "projectName": "HeshmatNews",
-        "projectPath": "/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/HeshmatNews.csproj",
-        "packagesPath": "/home/dev1/.nuget/packages/",
-        "outputPath": "/home/dev1/Desktop/Heshmat_news_Vue/HeshmatNews/obj/",
+        "projectPath": "/home/oem/Desktop/Heshmat_news_Vue/HeshmatNews/HeshmatNews.csproj",
+        "packagesPath": "/home/oem/.nuget/packages/",
+        "outputPath": "/home/oem/Desktop/Heshmat_news_Vue/HeshmatNews/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/dev1/.nuget/NuGet/NuGet.Config"
+          "/home/oem/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "net5.0"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
+          "net5.0": {
+            "targetAlias": "net5.0",
             "projectReferences": {}
           }
         },
@@ -34,119 +35,90 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
+        "net5.0": {
+          "targetAlias": "net5.0",
           "dependencies": {
-            "Aggregates.NET.NewtonsoftJson": {
-              "target": "Package",
-              "version": "[0.15.69.920, )"
-            },
-            "AspNet.Identity.Samples": {
-              "target": "Package",
-              "version": "[1.0.2, )"
-            },
-            "Audit.EntityFramework": {
-              "target": "Package",
-              "version": "[17.0.1, )"
-            },
             "AutoMapper": {
               "target": "Package",
               "version": "[10.1.1, )"
             },
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
-              "version": "[8.1.1, )"
+              "version": "[8.1.0, )"
             },
             "Gridify": {
               "target": "Package",
               "version": "[1.1.0, )"
             },
-            "Microsoft.AspNet.Identity.Core": {
+            "Gridify.EntityFramework": {
               "target": "Package",
-              "version": "[2.0.0, )"
+              "version": "[1.1.0, )"
             },
-            "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": {
+            "HtmlAgilityPack": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[1.11.30, )"
             },
-            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[3.1.13, )"
-            },
-            "Microsoft.AspNetCore.Identity": {
-              "target": "Package",
-              "version": "[2.2.0, )"
+              "version": "[5.0.1, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.13, )"
-            },
-            "Microsoft.AspNetCore.Identity.UI": {
-              "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[5.0.1, )"
             },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
-              "version": "[3.1.0, )"
+              "version": "[5.0.0, )"
             },
             "Microsoft.AspNetCore.SpaServices.Extensions": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[5.0.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[5.0.1, )"
             },
-            "Microsoft.EntityFrameworkCore.Relational": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[5.0.0, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "Microsoft.Extensions.Identity.Core": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[6.0.0-preview.1.21103.6, )"
             },
-            "Microsoft.EntityFrameworkCore.Tools": {
+            "Microsoft.Extensions.Identity.Stores": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[5.0.1, )"
             },
-            "Microsoft.IdentityModel.JsonWebTokens": {
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[6.10.0, )"
+              "version": "[5.0.0, )"
             },
-            "MySql.Data.EntityFrameworkCore": {
+            "NLog.Extensions.Logging": {
               "target": "Package",
-              "version": "[8.0.22, )"
+              "version": "[1.7.0, )"
             },
-            "MySql.Data.EntityFrameworkCore.Design": {
+            "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
-              "version": "[8.0.19, )"
+              "version": "[5.0.0-alpha.2, )"
             },
-            "Newtonsoft.Json": {
+            "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[13.0.1, )"
-            },
-            "Newtonsoft.Json.Bson": {
-              "target": "Package",
-              "version": "[1.0.2, )"
-            },
-            "Pomelo.EntityFrameworkCore.MySql.Json.Newtonsoft": {
-              "target": "Package",
-              "version": "[3.2.4, )"
+              "version": "[5.6.3, )"
             },
             "Swashbuckle.AspNetCore.Swagger": {
               "target": "Package",
-              "version": "[6.1.2, )"
+              "version": "[6.0.7, )"
             },
-            "Swashbuckle.AspNetCore.SwaggerGen": {
+            "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[6.1.2, )"
-            },
-            "Swashbuckle.AspNetCore.SwaggerUI": {
-              "target": "Package",
-              "version": "[6.1.2, )"
+              "version": "[1.2.6, )"
             },
             "VueCliMiddleware": {
               "target": "Package",
-              "version": "[5.0.0, )"
+              "version": "[3.1.2, )"
             }
           },
           "imports": [
@@ -167,7 +139,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.407/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.203/RuntimeIdentifierGraph.json"
         }
       }
     }
