@@ -61,6 +61,9 @@ namespace dadachMovie.Migrations
                     b.Property<int?>("SubGroup")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SubGroups")
+                        .HasColumnType("int");
+
                     b.Property<string>("Tags")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -74,42 +77,6 @@ namespace dadachMovie.Migrations
                     b.HasIndex("SubGroup");
 
                     b.ToTable("News");
-                });
-
-            modelBuilder.Entity("HeshmastNews.Entities.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("NameFamily")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("RegisterDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("UserAvatar")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("HeshmastNews.Entities.Category", b =>
