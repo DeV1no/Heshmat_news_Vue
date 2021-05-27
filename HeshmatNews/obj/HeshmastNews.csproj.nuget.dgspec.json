@@ -1,0 +1,149 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/oem/Desktop/Heshmat_news_Vue/HeshmastNews.csproj": {}
+  },
+  "projects": {
+    "/home/oem/Desktop/Heshmat_news_Vue/HeshmastNews.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/oem/Desktop/Heshmat_news_Vue/HeshmastNews.csproj",
+        "projectName": "HeshmastNews",
+        "projectPath": "/home/oem/Desktop/Heshmat_news_Vue/HeshmastNews.csproj",
+        "packagesPath": "/home/oem/.nuget/packages/",
+        "outputPath": "/home/oem/Desktop/Heshmat_news_Vue/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/oem/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[10.1.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "Gridify": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Gridify.EntityFramework": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.11.30, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.AspNetCore.SpaServices.Extensions": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.Extensions.Identity.Core": {
+              "target": "Package",
+              "version": "[6.0.0-preview.1.21103.6, )"
+            },
+            "Microsoft.Extensions.Identity.Stores": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "NLog.Extensions.Logging": {
+              "target": "Package",
+              "version": "[1.7.0, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[5.0.0-alpha.2, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.6.3, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.2.6, )"
+            },
+            "VueCliMiddleware": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+<<<<<<< HEAD:obj/HeshmastNews.csproj.nuget.dgspec.json
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.203/RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.407/RuntimeIdentifierGraph.json"
+>>>>>>> 9f08e2fd1eec00c0994c3060f020ea4e0894d1ae:HeshmatNews/obj/HeshmastNews.csproj.nuget.dgspec.json
+        }
+      }
+    }
+  }
+}
