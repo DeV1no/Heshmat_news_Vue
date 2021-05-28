@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace HeshmastNews.Entities
 {
-    public class User:IdentityUser<int>
+    public class User : IdentityUser<int>
     {
         public int Id { get; set; }
-       
+
 
         [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
         public string UserName { get; set; }
@@ -17,6 +17,7 @@ namespace HeshmastNews.Entities
         [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
         [EmailAddress(ErrorMessage = "ایمیل وارد شده معتبر نمیباشد")]
         public string Email { get; set; }
+
         [Required] public string NameFamily { get; set; }
 
         [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
@@ -26,10 +27,11 @@ namespace HeshmastNews.Entities
 
         public DateTime RegisterDate { get; set; }
         public bool IsDelete { get; set; }
-        
+        public string Role { get; set; }
+
+        public string Token { get; set; }
         // Relation ship 
-       
-        public NewsComment NewsComment{ get; set; }
-        
+
+        public NewsComment NewsComment { get; set; }
     }
 }

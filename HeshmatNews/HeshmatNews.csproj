@@ -72,7 +72,6 @@
         </ItemGroup>
     </Target>
     <ItemGroup>
-        <Folder Include="Migrations" />
         <Folder Include="wwwroot\" />
         <Folder Include="wwwroot\news\image" />
     </ItemGroup>

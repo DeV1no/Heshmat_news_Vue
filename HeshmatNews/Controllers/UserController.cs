@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs.User;
@@ -15,46 +16,28 @@ namespace HeshmastNews.Controllers
     public class UserController : ControllerBase
     {
         private IUserService _userService;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private ApplicationDbContext _context;
+        private IMapper _mapper;
 
-        public UserController(IUserService userService, UserManager<User> userManager, SignInManager<User> signInManager, ApplicationDbContext context)
+        public UserController( IMapper mapper, IUserService userService)
         {
+            _mapper = mapper;
             _userService = userService;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _context = context;
         }
 
 
-        [HttpPost("/Register")]
-        public User Post(UserRegisterViewModelDTO user)
+        [HttpPost("Register")]
+        public IActionResult Post(UserRegisterDTO user)
         {
-            return _userService.RegisterUser(user);
+            return Ok( _userService.Register(user));
         }
 
-        [HttpPost("/Login")]
         [HttpPost("Login", Name = "Login")]
-        public async Task<ActionResult<UserTokenDTO>> Login([FromBody] UserLoginViewModelDTO model)
+        public  IActionResult Login([FromBody] UserLoginDTO model)
         {
-            var result =
-                _context.Users.SingleOrDefault(u => u.Email == model.Email && u.Password == model.Password);
-            
-            
-            /*
-            var result =
-                _context.User.SingleOrDefault(u => u.Email == model.Email && u.Password == model.Password);
-                */
-
-            if (result != null)
-            {
-                return await _userService.BuildToken(model);
-            }
-            else
-            {
-                return BadRequest("Invalid login attempt");
-            }
+            var user = _userService.Authenticate(model);
+            if (user == null)
+                return BadRequest(new {message = "Username or password is incorrect"});
+            return Ok(user);
         }
     }
 }

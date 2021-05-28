@@ -7,7 +7,8 @@ namespace dadachMovie.Services.Contracts
 {
     public interface IUserService
     {
-        User RegisterUser(UserRegisterViewModelDTO user);
-       Task <UserTokenDTO> BuildToken(UserLoginViewModelDTO userInfo);
+        bool IsUniqueUser(string username);
+        UserLoginViewModelDTO Authenticate(UserLoginDTO model);
+        UserRegisterViewModelDTO Register(UserRegisterDTO model);
     }
 }

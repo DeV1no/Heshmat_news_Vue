@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using AutoMapper;
+using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.Entities;
 using HeshmastNews.Services;
@@ -36,35 +37,43 @@ namespace HeshmastNews
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-          //IOC
+            //IOC
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IFileStorageService, InAppStorageService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<INewsService, NewsService>();
-            
-            
-            
-            
-            
-            
+
+            //Spa Static files config
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
             services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddIdentity<User, Role>(options => { options.User.RequireUniqueEmail = true; }
             ).AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                    options.TokenValidationParameters = new TokenValidationParameters
+            // JWT Setting
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.Configure<AppSettings>(appSettingsSection);
+            services.AddAuthentication(a =>
+                {
+                    a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(Configuration["jwt:key"])),
-                        ClockSkew = TimeSpan.Zero
-                    }
-                );
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                })
+                ;
+            //Cors
             services.AddCors(options =>
             {
                 options.AddPolicy("VueCorsPolicy", builder =>
@@ -97,11 +106,8 @@ namespace HeshmastNews
                         .AllowCredentials());
             });
 
-            services.AddAutoMapper(cfg =>
-            {
-                cfg.AddMaps("HeshmastNews");
-                cfg.AddProfile<Helpers.AutoMapperProfile>();
-            });
+            services.AddAutoMapper(typeof(HeshmatMapper.HeshmatMapper));
+
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

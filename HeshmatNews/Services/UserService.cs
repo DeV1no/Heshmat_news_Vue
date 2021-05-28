@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.Configuration;
 using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
@@ -15,80 +17,69 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace HeshmastNews.Services
 {
-    public class UserService : IUserService
+    public class UserService:IUserService
     {
         private ApplicationDbContext _context;
+        private IMapper _mapper;
+        private readonly AppSettings _appSettings;
 
-         private readonly UserManager<User> _userManager;
-        private readonly IConfiguration _configuration;
-        private readonly SignInManager<User> _signInManager;
-
-        public UserService(ApplicationDbContext context, UserManager<User> userManager, IConfiguration configuration, SignInManager<User> signInManager)
+        public UserService(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> appSettings)
         {
             _context = context;
-            _userManager = userManager;
-            _configuration = configuration;
-            _signInManager = signInManager;
+            _mapper = mapper;
+            _appSettings = appSettings.Value;
         }
 
-
-        public User RegisterUser(UserRegisterViewModelDTO user)
+        
+        public bool IsUniqueUser(string username)
         {
-            var userVR = new User()
-            {
-                UserName = user.UserName,
-                Email = user.Email,
-                NameFamily = user.NameFamily,
-                Password = user.Password,
-                UserAvatar = "/User/UserProfile/default.png",
-                RegisterDate = DateTime.Now,
-                IsDelete = false
-            };
+            return _context.Users.Any(u => u.UserName == username);
+        }
 
-              _context.User.Add(userVR);
+        public UserLoginViewModelDTO Authenticate(UserLoginDTO model)
+        {
+            var user = _context.Users
+                .SingleOrDefault(u => u.UserName == model.Username && u.Password == model.Password);
+
+
+            if (user == null)
+                return null;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role)
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            user.Token = tokenHandler.WriteToken(token);
+            return _mapper.Map<UserLoginViewModelDTO>(user);
+        }
+
+        public UserRegisterViewModelDTO Register(UserRegisterDTO model)
+        {
+            bool isUnique = IsUniqueUser(model.UserName);
+            if (isUnique)
+                return null;
+
+            var userObj = _mapper.Map<User>(model);
+            userObj.Role = "User";
+
+            _context.Users.Add(userObj);
             _context.SaveChanges();
-            return userVR;
-        }
-
-        public async Task<UserTokenDTO> BuildToken(UserLoginViewModelDTO userInfo)
-        {
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier, userInfo.Email),
-                new Claim(ClaimTypes.Name, userInfo.Email)
-            };
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
-            
-       //     HttpContext.SignInAsync(principal);
-
-            var identityUser = await _userManager.FindByEmailAsync(userInfo.Email);
-           var claimsDB = await _userManager.GetClaimsAsync(identityUser);
-
-            claims.AddRange(claimsDB);
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var expiration = DateTime.UtcNow.AddYears(1);
-
-            JwtSecurityToken token = new JwtSecurityToken(
-                issuer: null,
-                audience: null,
-                claims: claims,
-                expires: expiration,
-                signingCredentials: creds);
-
-            return new UserTokenDTO()
-            {
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = expiration
-            };
-          //  return null;
+            var userView = _mapper.Map<UserRegisterViewModelDTO>(model);
+            return   userView;
         }
     }
 }

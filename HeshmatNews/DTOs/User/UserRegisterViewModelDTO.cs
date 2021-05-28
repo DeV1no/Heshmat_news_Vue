@@ -14,9 +14,7 @@ namespace HeshmastNews.DTOs.User
 
         [Required] public string NameFamily { get; set; }
 
-        [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
-        public string Password { get; set; }
-        
+       
        
     }
 }

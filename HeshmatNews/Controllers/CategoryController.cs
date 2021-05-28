@@ -5,6 +5,7 @@ using HeshmastNews.Data;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;
 using HeshmastNews.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,6 +45,7 @@ namespace HeshmastNews.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public Category Post([FromBody] CategoryCreationDTO category)
         {
             return _categoryService.AddCategory(category);

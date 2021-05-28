@@ -21,7 +21,6 @@ namespace HeshmastNews.Controllers
         private ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IFileStorageService _fileStorageService;
-        private readonly string containerName = "news";
         private INewsService _newsService;
 
         public NewsController(
@@ -37,9 +36,9 @@ namespace HeshmastNews.Controllers
 
         [HttpGet]
         [Produces(typeof(Paging<News>))]
-        public List<NewsViewModelDTO> Get()
+        public IActionResult Get()
         {
-            return _newsService.GetAllNews();
+            return Ok (_newsService.GetAllNews());
            
         }
 
@@ -58,7 +57,7 @@ namespace HeshmastNews.Controllers
       
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromForm] NewsCreationDTO newsCreationDto)
+        public  Task<ActionResult> Put(int id, [FromForm] NewsCreationDTO newsCreationDto)
         {
             // var newsDB = await _context.News.FirstOrDefaultAsync;
 
