@@ -10,5 +10,6 @@ namespace dadachMovie.Services.Contracts
         bool IsUniqueUser(string username);
         UserLoginViewModelDTO Authenticate(UserLoginDTO model);
         UserRegisterViewModelDTO Register(UserRegisterDTO model);
+        CurrentUserViewModelDTO GetCurrentUserById(string id);
     }
 }

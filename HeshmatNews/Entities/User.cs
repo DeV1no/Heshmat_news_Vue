@@ -8,9 +8,7 @@ namespace HeshmastNews.Entities
 {
     public class User : IdentityUser<int>
     {
-        public int Id { get; set; }
-
-
+         
         [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
         public string UserName { get; set; }
 

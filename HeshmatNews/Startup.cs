@@ -49,6 +49,8 @@ namespace HeshmastNews
             services.AddControllers();
             services.AddIdentity<User, Role>(options => { options.User.RequireUniqueEmail = true; }
             ).AddEntityFrameworkStores<ApplicationDbContext>();
+//
+            services.AddHttpContextAccessor();
 
             // JWT Setting
             var appSettingsSection = Configuration.GetSection("AppSettings");

@@ -12,6 +12,7 @@ namespace HeshmastNews.HeshmatMapper
             CreateMap<UserRegisterViewModelDTO,UserRegisterDTO>().ReverseMap();
             CreateMap<User, UserRegisterDTO>().ReverseMap();
             CreateMap<UserLoginViewModelDTO, User>().ReverseMap();
+            CreateMap<CurrentUserViewModelDTO, User>().ReverseMap();
         }
     }
 }

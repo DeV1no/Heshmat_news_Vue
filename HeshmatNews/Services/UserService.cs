@@ -11,8 +11,10 @@ using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs.User;
 using HeshmastNews.Entities;
+using HeshmatNews.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -22,20 +24,23 @@ using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace HeshmastNews.Services
 {
-    public class UserService:IUserService
+    public class UserService : IUserService
     {
         private ApplicationDbContext _context;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
-        public UserService(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> appSettings)
+
+        public UserService(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> appSettings
+        )
         {
             _context = context;
             _mapper = mapper;
+
             _appSettings = appSettings.Value;
         }
 
-        
+
         public bool IsUniqueUser(string username)
         {
             return _context.Users.Any(u => u.UserName == username);
@@ -56,12 +61,15 @@ namespace HeshmastNews.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role)
+                    new Claim(ClaimTypes.Role, user.Role),
+                    new Claim(ClaimTypes.UserData, user.Id.ToString())
                 }),
+
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
             return _mapper.Map<UserLoginViewModelDTO>(user);
@@ -75,11 +83,17 @@ namespace HeshmastNews.Services
 
             var userObj = _mapper.Map<User>(model);
             userObj.Role = "User";
-
+            userObj.RegisterDate = DateTime.Now;
             _context.Users.Add(userObj);
             _context.SaveChanges();
             var userView = _mapper.Map<UserRegisterViewModelDTO>(model);
-            return   userView;
+            return userView;
+        }
+
+        public CurrentUserViewModelDTO GetCurrentUserById(string id)
+        {
+            var userDb = _context.Users.FirstOrDefault(u => u.Id.ToString() == id);
+            return _mapper.Map<CurrentUserViewModelDTO>(userDb);
         }
     }
 }
