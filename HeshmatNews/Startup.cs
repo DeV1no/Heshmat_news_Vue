@@ -42,6 +42,7 @@ namespace HeshmastNews
             services.AddTransient<IFileStorageService, InAppStorageService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<INewsService, NewsService>();
+            services.AddTransient<ICommentService, CommentService>();
 
             //Spa Static files config
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
@@ -93,11 +94,13 @@ namespace HeshmastNews
                 opt.UseMySql(Configuration.GetConnectionString("MariaDbConnection"),
                     new MariaDbServerVersion(new System.Version(10, 5, 0)));
             });*/
+            //DataBase
             services.AddDbContext<ApplicationDbContext>(opt =>
             {
                 opt.UseMySql(Configuration.GetConnectionString("MariaDbConnection"),
                     new MariaDbServerVersion(new System.Version(10, 5, 10)));
             });
+            //Cors
             services.AddCors(c =>
             {
                 c.AddPolicy(name: MyAllowSpecificOrigins, opt =>

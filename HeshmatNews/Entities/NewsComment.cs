@@ -9,12 +9,14 @@ namespace HeshmastNews.Entities
         [Key] public int CommentId { get; set; }
         public int UsersId { get; set; }
         public int NewsId { get; set; }
+        public string Subject { get; set; }
         public string CommentBody { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool isAccepted { get; set; }
 
         // Relation Ship 
-     //   [ForeignKey("UsersId")] public User Users { get; set; }
+        [ForeignKey("UsersId")] public User UserId { get; set; }
+        public User User { get; set; }
         [ForeignKey("NewsId")] public News News { get; set; }
     }
 }
