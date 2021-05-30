@@ -38,7 +38,7 @@ namespace HeshmastNews.Controllers
             return _commentService.AcceptComment(commentId);
         }
 
-        [HttpDelete("{commentId:int}", Name = "acceptComment")] [Authorize]
+        [HttpDelete("{commentId:int}", Name = "removeComment")] [Authorize]
         public bool DeleteComment(int commentId)
         {
             return _commentService.RemoveComment(commentId);
