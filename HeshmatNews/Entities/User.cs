@@ -8,7 +8,6 @@ namespace HeshmastNews.Entities
 {
     public class User : IdentityUser<int>
     {
-
         [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
         public string UserName { get; set; }
 
@@ -16,7 +15,11 @@ namespace HeshmastNews.Entities
         [EmailAddress(ErrorMessage = "ایمیل وارد شده معتبر نمیباشد")]
         public string Email { get; set; }
 
-        [Required] public string NameFamily { get; set; }
+        [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
+        public string Family { get; set; }
 
         [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
         public string Password { get; set; }

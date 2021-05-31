@@ -12,7 +12,11 @@ namespace HeshmastNews.DTOs.User
         [EmailAddress(ErrorMessage = "ایمیل وارد شده معتبر نمیباشد")]
         public string Email { get; set; }
 
-        [Required] public string NameFamily { get; set; }
+        [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
+        public string Family { get; set; }
 
        
        

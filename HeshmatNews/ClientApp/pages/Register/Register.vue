@@ -48,15 +48,30 @@
               <label for="Name">
                 <i class="fa fa-address-card" aria-hidden="true"></i>
 
-                نام و نام خانوادگی</label
+                نام </label
               >
               <input
                 type="text"
                 class="form-control"
                 id="Name"
                 aria-describedby="emailHelp"
-                placeholder="نام و نام خانوادگی خود را وارد نمایید"
-                v-model="mdl.nameFamily"
+                placeholder="نام  خود را وارد نمایید"
+                v-model="mdl.name"
+              />
+            </div>
+            <div class="form-group col-md-12">
+              <label for="Name">
+                <i class="fa fa-address-card" aria-hidden="true"></i>
+
+                 نام خانوادگی</label
+              >
+              <input
+                  type="text"
+                  class="form-control"
+                  id="Family"
+                  aria-describedby="emailHelp"
+                  placeholder=" نام خانوادگی خود را وارد نمایید"
+                  v-model="mdl.family"
               />
             </div>
             <div class="form-group col-md-12">
