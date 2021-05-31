@@ -90,7 +90,4 @@ label {
 p {
   padding-top: 4px;
 }
-input {
-  text-align: right;
-}
 </style>
