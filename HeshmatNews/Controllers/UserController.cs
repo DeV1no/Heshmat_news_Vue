@@ -20,7 +20,8 @@ namespace HeshmastNews.Controllers
         private IUserService _userService;
         private IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public UserController( IMapper mapper, IUserService userService, IHttpContextAccessor httpContextAccessor)
+
+        public UserController(IMapper mapper, IUserService userService, IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
             _userService = userService;
@@ -31,11 +32,11 @@ namespace HeshmastNews.Controllers
         [HttpPost("Register")]
         public IActionResult Post(UserRegisterDTO user)
         {
-            return Ok( _userService.Register(user));
+            return Ok(_userService.Register(user));
         }
 
         [HttpPost("Login", Name = "Login")]
-        public  IActionResult Login([FromBody] UserLoginDTO model)
+        public IActionResult Login([FromBody] UserLoginDTO model)
         {
             var user = _userService.Authenticate(model);
             if (user == null)
@@ -45,12 +46,28 @@ namespace HeshmastNews.Controllers
 
         [HttpGet("CurrentUser")]
         [Authorize]
-
         public IActionResult GetCurrentUser()
         {
-           var userId = _httpContextAccessor.HttpContext.User.Identity.Name;
-           var user = _userService.GetCurrentUserById(userId);
-           return Ok(user);
+            var userId = _httpContextAccessor.HttpContext.User.Identity.Name;
+            var user = _userService.GetCurrentUserById(userId);
+            return Ok(user);
+        }
+
+        [HttpPost("isUniqueUserName")]
+        public bool IsUniqueUserName(string username)
+        {
+            return !_userService.IsUniqueUser(username);
+        }
+        [HttpPost("isUniqueEmail")]
+        public bool IsUniqueEmail(string email)
+        {
+            return !_userService.IsUniqueEmail(email);
+        }
+        
+        [HttpPost("activeUserBySecretCode")]
+        public int ActiveUserBySecretCode(string secretCode)
+        {
+            return _userService.ActiveUserBySecretKey(secretCode);
         }
     }
 }

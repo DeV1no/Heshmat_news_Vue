@@ -27,7 +27,9 @@ namespace HeshmastNews.Entities
         public string UserAvatar { get; set; }
 
         public DateTime RegisterDate { get; set; }
+        public string SecretKey { get; set; }
         public bool IsDelete { get; set; }
+        public bool IsActive { get; set; }
         public string Role { get; set; }
 
         public string Token { get; set; }

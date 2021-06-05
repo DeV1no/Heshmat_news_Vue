@@ -3,14 +3,16 @@ using System;
 using HeshmastNews.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace dadachMovie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210531183557_SeprateNameFamily")]
+    partial class SeprateNameFamily
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,9 +161,6 @@ namespace dadachMovie.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<bool>("IsDelete")
                         .HasColumnType("tinyint(1)");
 
@@ -198,9 +197,6 @@ namespace dadachMovie.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Role")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("SecretKey")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("SecurityStamp")

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using dadachMovie.Services.Contracts;
+using HeshmastNews.Convertor;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs.User;
 using HeshmastNews.Entities;
@@ -44,6 +45,11 @@ namespace HeshmastNews.Services
         public bool IsUniqueUser(string username)
         {
             return _context.Users.Any(u => u.UserName == username);
+        }
+
+        public bool IsUniqueEmail(string email)
+        {
+            return _context.Users.Any(u => u.Email == email);
         }
 
         public UserLoginViewModelDTO Authenticate(UserLoginDTO model)
@@ -83,6 +89,7 @@ namespace HeshmastNews.Services
 
             var userObj = _mapper.Map<User>(model);
             userObj.Role = "User";
+            userObj.SecretKey = CharRandomMaker.RandomString(10);
             userObj.RegisterDate = DateTime.Now;
             _context.Users.Add(userObj);
             _context.SaveChanges();
@@ -94,6 +101,45 @@ namespace HeshmastNews.Services
         {
             var userDb = _context.Users.FirstOrDefault(u => u.Id.ToString() == id);
             return _mapper.Map<CurrentUserViewModelDTO>(userDb);
+        }
+
+        public User GetUserBySecretCode(string secretKey)
+        {
+            return _context.Users.FirstOrDefault(u => u.SecretKey == secretKey);
+        }
+
+        public int ActiveUserBySecretKey(string secretKey)
+        {
+            var userDb = GetUserBySecretCode(secretKey);
+            if (userDb == null)
+                return -1;
+            if (userDb.IsActive)
+                return -2;
+            else
+            {
+                userDb.IsActive = true;
+                userDb.SecretKey = CharRandomMaker.RandomString(10);
+                _context.Users.Update(userDb);
+                _context.SaveChanges();
+                return 1;
+            }
+        }
+
+        public int ResetPasswordBySecretKey(string secretKey, string password)
+        {
+            var userDb = GetUserBySecretCode(secretKey);
+
+            if (userDb == null)
+                return -1;
+
+            else
+            {
+                userDb.Password = password;
+                userDb.SecretKey = CharRandomMaker.RandomString(10);
+                _context.Users.Update(userDb);
+                _context.SaveChanges();
+                return 1;
+            }
         }
     }
 }
