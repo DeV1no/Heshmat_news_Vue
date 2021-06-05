@@ -18,9 +18,10 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- right nav items  -->
       <ul class="navbar-nav mr-5 ml-auto">
-        <li class="nav-item active">
-          <nuxt-link class="nav-link" active-class="active" to="/home"
+        <li class="nav-item ">
+          <nuxt-link class="nav-link" active-class="active" exact to="/home"
             >خانه
           </nuxt-link>
         </li>
@@ -57,6 +58,20 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">داشبورد مدیر </a>
+        </li>
+      </ul>
+      <!-- left nav items  -->
+      <ul class="navbar-nav ml-2 mr-auto">
+        <li class="nav-item">
+          <nuxt-link class="nav-link" active-class="active" exact to="/register"
+            >ثبت نام
+          </nuxt-link>
+        </li>
+        <span class="mt-2">/</span>
+        <li class="nav-item">
+          <nuxt-link class="nav-link" active-class="active" exact to="/login"
+            >ورود
+          </nuxt-link>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">

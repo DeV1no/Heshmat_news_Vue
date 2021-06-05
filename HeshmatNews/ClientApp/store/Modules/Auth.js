@@ -1,101 +1,85 @@
-// import Vue from 'vue'
+import axios from 'axios';
+
 const state = {
-    state() {
-        return {
-            userId: null,
-            token: null,
-            tokenExpiration: null,
-            isAuth: false
-        }
-    },
-
+  token: null,
+  tokenExpiration: null,
+  isAuth: '',
+  username: null,
+  userId: null
 };
-
-
-const getters = {
-    userId(state) {
-        return state.userId
-    },
-    token(state) {
-        return state.token
-    }
-};
-
 const mutations = {
-    setUser(state, payload) {
-        state.token = payload.token;
-        state.userId = payload.userId;
-        state.tokenExpiration = payload.token;
-        state.isAuth = true
-    },
-
+  setUser(state, payload) {
+    state.token = payload.token;
+    state.userId = payload.userId;
+    state.tokenExpiration = payload.tokenExpiration;
+    state.username = payload.username;
+    state.isAuth = true;
+  }
 };
-
-
 const actions = {
-    async login(context, payload) {
-        const response = await fetch(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBdFe6J_9HARP8yPmNEIaW5VY5qH86lhR8', {
-                method: 'POST',
-                body: JSON.stringify({
-                    email: payload.email,
-                    password: payload.password,
-                    returnSecureToken: true,
-
-                })
-            });
-        const responseData = await response.json()
-        if (!response.ok) {
-            console.log(responseData);
-            const error = new Error(responseData.message || 'Failed to Authenticate');
-            throw error
-        }
-        console.log(responseData);
-        context.commit('setUser', {
-            token: responseData.idToken,
-            userId: responseData.localId,
-            tokenExpiration: responseData.expiresIn,
-
-        })
-
-    },
-    async signup(context, payload) {
-        const response = await fetch(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBdFe6J_9HARP8yPmNEIaW5VY5qH86lhR8', {
-                method: 'POST',
-                body: JSON.stringify({
-                    email: payload.email,
-                    password: payload.password,
-                    returnSecureToken: true
-                })
-            });
-        const responseData = await response.json()
-        if (!response.ok) {
-            console.log(responseData);
-            const error = new Error(responseData.message || 'Failed to Authenticate');
-            throw error
-        }
-        console.log(responseData);
-        context.commit('setUser', {
-            token: responseData.idToken,
-            userId: responseData.localId,
-            tokenExpiration: responseData.expiresIn
-        })
-    },
-    logOut(context) {
-        context.commit('setUser', {
-            token: null,
-            userId: null,
-            tokenExpiration: null,
-            isAuth: false
-        })
-
+  async login(context, payload) {
+    const mdl = {
+      username: payload.username,
+      password: payload.password
+    };
+    await axios.post('/api/User/Login', mdl).then(res => {
+      if (res.statusText != 'OK') {
+        return false;
+      }
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('username', res.data.username);
+      localStorage.setItem('userId', res.data.id);
+      localStorage.setItem('tokenExpiration', res.data.tokenExpires);
+      context.commit('setUser', {
+        token: res.data.token,
+        username: res.data.username,
+        userId: res.data.userId,
+        tokenExpiration: res.data.tokenExpires,
+        isAuth: true
+      });
+      return true;
+    });
+  },
+  autoLog(context) {
+    const Token = localStorage.getItem('token');
+    const Username = localStorage.getItem('tokenExpiration');
+    const UserId = localStorage.getItem('tokenExpiration');
+    const TokenExpiration = localStorage.getItem('tokenExpiration');
+    if (Token) {
+      context.commit('setUser', {
+        token: Token,
+        tokenExpiration: TokenExpiration,
+        username: Username,
+        userId: UserId,
+        isAuth: true
+      });
     }
-}
+  },
+
+  logOut(context) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('tokenExpiration');
+
+    context.commit('setUser', {
+      token: null,
+      userId: null,
+      tokenExpiration: null,
+      isAuth: false
+    });
+  }
+};
+const getters = {
+  token(state) {
+    return state.token;
+  },
+  isAuthGet(state) {
+    return !!state.token;
+  }
+};
 
 export default {
-    state,
-    getters,
-    mutations,
-    actions,
-}
+  state,
+  actions,
+  getters,
+  mutations
+};

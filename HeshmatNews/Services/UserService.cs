@@ -55,11 +55,16 @@ namespace HeshmastNews.Services
         public UserLoginViewModelDTO Authenticate(UserLoginDTO model)
         {
             var user = _context.Users
-                .SingleOrDefault(u => u.UserName == model.Username && u.Password == model.Password);
-
-
+                .SingleOrDefault(u => u.UserName == model.Username);
             if (user == null)
+            {
+                user = _context.Users
+                    .SingleOrDefault(u => u.Email == model.Username);
+            }
+
+            if (user == null || user.Password != model.Password)
                 return null;
+            // Create Token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -78,7 +83,9 @@ namespace HeshmastNews.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
+            user.TokenExpires = (DateTime) tokenDescriptor.Expires;
             return _mapper.Map<UserLoginViewModelDTO>(user);
+            
         }
 
         public UserRegisterViewModelDTO Register(UserRegisterDTO model)
