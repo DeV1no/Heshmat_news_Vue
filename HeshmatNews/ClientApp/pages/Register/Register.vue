@@ -23,11 +23,15 @@
               <input
                 type="text"
                 class="form-control"
-                id="Name"
+                id="UserName"
                 aria-describedby="emailHelp"
                 placeholder="نام کاربری خود را وارد نمایید"
                 v-model="mdl.userName"
+                @blur="uniqueUsernameChecker(mdl.userName)"
               />
+              <small v-if="!isUniqueUsername" class="text-danger mr-4">
+                نام کاربری وارد شده پیشتر توسط کاربر دیگری انتخاب شده است
+              </small>
             </div>
             <div class="form-group col-md-12">
               <label for="Name">
@@ -42,14 +46,18 @@
                 aria-describedby="emailHelp"
                 placeholder="پست الکترونیکی خود را وارد نمایید"
                 v-model="mdl.email"
+                @blur="uniqueEmailChecker(mdl.email)"
               />
+              <small v-if="!isUniqueEmail" class="text-danger mr-4">
+                پست الکترونیکی وارد شده پیشتر توسط کاربر دیگری انتخاب شده است
+              </small>
             </div>
             <div class="form-group col-md-12">
               <label for="Name">
                 <i class="fa fa-address-card" aria-hidden="true"></i>
 
-                نام </label
-              >
+                نام
+              </label>
               <input
                 type="text"
                 class="form-control"
@@ -63,15 +71,15 @@
               <label for="Name">
                 <i class="fa fa-address-card" aria-hidden="true"></i>
 
-                 نام خانوادگی</label
+                نام خانوادگی</label
               >
               <input
-                  type="text"
-                  class="form-control"
-                  id="Family"
-                  aria-describedby="emailHelp"
-                  placeholder=" نام خانوادگی خود را وارد نمایید"
-                  v-model="mdl.family"
+                type="text"
+                class="form-control"
+                id="Family"
+                aria-describedby="emailHelp"
+                placeholder=" نام خانوادگی خود را وارد نمایید"
+                v-model="mdl.family"
               />
             </div>
             <div class="form-group col-md-12">
@@ -121,7 +129,12 @@
               type="submit"
               class="btn light-brown-background btn-lg mr-auto ml-4 mt-2"
               @click.prevent="register"
-              :disabled="isSaving || isRegisterSucced"
+              :disabled="
+                isSaving ||
+                  isRegisterSucced ||
+                  !isUniqueEmail ||
+                  !isUniqueUserName
+              "
             >
               <i class="fa fa-send"></i>
               ثبت نام
@@ -175,7 +188,8 @@ export default {
       mdl: {
         userName: null,
         email: null,
-        nameFamily: null,
+        name: null,
+        family: null,
         password: null
       },
       valMdl: {
@@ -184,10 +198,24 @@ export default {
       isSaving: false,
       isRegisterSucced: false,
       isAgreeTerm: false,
+      isUniqueUsername: true,
+      isUniqueEmail: true,
       rePassword: null
     };
   },
   methods: {
+    async uniqueUsernameChecker(userName) {
+      await axios
+        .post(`/api/User/isUniqueUserName?username=${userName}`)
+        .then(res => {
+          this.isUniqueUsername = res.data;
+        });
+    },
+    async uniqueEmailChecker(email) {
+      await axios.post(`/api/User/isUniqueEmail?email=${email}`).then(res => {
+        this.isUniqueEmail = res.data;
+      });
+    },
     async register() {
       try {
         this.isSaving = true;

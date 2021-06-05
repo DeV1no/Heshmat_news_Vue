@@ -87,7 +87,6 @@ export default {
     async GetSubCategories() {
       await axios.get(`/api/categories/getSubCategories`).then(res => {
         this.subCategory = res.data;
-        console.log(this.subCategory);
       });
     },
 
