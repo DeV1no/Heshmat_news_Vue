@@ -30,12 +30,13 @@ namespace HeshmastNews.Entities
         public string SecretKey { get; set; }
         public bool IsDelete { get; set; }
         public bool IsActive { get; set; }
-        public string Role { get; set; }
+        public int? RoleId { get; set; }
         public string Token { get; set; }
         [NotMapped] public DateTime TokenExpires { get; set; }
 
         // Relation ship 
-
         public NewsComment NewsComment { get; set; }
+        [ForeignKey("RoleId")]
+        public Role Role { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -53,36 +54,56 @@ namespace HeshmastNews.Controllers
             return Ok(user);
         }
 
+        [HttpGet("getUserLsit")]
+        //  [Authorize]
+        public List<UserListViewModelDTO> GetUserList()
+        {
+            return _userService.GetUserList();
+        }
+
         [HttpPost("isUniqueUserName")]
         public bool IsUniqueUserName(string username)
         {
             return !_userService.IsUniqueUser(username);
         }
+
         [HttpPost("isUniqueEmail")]
         public bool IsUniqueEmail(string email)
         {
             return !_userService.IsUniqueEmail(email);
         }
-        
+
         [HttpPost("activeUserBySecretCode")]
         public int ActiveUserBySecretCode(string secretCode)
         {
             return _userService.ActiveUserBySecretKey(secretCode);
         }
-        
-        [HttpPost("ressetPasswordBySecretKey")]
-        public int ResetPasword(string secretKey,string password)
-        {
-            return _userService.ResetPasswordBySecretKey(secretKey,password);
-        }
-        [HttpPost("userExistedWithSecretKey")]
-        public bool isExistedUserBySecretCode (string secretKey)
-        {
-           var userDb= _userService.GetUserBySecretCode(secretKey);
-           if (userDb == null)
-               return false;
-           return true;
 
+        [HttpPost("ressetPasswordBySecretKey")]
+        public int ResetPasword(string secretKey, string password)
+        {
+            return _userService.ResetPasswordBySecretKey(secretKey, password);
+        }
+
+        [HttpPost("userExistedWithSecretKey")]
+        public bool isExistedUserBySecretCode(string secretKey)
+        {
+            var userDb = _userService.GetUserBySecretCode(secretKey);
+            if (userDb == null)
+                return false;
+            return true;
+        }
+
+        [HttpPut("addroleToUser")]
+        public bool AddRoleToUser([FromBody] UserRoleDTO model)
+        {
+            return _userService.AddRoleToUser(model.userId, model.roleId);
+        }
+
+        [HttpPut("removeRoleFromUser/{userId:int}")]
+        public bool RemoveRoleFromUser(int userId)
+        {
+            return _userService.RemoveRoleToFrom(userId);
         }
     }
 }

@@ -72,7 +72,7 @@ namespace HeshmastNews.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role),
+                    new Claim(ClaimTypes.Role, user.RoleId.ToString()),
                     new Claim(ClaimTypes.UserData, user.Id.ToString())
                 }),
 
@@ -85,7 +85,6 @@ namespace HeshmastNews.Services
             user.Token = tokenHandler.WriteToken(token);
             user.TokenExpires = (DateTime) tokenDescriptor.Expires;
             return _mapper.Map<UserLoginViewModelDTO>(user);
-            
         }
 
         public UserRegisterViewModelDTO Register(UserRegisterDTO model)
@@ -95,7 +94,7 @@ namespace HeshmastNews.Services
                 return null;
 
             var userObj = _mapper.Map<User>(model);
-            userObj.Role = "User";
+            userObj.RoleId = 1;
             userObj.SecretKey = CharRandomMaker.RandomString(10);
             userObj.RegisterDate = DateTime.Now;
             _context.Users.Add(userObj);
@@ -107,7 +106,7 @@ namespace HeshmastNews.Services
         public CurrentUserViewModelDTO GetCurrentUserById(string id)
         {
             var userDb = _context.Users.FirstOrDefault(u => u.Id.ToString() == id);
-           
+
             return _mapper.Map<CurrentUserViewModelDTO>(userDb);
         }
 
@@ -148,6 +147,42 @@ namespace HeshmastNews.Services
                 _context.SaveChanges();
                 return 1;
             }
+        }
+
+        public List<UserListViewModelDTO> GetUserList()
+        {
+            var userDb = _context.Users.ToList();
+            var user = new List<UserListViewModelDTO>();
+            foreach (var item in userDb)
+            {
+                user.Add(_mapper.Map<UserListViewModelDTO>(item));
+            }
+
+            return user;
+        }
+
+        public bool AddRoleToUser(int userId, int roleId)
+        {
+            var userDb = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var roleDb = _context.Roles.FirstOrDefault(r => r.Id == roleId);
+            if (userDb == null || roleDb == null)
+                return false;
+            userDb.RoleId = roleId;
+            _context.Users.Update(userDb);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool RemoveRoleToFrom(int userId)
+        {
+            var userDb = _context.Users.FirstOrDefault(u => u.Id == userId);
+            
+            if (userDb == null )
+                return false;
+            userDb.RoleId = null;
+            _context.Users.Update(userDb);
+            _context.SaveChanges();
+            return true;
         }
     }
 }

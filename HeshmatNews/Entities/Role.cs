@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace HeshmastNews.Entities
@@ -6,5 +7,7 @@ namespace HeshmastNews.Entities
     {
      //   public int Id { get; set; }
         public string RoleName { get; set; }
+        //Relation
+        public List<User> Users { get; set; }
     }
 }

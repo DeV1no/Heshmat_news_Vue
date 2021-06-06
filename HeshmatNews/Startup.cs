@@ -43,6 +43,7 @@ namespace HeshmastNews
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IRoleService, RoleService>();
 
             //Spa Static files config
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
@@ -50,7 +51,7 @@ namespace HeshmastNews
             services.AddControllers();
             services.AddIdentity<User, Role>(options => { options.User.RequireUniqueEmail = true; }
             ).AddEntityFrameworkStores<ApplicationDbContext>();
-//
+            //Http Accessor for Identity
             services.AddHttpContextAccessor();
 
             // JWT Setting
@@ -89,12 +90,7 @@ namespace HeshmastNews
                 });
             });
 
-            /*services.AddDbContext<ApplicationDbContext>(opt =>
-            {
-                opt.UseMySql(Configuration.GetConnectionString("MariaDbConnection"),
-                    new MariaDbServerVersion(new System.Version(10, 5, 0)));
-            });*/
-            //DataBase
+            //Database
             services.AddDbContext<ApplicationDbContext>(opt =>
             {
                 opt.UseMySql(Configuration.GetConnectionString("MariaDbConnection"),
