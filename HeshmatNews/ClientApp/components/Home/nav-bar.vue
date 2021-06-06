@@ -62,16 +62,38 @@
       </ul>
       <!-- left nav items  -->
       <ul class="navbar-nav ml-2 mr-auto">
-        <li class="nav-item">
-          <nuxt-link class="nav-link" active-class="active" exact to="/register"
-            >ثبت نام
+        <li class="nav-item" v-if="!isLogin">
+          <nuxt-link
+            class="nav-link"
+            active-class="active"
+            exact
+            to="/register"
+          >
+            ثبت نام
           </nuxt-link>
         </li>
-        <span class="mt-2">/</span>
         <li class="nav-item">
-          <nuxt-link class="nav-link" active-class="active" exact to="/login"
-            >ورود
+          <nuxt-link
+            class="nav-link"
+            active-class="active"
+            exact
+            to="/login"
+            v-if="!isLogin"
+          >
+            ورود
           </nuxt-link>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            active-class="active"
+            exact
+            href=""
+            v-if="isLogin"
+            @click="logOut"
+          >
+            خروج
+          </a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -86,6 +108,50 @@
         </button>
       </form>
     </div>
+    <div>
+      <b-modal id="unActive-user-modal" hide-footer>
+        <template #modal-title>
+          <h6 class="text-danger">
+            <i class="fa fa-times"></i>
+            حساب کاربری شما فعال نمیباشد
+          </h6>
+        </template>
+        <div class="d-block text-center">
+          <p>
+            برای فعال سازی حساب کاربریتان پست الکترونیکی خود را بررسی کنید
+          </p>
+          <p>
+            اگر هنوز ایمیلی دریافت نکرده اید درخواست ارستال مجدد را بزنید
+          </p>
+          <div class="form-group col-md-12">
+            <label for="Name">
+              <i class="fa fa-envelope" aria-hidden="true"></i>
+
+              پست الکترونیکی</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="Email"
+              aria-describedby="emailHelp"
+              placeholder="پست الکترونیکی خود را وارد نمایید"
+            />
+          </div>
+        </div>
+        <nuxt-link to="/home" class="btn btn-success btn-block">
+          <div class="home-btn">
+            <i class="fa fa-send"></i>
+            ارسال مجدد ایمیل
+          </div>
+        </nuxt-link>
+        <nuxt-link to="/home" class="btn btn-danger btn-block">
+          <div class="home-btn">
+            <i class="fa fa-home"></i>
+            بازگشت
+          </div>
+        </nuxt-link>
+      </b-modal>
+    </div>
   </nav>
 </template>
 
@@ -95,26 +161,71 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      subCategory: []
+      subCategory: [],
+      isLogin: false,
+      tokenId: this.$store.getters.isAuthGet,
+      token: '',
+      isAdmin: false,
+      currentUser: null
     };
   },
   methods: {
+    activeChecker() {
+      if (this.token) {
+        if (!this.currentUser.isActive) {
+          this.$store.dispatch('logOut');
+          this.$bvModal.show('unActive-user-modal');
+        }
+      }
+    },
+    logCheck() {
+      if (this.token != null) {
+        this.isLogin = true;
+      }
+    },
     async GetSubCategories() {
       await axios.get(`/api/categories/getSubCategories`).then(res => {
         this.subCategory = res.data;
       });
     },
-
+    autoLog() {
+      this.$store.dispatch('autoLog');
+    },
     logOut() {
       this.$store.dispatch('logOut');
       this.$store.state.auth.isAuth = false;
-      this.$router.replace('/');
-      console.log(this.$store.state.auth.isAuth);
+      this.$router.replace('/home');
+    },
+    async getCurrentUser() {
+      if (this.token) {
+        try {
+          await axios
+            .get('/api/User/CurrentUser', {
+              headers: {
+                Authorization: ` Bearer ${this.token}`
+              }
+            })
+            .then(res => {
+              this.currentUser = res.data;
+            });
+        } catch (error) {
+          console.log(error);
+          this.$store.dispatch('logOut');
+        }
+      }
     }
   },
   computed: {},
   async mounted() {
     await this.GetSubCategories();
+  },
+  async created() {
+    this.token = localStorage.getItem('token');
+    this.logCheck();
+    await this.autoLog();
+    await this.getCurrentUser();
+    await this.activeChecker();
+    //this.adminChecker();
   }
 };
 </script>

@@ -23,7 +23,7 @@ const actions = {
       password: payload.password
     };
     await axios.post('/api/User/Login', mdl).then(res => {
-      if (res.statusText != 'OK') {
+      if (!res) {
         return false;
       }
       localStorage.setItem('token', res.data.token);
@@ -42,8 +42,8 @@ const actions = {
   },
   autoLog(context) {
     const Token = localStorage.getItem('token');
-    const Username = localStorage.getItem('tokenExpiration');
-    const UserId = localStorage.getItem('tokenExpiration');
+    const Username = localStorage.getItem('username');
+    const UserId = localStorage.getItem('userId');
     const TokenExpiration = localStorage.getItem('tokenExpiration');
     if (Token) {
       context.commit('setUser', {
@@ -59,6 +59,8 @@ const actions = {
   logOut(context) {
     localStorage.removeItem('token');
     localStorage.removeItem('tokenExpiration');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userId');
 
     context.commit('setUser', {
       token: null,
@@ -74,6 +76,9 @@ const getters = {
   },
   isAuthGet(state) {
     return !!state.token;
+  },
+  getCurrentUserId(state) {
+    return state.userId;
   }
 };
 

@@ -69,5 +69,20 @@ namespace HeshmastNews.Controllers
         {
             return _userService.ActiveUserBySecretKey(secretCode);
         }
+        
+        [HttpPost("ressetPasswordBySecretKey")]
+        public int ResetPasword(string secretKey,string password)
+        {
+            return _userService.ResetPasswordBySecretKey(secretKey,password);
+        }
+        [HttpPost("userExistedWithSecretKey")]
+        public bool isExistedUserBySecretCode (string secretKey)
+        {
+           var userDb= _userService.GetUserBySecretCode(secretKey);
+           if (userDb == null)
+               return false;
+           return true;
+
+        }
     }
 }

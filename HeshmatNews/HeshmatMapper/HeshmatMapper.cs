@@ -1,4 +1,5 @@
 using AutoMapper;
+using HeshmastNews.Convertor;
 using HeshmastNews.DTOs.Comment;
 using HeshmastNews.DTOs.User;
 using HeshmastNews.Entities;
@@ -15,6 +16,7 @@ namespace HeshmastNews.HeshmatMapper
             CreateMap<User, UserRegisterDTO>().ReverseMap();
             CreateMap<UserLoginViewModelDTO, User>().ReverseMap();
             CreateMap<CurrentUserViewModelDTO, User>().ReverseMap();
+                
             //Comments Maps
             CreateMap<NewsComment, CommentDTO>().ReverseMap();
             

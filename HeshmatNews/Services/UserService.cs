@@ -107,6 +107,7 @@ namespace HeshmastNews.Services
         public CurrentUserViewModelDTO GetCurrentUserById(string id)
         {
             var userDb = _context.Users.FirstOrDefault(u => u.Id.ToString() == id);
+           
             return _mapper.Map<CurrentUserViewModelDTO>(userDb);
         }
 

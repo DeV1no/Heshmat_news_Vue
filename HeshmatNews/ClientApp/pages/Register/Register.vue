@@ -133,7 +133,7 @@
                 isSaving ||
                   isRegisterSucced ||
                   !isUniqueEmail ||
-                  !isUniqueUserName
+                  !isUniqueUsername
               "
             >
               <i class="fa fa-send"></i>

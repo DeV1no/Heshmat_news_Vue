@@ -44,7 +44,7 @@
 
             <button
               type="submit"
-              class="btn light-brown-background btn-lg mr-auto ml-4 mt-2"
+              class="btn light-brown-background btn-lg mr-auto ml-4 mt-2 "
               @click.prevent="Login"
               :disabled="isSaving"
             >
@@ -52,6 +52,18 @@
               ورود
             </button>
           </form>
+          <div class="help-text">
+            <p class="text-muted d-block">
+              نمیتوانید وارد شوید ؟ اینجا کلیک کنید
+            </p>
+            <p class="text-muted d-block">
+              حساب کاربری ندارید ؟
+              <span>
+                <nuxt-link to="/register">اینجا</nuxt-link>
+              </span>
+              کلیک کنید
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -103,6 +115,10 @@ export default {
 </script>
 
 <style scoped>
+.help-text {
+  margin-right: 1rem;
+  font-size: 14px;
+}
 .submit-mainform {
   margin-top: 4rem;
 }
