@@ -73,15 +73,7 @@
 </template>
 
 <script>
-import NavBar from '../../components/Home/nav-bar.vue';
-import Loading from '../../components/Loading';
-
-import axios from 'axios';
 export default {
-  components: {
-    NavBar,
-    Loading
-  },
   data() {
     return {
       mdl: {

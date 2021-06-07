@@ -5,7 +5,7 @@
         <div class="col">
           <p class="lead text-center">
             Copyright &copy;
-            <span id="year"></span> DadaCh Movie
+            <span id="year"></span> Heshmat News
           </p>
         </div>
       </div>

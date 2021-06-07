@@ -2,7 +2,7 @@
   <div>
     <admin-nav />
     <section id="posts" class="bg-light">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row">
           <admin-side />
           <div class="col-md-9 ml-auto" dir="rtl"></div>
@@ -13,14 +13,7 @@
   </div>
 </template>
 
-<script>
-import AdminFooter from '../../components/Admin/AdminFooter';
-import AdminNav from '../../components/Admin/AdminNav';
-import AdminSide from '../../components/Admin/AdminAside';
-export default {
-  components: { AdminNav, AdminFooter, AdminSide }
-};
-</script>
+<script></script>
 
 <style scoped>
 body {

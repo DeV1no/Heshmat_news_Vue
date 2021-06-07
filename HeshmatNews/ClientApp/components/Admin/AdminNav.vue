@@ -1,12 +1,12 @@
 <template>
   <div dir="rtl">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
-      <div class="container">
+      <div class="container-fluid">
         <nuxt-link
           to="/home"
           class="nav-link  nav-title"
           exact-active-class="active"
-          >داداچ مویی</nuxt-link
+          >حشمت نیوز</nuxt-link
         >
         <button
           class="navbar-toggler"
@@ -27,10 +27,10 @@
             </li>
             <li class="nav-item px-2">
               <nuxt-link
-                to="/admin/moviepanel"
+                to="/admin/news/list"
                 class="nav-link "
                 exact-active-class="active"
-                >فیلم ها</nuxt-link
+                >اخبار</nuxt-link
               >
             </li>
             <li class="nav-item px-2">
@@ -38,25 +38,10 @@
                 to="/admin/peoplepanel"
                 class="nav-link"
                 exact-active-class="active"
-                >هنرمندان</nuxt-link
-              >
-            </li>
-            <li class="nav-item px-2">
-              <nuxt-link
-                to="/admin/newspanel"
-                class="nav-link"
-                exact-active-class="active"
-                >اخبار</nuxt-link
-              >
-            </li>
-            <li class="nav-item px-2">
-              <nuxt-link
-                to="/admin/userpanel"
-                class="nav-link"
-                exact-active-class="active"
                 >کاربران</nuxt-link
               >
             </li>
+
             <li class="nav-item px-2">
               <nuxt-link
                 to="/admin/requestpanel"
@@ -90,7 +75,7 @@
       </div>
     </nav>
     <header id="main-header" class="py-2 bg-primary text-white">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row">
           <div class="col-md-6">
             <h1><i class="fa fa-cog ml-1"></i>داشبورد مدیریت</h1>
@@ -99,7 +84,7 @@
       </div>
     </header>
     <section id="actions" class="py-4 mb-1 bg-light">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-md-3">
             <nuxt-link to="/admin/news/add" class="btn btn-primary btn-block">
@@ -129,70 +114,65 @@
         </div>
       </div>
     </section>
-    <genre-form />
   </div>
 </template>
 
 <script>
-// import axios from 'axios';
-// import GenreForm from '../Forms/GenreForm.vue';
-// export default {
-//   components: {
-//     GenreForm
-//   },
-//   data() {
-//     return {
-//       currentUser: {},
-//       isLogin: false,
-//       tokenId: this.$store.getters.isAuthGet,
-//       token: '',
-//       isAdmin: false
-//     };
-//   },
-//   methods: {
-//     autoLog() {
-//       this.$store.dispatch('autoLog');
-//     },
-//     logCheck() {
-//       if (this.tokenId != '') {
-//         this.isLogin = true;
-//       }
-//     },
-//     logOut() {
-//       this.$store.dispatch('logOut');
-//     },
-//     async getCurrentUser() {
-//       try {
-//         await axios
-//           .get('/api/accounts/CurrentUser', {
-//             headers: {
-//               Authorization: ` Bearer ${this.token}`
-//             }
-//           })
-//           .then(res => {
-//             console.log(res);
-//             this.currentUser = res.data;
-//             if (this.currentUser.roles[0] === 'Admin') {
-//               this.isAdmin = true;
-//             }
-//             // console.log(this.curentUser);
-//           });
-//       } catch (error) {
-//         console.log(error);
-//         this.$router.push('/home');
-//       }
-//       if (!this.isAdmin) {
-//         this.$router.push('/home');
-//       }
-//     }
-//   },
-//   async created() {
-//     //this.autoLog();
-//     this.token = localStorage.getItem('token');
-//     this.logCheck();
-//     await this.getCurrentUser();
-//   }
-// };
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      currentUser: {},
+      isLogin: false,
+      tokenId: this.$store.getters.isAuthGet,
+      token: '',
+      isAdmin: false
+    };
+  },
+  methods: {
+    autoLog() {
+      this.$store.dispatch('autoLog');
+    },
+    logCheck() {
+      if (this.tokenId != '') {
+        this.isLogin = true;
+      }
+    },
+    logOut() {
+      this.$store.dispatch('logOut');
+    },
+    async getCurrentUser() {
+      try {
+        await axios
+          .get('/api/accounts/CurrentUser', {
+            headers: {
+              Authorization: ` Bearer ${this.token}`
+            }
+          })
+          .then(res => {
+            console.log(res);
+            this.currentUser = res.data;
+            if (this.currentUser.roles[0] === 'Admin') {
+              this.isAdmin = true;
+            }
+            console.log(this.curentUser);
+          });
+      } catch (error) {
+        console.log(error);
+        this.$router.push('/home');
+      }
+      if (!this.isAdmin) {
+        this.$router.push('/home');
+      }
+    }
+  },
+  async created() {
+    this.autoLog();
+    this.token = localStorage.getItem('token');
+    // this.logCheck();
+    // await this.getCurrentUser();
+  }
+};
 </script>
 
 <style scoped>

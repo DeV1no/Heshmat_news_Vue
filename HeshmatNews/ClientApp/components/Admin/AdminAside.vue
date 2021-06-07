@@ -1,14 +1,13 @@
 <template>
   <div dir="rtl">
-    <div class="col-md-3 mt-3">
+    <div class="col-md-3 mt-3 mr-4">
       <div class="card text-center bg-primary text-white mb-3">
         <div class="card-body">
-          <h3>فیلم ها</h3>
-          <h4 class="display-4">
-            <i class="fa fa-film"></i>
-            {{ movieCount }}
+          <h3>اخبار</h3>
+          <h4 class="display-4 ">
+            <span class="d-block"> <i class="fa fa-pencil "></i> 6 </span>
           </h4>
-          <nuxt-link to="/admin/moviepanel" class="btn btn-outline-light btn-sm"
+          <nuxt-link to="/admin/news/list" class="btn btn-outline-light btn-sm"
             >مشاهده</nuxt-link
           >
         </div>
@@ -17,7 +16,7 @@
         <div class="card-body">
           <h3>هنرمندان</h3>
           <h4 class="display-4">
-            <i class="fa fa-eercast ml-1"></i>{{ peopleCount }}
+            <!-- <i class="fa fa-eercast ml-1"></i>{{ peopleCount }} -->
           </h4>
           <nuxt-link
             to="/admin/peoplepanel"
@@ -41,9 +40,9 @@
         <div class="card-body">
           <h3>کاربران</h3>
           <h4 class="display-4">
-            <i class="fa fa-users"></i> {{ usersCount }}
+            <!-- <i class="fa fa-users"></i> {{ usersCount }} -->
           </h4>
-          <nuxt-link to="/admin/userpanel" class="btn btn-outline-light btn-sm"
+          <nuxt-link to="/admin/users/list" class="btn btn-outline-light btn-sm"
             >مشاهده</nuxt-link
           >
         </div>
