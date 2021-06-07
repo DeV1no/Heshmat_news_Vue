@@ -57,7 +57,14 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">داشبورد مدیر </a>
+          <nuxt-link
+            class="nav-link"
+            active-class="active"
+            exact
+            to="/admin"
+            v-if="isLogin"
+            >داشبورد مدیر
+          </nuxt-link>
         </li>
       </ul>
       <!-- left nav items  -->

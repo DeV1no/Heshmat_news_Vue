@@ -134,43 +134,44 @@ export default {
       this.$store.dispatch('autoLog');
     },
     logCheck() {
-      if (this.tokenId != '') {
+      if (this.token != null) {
         this.isLogin = true;
       }
     },
+    autoLog() {
+      this.$store.dispatch('autoLog');
+    },
     logOut() {
       this.$store.dispatch('logOut');
+      this.$store.state.auth.isAuth = false;
+      this.$router.replace('/home');
     },
     async getCurrentUser() {
-      try {
-        await axios
-          .get('/api/accounts/CurrentUser', {
-            headers: {
-              Authorization: ` Bearer ${this.token}`
-            }
-          })
-          .then(res => {
-            console.log(res);
-            this.currentUser = res.data;
-            if (this.currentUser.roles[0] === 'Admin') {
-              this.isAdmin = true;
-            }
-            console.log(this.curentUser);
-          });
-      } catch (error) {
-        console.log(error);
-        this.$router.push('/home');
-      }
-      if (!this.isAdmin) {
-        this.$router.push('/home');
+      if (this.token) {
+        try {
+          await axios
+            .get('/api/User/CurrentUser', {
+              headers: {
+                Authorization: ` Bearer ${this.token}`
+              }
+            })
+            .then(res => {
+              this.currentUser = res.data;
+            });
+        } catch (error) {
+          console.log(error);
+          this.$store.dispatch('logOut');
+        }
       }
     }
   },
   async created() {
-    this.autoLog();
     this.token = localStorage.getItem('token');
-    // this.logCheck();
-    // await this.getCurrentUser();
+    this.logCheck();
+    await this.autoLog();
+    await this.getCurrentUser();
+    await this.activeChecker();
+    //this.adminChecker();
   }
 };
 </script>
