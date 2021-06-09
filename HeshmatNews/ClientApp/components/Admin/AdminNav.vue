@@ -170,7 +170,7 @@ export default {
     this.logCheck();
     await this.autoLog();
     await this.getCurrentUser();
-    await this.activeChecker();
+    // await this.activeChecker();
     //this.adminChecker();
   }
 };

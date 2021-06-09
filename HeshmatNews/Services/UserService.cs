@@ -161,6 +161,12 @@ namespace HeshmastNews.Services
             return user;
         }
 
+        public UserListViewModelDTO GetUserDataById(int userId)
+        {
+            var userDb = _context.Users.FirstOrDefault(u => u.Id == userId);
+            return _mapper.Map<UserListViewModelDTO>(userDb);
+        }
+
         public bool AddRoleToUser(int userId, int roleId)
         {
             var userDb = _context.Users.FirstOrDefault(u => u.Id == userId);

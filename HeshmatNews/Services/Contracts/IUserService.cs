@@ -16,6 +16,7 @@ namespace dadachMovie.Services.Contracts
         int ActiveUserBySecretKey(string secretKey);
         int ResetPasswordBySecretKey(string secretKey, string password);
         List<UserListViewModelDTO> GetUserList();
+        UserListViewModelDTO GetUserDataById(int userId);
         bool AddRoleToUser(int userId, int roleId);
         bool RemoveRoleToFrom(int userId);
     }

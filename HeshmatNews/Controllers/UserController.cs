@@ -105,5 +105,11 @@ namespace HeshmastNews.Controllers
         {
             return _userService.RemoveRoleToFrom(userId);
         }
+
+        [HttpGet("getUserDetails/{userId:int}")]
+        public UserListViewModelDTO GetUserDetails(int userId)
+        {
+            return _userService.GetUserDataById(userId);
+        }
     }
 }

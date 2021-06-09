@@ -28,17 +28,17 @@
                   >
                     <template slot="table-row" slot-scope="props">
                       <span v-if="props.column.field == 'actions'">
-                        <!-- <nuxt-link
-                        :to="{
-                          name: 'PeopleEdit-id',
-                          params: { id: props.row.id }
-                        }"
-                      > -->
-                        <span class="text-primary fs-13">
-                          <i class="fa fa-universal-access"></i>
-                          مدیریت سطح دسترسی
-                        </span>
-                        <!-- </nuxt-link> -->
+                        <nuxt-link
+                          :to="{
+                            name: 'Admin-Users-Role-id',
+                            params: { id: props.row.id }
+                          }"
+                        >
+                          <span class="text-primary fs-13">
+                            <i class="fa fa-universal-access"></i>
+                            مدیریت سطح دسترسی
+                          </span>
+                        </nuxt-link>
                       </span>
                       <span v-else>
                         {{ props.formattedRow[props.column.field] }}
@@ -163,14 +163,7 @@ export default {
 body {
   background-color: gray !important;
 }
-.card-custom {
-  box-shadow: rgba(0, 0, 0, 0.15) 1.25px 1.25px 1.5px;
-}
-.card-header-custom {
-  padding: 0.5rem;
-  font-size: 22px;
-  border-bottom: 0.5px solid rgb(221, 214, 214);
-}
+
 .bg-danger {
   background-color: brown;
 }

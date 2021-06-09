@@ -4,7 +4,16 @@ import AdminNav from './Admin/AdminNav';
 import AdminSide from './Admin/AdminAside';
 import NavBar from './Home/nav-bar.vue';
 import Loading from './Loading';
-const components = { AdminFooter, AdminNav, AdminSide, NavBar, Loading };
+import Multiselect from 'vue-multiselect';
+
+const components = {
+  AdminFooter,
+  AdminNav,
+  AdminSide,
+  NavBar,
+  Loading,
+  Multiselect
+};
 
 Object.entries(components).forEach(([name, component]) => {
   Vue.component(name, component);
