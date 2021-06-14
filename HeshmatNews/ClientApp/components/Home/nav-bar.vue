@@ -225,13 +225,14 @@ export default {
   computed: {},
   async mounted() {
     await this.GetSubCategories();
-  },
-  async created() {
-    this.token = localStorage.getItem('token');
-    this.logCheck();
+    await this.logCheck();
     await this.autoLog();
     await this.getCurrentUser();
     await this.activeChecker();
+  },
+  async created() {
+    this.token = localStorage.getItem('token');
+
     //this.adminChecker();
   }
 };

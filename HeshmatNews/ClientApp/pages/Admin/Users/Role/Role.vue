@@ -68,14 +68,14 @@
                         </div>
                       </div>
                       <div class="col-md-6">
-                        <label for="basic-url">نقش</label>
+                        <label for="basic-url">نقش (ها)</label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend"></div>
                           <input
                             type="text"
                             class="form-control"
                             name="roleName"
-                            v-model="userData.roleName"
+                            v-model="userCurrentRoles"
                             readonly
                           />
                         </div>
@@ -99,12 +99,20 @@
                         <div>
                           <label class="typo__label"></label>
                           <multiselect
-                            v-model="roleObj"
+                            v-model="roleArray"
                             :options="roleOptions"
                             :custom-label="nameWithLang"
+                            :multiple="true"
+                            :close-on-select="false"
+                            :clear-on-select="false"
+                            :preserve-search="true"
+                            :preselect-first="true"
+                            @tag="addTag"
+                            :taggable="true"
                             placeholder="سر گروه را انتخاب کنید "
                             label="name"
                             track-by="name"
+                            @update="updateMultiValue"
                           ></multiselect>
                         </div>
                       </div>
@@ -143,11 +151,11 @@ export default {
       id: this.$route.params.id,
       isSaving: false,
 
-      roleObj: null,
+      roleArray: [],
       roleOptions: [],
       mdl: {
         userId: null,
-        roleId: null
+        roleId: []
       },
       userData: {
         id: null,
@@ -162,10 +170,27 @@ export default {
       dictionary: {
         True: 'فعال',
         False: 'غیر فعال'
-      }
+      },
+      userCurrentRoles: null
     };
   },
   methods: {
+    updateMultiValue(value) {
+      this.roleArray = value;
+    },
+    addTag(newTag) {
+      const tag = {
+        name: newTag,
+        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000)
+      };
+      this.roleOptions.push(tag);
+      this.roleArray.push(tag);
+    },
+    rolArrayMaker() {
+      this.roleArray.forEach(q => {
+        this.mdl.roleId.push(q.id);
+      });
+    },
     getRoles() {
       axios.get('/api/Role').then(res => {
         res.data.forEach(c => {
@@ -185,12 +210,12 @@ export default {
     },
 
     SubData() {
-      if (!this.roleObj) {
+      if (!this.roleArray) {
         this.$toast.error('خطا! لطفا تمامی اطلاعات را وارد کنید').goAway(4500);
         return;
       }
       this.mdl.userId = this.id;
-      this.mdl.roleId = this.roleObj.id;
+      this.rolArrayMaker();
       try {
         this.isSaving = true;
         axios.put('/api/User/addroleToUser', this.mdl).then(res => {
@@ -209,6 +234,7 @@ export default {
     getUserData() {
       axios.get(`/api/User/getUserDetails/${this.id}`).then(res => {
         this.userData = res.data;
+        this.userCurrentRoles = res.data.roleNames.toString();
       });
     }
   },

@@ -90,54 +90,12 @@ export default {
         },
 
         {
-          label: 'نقش',
-          field: 'roleName'
-        },
-        {
           label: '',
           field: 'actions',
           sortable: false
         }
       ],
-      users: [],
-      rows: [
-        { id: 1, name: 'John', age: 20, createdAt: '', score: 0.03343 },
-        {
-          id: 2,
-          name: 'Jane',
-          age: 24,
-          createdAt: '2011-10-31',
-          score: 0.03343
-        },
-        {
-          id: 3,
-          name: 'Susan',
-          age: 16,
-          createdAt: '2011-10-30',
-          score: 0.03343
-        },
-        {
-          id: 4,
-          name: 'Chris',
-          age: 55,
-          createdAt: '2011-10-11',
-          score: 0.03343
-        },
-        {
-          id: 5,
-          name: 'Dan',
-          age: 40,
-          createdAt: '2011-10-21',
-          score: 0.03343
-        },
-        {
-          id: 6,
-          name: 'John',
-          age: 20,
-          createdAt: '2011-10-31',
-          score: 0.03343
-        }
-      ]
+      users: []
     };
   },
   methods: {
@@ -149,8 +107,8 @@ export default {
       return 'غیر فعال';
     },
     statusCheckerClass(row) {
-      if (row.isActive) return 'badge badge-success text-white mr-5 mt-2 ';
-      return 'badge badge-danger text-white mr-5 mt-2 ';
+      if (row.isActive) return 'text-success mr-5 mt-2 ';
+      return 'text-danger mr-5 mt-2 ';
     }
   },
   mounted() {

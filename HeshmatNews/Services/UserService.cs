@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -72,7 +73,7 @@ namespace HeshmastNews.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.RoleId.ToString()),
+                    //  new Claim(ClaimTypes.Role, user.UserRoles.ToString()),
                     new Claim(ClaimTypes.UserData, user.Id.ToString())
                 }),
 
@@ -94,7 +95,7 @@ namespace HeshmastNews.Services
                 return null;
 
             var userObj = _mapper.Map<User>(model);
-            userObj.RoleId = 1;
+            //  userObj.RoleId = 1;
             userObj.SecretKey = CharRandomMaker.RandomString(10);
             userObj.RegisterDate = DateTime.Now;
             _context.Users.Add(userObj);
@@ -151,7 +152,8 @@ namespace HeshmastNews.Services
 
         public List<UserListViewModelDTO> GetUserList()
         {
-            var userDb = _context.Users.ToList();
+            var userDb = _context.Users
+                .Include(r => r.Roles).ToList();
             var user = new List<UserListViewModelDTO>();
             foreach (var item in userDb)
             {
@@ -163,17 +165,26 @@ namespace HeshmastNews.Services
 
         public UserListViewModelDTO GetUserDataById(int userId)
         {
-            var userDb = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var userDb = _context.Users.Include(r => r.Roles)
+                .FirstOrDefault(u => u.Id == userId);
             return _mapper.Map<UserListViewModelDTO>(userDb);
         }
 
-        public bool AddRoleToUser(int userId, int roleId)
+        public bool AddRoleToUser(int userId, List<int> roleId)
         {
-            var userDb = _context.Users.FirstOrDefault(u => u.Id == userId);
-            var roleDb = _context.Roles.FirstOrDefault(r => r.Id == roleId);
-            if (userDb == null || roleDb == null)
+            var userDb = _context.Users
+                .Include(r => r.Roles)
+                .FirstOrDefault(u => u.Id == userId);
+            if (userDb == null)
                 return false;
-            userDb.RoleId = roleId;
+            foreach (var item in roleId)
+            {
+                var roleDb = _context.Roles.FirstOrDefault(r => r.Id == item);
+                if (roleDb == null)
+                    return false;
+                userDb.Roles.Add(roleDb);
+            }
+
             _context.Users.Update(userDb);
             _context.SaveChanges();
             return true;
@@ -182,10 +193,10 @@ namespace HeshmastNews.Services
         public bool RemoveRoleToFrom(int userId)
         {
             var userDb = _context.Users.FirstOrDefault(u => u.Id == userId);
-            
-            if (userDb == null )
+
+            if (userDb == null)
                 return false;
-            userDb.RoleId = null;
+            //   userDb.RoleId = null;
             _context.Users.Update(userDb);
             _context.SaveChanges();
             return true;

@@ -7,9 +7,12 @@ namespace dadachMovie.Services.Contracts
     {
         List<RoleDTO> GetAllRoles();
         RoleDTO GetRole(int roleID);
-       int AddRole(RoleDTO model);
-       int UpdateRole(RoleDTO model);
+        int AddRole(RoleDTO model);
+        int UpdateRole(RoleDTO model);
         bool RemoveRole(int RoleId);
-        
+        List<PermissionViewModelDTO> GetPermissionList();
+        List<PermissionViewModelDTO> GetParentPermissionList();
+        List<PermissionViewModelDTO> GetSubPermissionList();
+       
     }
 }

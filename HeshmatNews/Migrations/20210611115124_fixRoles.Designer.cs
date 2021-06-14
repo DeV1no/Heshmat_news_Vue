@@ -3,14 +3,16 @@ using System;
 using HeshmastNews.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace dadachMovie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210611115124_fixRoles")]
+    partial class fixRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,6 +189,27 @@ namespace dadachMovie.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("HeshmastNews.Entities.RolePermisson", b =>
+                {
+                    b.Property<int>("RP_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RP_id");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RolePermisson");
+                });
+
             modelBuilder.Entity("HeshmastNews.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -272,21 +295,6 @@ namespace dadachMovie.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PermissionRole", b =>
-                {
-                    b.Property<int>("PermissionsPermissionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PermissionsPermissionId", "RolesId");
-
-                    b.HasIndex("RolesId");
-
-                    b.ToTable("PermissionRole");
-                });
-
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.Property<int>("RolesId")
@@ -350,19 +358,23 @@ namespace dadachMovie.Migrations
                         .HasForeignKey("ParentId");
                 });
 
-            modelBuilder.Entity("PermissionRole", b =>
+            modelBuilder.Entity("HeshmastNews.Entities.RolePermisson", b =>
                 {
-                    b.HasOne("HeshmastNews.Entities.Permission", null)
-                        .WithMany()
-                        .HasForeignKey("PermissionsPermissionId")
+                    b.HasOne("HeshmastNews.Entities.Permission", "Permission")
+                        .WithMany("RolePermissons")
+                        .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HeshmastNews.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
+                    b.HasOne("HeshmastNews.Entities.Role", "Role")
+                        .WithMany("RolePermissons")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -392,6 +404,13 @@ namespace dadachMovie.Migrations
             modelBuilder.Entity("HeshmastNews.Entities.Permission", b =>
                 {
                     b.Navigation("permissions");
+
+                    b.Navigation("RolePermissons");
+                });
+
+            modelBuilder.Entity("HeshmastNews.Entities.Role", b =>
+                {
+                    b.Navigation("RolePermissons");
                 });
 
             modelBuilder.Entity("HeshmastNews.Entities.User", b =>

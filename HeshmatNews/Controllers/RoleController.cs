@@ -45,5 +45,23 @@ namespace HeshmastNews.Controllers
         {
             return _roleService.RemoveRole(roleId);
         }
+
+        [HttpGet("permissions")]
+        public List<PermissionViewModelDTO> GetPermissionsList()
+        {
+            return _roleService.GetPermissionList();
+        }
+
+        [HttpGet("parentPermissions")]
+        public List<PermissionViewModelDTO> GetParentPermissionsList()
+        {
+            return _roleService.GetParentPermissionList();
+        }
+
+        [HttpGet("subPermissions")]
+        public List<PermissionViewModelDTO> GetSubPermissionsList()
+        {
+            return _roleService.GetSubPermissionList();
+        }
     }
 }

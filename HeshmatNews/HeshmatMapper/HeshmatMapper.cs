@@ -22,12 +22,15 @@ namespace HeshmastNews.HeshmatMapper
                 .ForMember(x => x.RegisterDate,
                     opt
                         => opt.MapFrom(r => DateConvertor.ToShamsi(r.RegisterDate)))
-                .ForMember(x => x.RoleName,
-                    opt => opt.MapFrom(
-                        r => r.Role.RoleName)).ReverseMap();
+            .ForMember(x => x.RoleNames,
+                opt => opt.MapFrom(
+                    r =>r.Roles.Select(r=>r.RoleName))).ReverseMap();
             //Role Mapper
             CreateMap<RoleDTO, Role>().ReverseMap();
             CreateMap<Role, RoleDTO>().ReverseMap();
+            CreateMap<Role, RoleDTO>().ReverseMap();
+            CreateMap<PermissionViewModelDTO, Permission>().ReverseMap();
+            CreateMap< Role,CreateRoleDTO>().ReverseMap();
             //Comments Maps
             CreateMap<NewsComment, CommentDTO>().ReverseMap();
 

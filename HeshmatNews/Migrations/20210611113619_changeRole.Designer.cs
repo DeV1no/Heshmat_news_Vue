@@ -3,14 +3,16 @@ using System;
 using HeshmastNews.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace dadachMovie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210611113619_changeRole")]
+    partial class changeRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,6 +189,27 @@ namespace dadachMovie.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("HeshmastNews.Entities.RolePermisson", b =>
+                {
+                    b.Property<int>("RP_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RP_id");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RolePermisson");
+                });
+
             modelBuilder.Entity("HeshmastNews.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -272,19 +295,25 @@ namespace dadachMovie.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PermissionRole", b =>
+            modelBuilder.Entity("HeshmastNews.Entities.UserRole", b =>
                 {
-                    b.Property<int>("PermissionsPermissionId")
+                    b.Property<int>("URId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("RolesId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.HasKey("PermissionsPermissionId", "RolesId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("RolesId");
+                    b.HasKey("URId");
 
-                    b.ToTable("PermissionRole");
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -350,19 +379,42 @@ namespace dadachMovie.Migrations
                         .HasForeignKey("ParentId");
                 });
 
-            modelBuilder.Entity("PermissionRole", b =>
+            modelBuilder.Entity("HeshmastNews.Entities.RolePermisson", b =>
                 {
-                    b.HasOne("HeshmastNews.Entities.Permission", null)
-                        .WithMany()
-                        .HasForeignKey("PermissionsPermissionId")
+                    b.HasOne("HeshmastNews.Entities.Permission", "Permission")
+                        .WithMany("RolePermissons")
+                        .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HeshmastNews.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
+                    b.HasOne("HeshmastNews.Entities.Role", "Role")
+                        .WithMany("RolePermissons")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("HeshmastNews.Entities.UserRole", b =>
+                {
+                    b.HasOne("HeshmastNews.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HeshmastNews.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -392,6 +444,13 @@ namespace dadachMovie.Migrations
             modelBuilder.Entity("HeshmastNews.Entities.Permission", b =>
                 {
                     b.Navigation("permissions");
+
+                    b.Navigation("RolePermissons");
+                });
+
+            modelBuilder.Entity("HeshmastNews.Entities.Role", b =>
+                {
+                    b.Navigation("RolePermissons");
                 });
 
             modelBuilder.Entity("HeshmastNews.Entities.User", b =>

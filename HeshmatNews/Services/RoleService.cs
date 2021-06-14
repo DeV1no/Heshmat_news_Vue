@@ -68,5 +68,43 @@ namespace HeshmastNews.Services
             _context.SaveChanges();
             return true;
         }
+
+        public List<PermissionViewModelDTO> GetPermissionList()
+        {
+            var permissionsDb = _context.Permission.ToList();
+            var permission = new List<PermissionViewModelDTO>();
+            foreach (var item in permissionsDb)
+            {
+                permission.Add(_mapper.Map<PermissionViewModelDTO>(item));
+            }
+
+            return permission;
+        }
+
+        public List<PermissionViewModelDTO> GetParentPermissionList()
+        {
+            var permissionsDb = _context.Permission.Where(p => p.ParentId == null).ToList();
+            var permission = new List<PermissionViewModelDTO>();
+            foreach (var item in permissionsDb)
+            {
+                permission.Add(_mapper.Map<PermissionViewModelDTO>(item));
+            }
+
+            return permission;
+        }
+
+        public List<PermissionViewModelDTO> GetSubPermissionList()
+        {
+            var permissionsDb = _context.Permission.Where(p => p.ParentId != null).ToList();
+            var permission = new List<PermissionViewModelDTO>();
+            foreach (var item in permissionsDb)
+            {
+                permission.Add(_mapper.Map<PermissionViewModelDTO>(item));
+            }
+
+            return permission;
+        }
+
+        
     }
 }
