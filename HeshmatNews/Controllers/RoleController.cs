@@ -63,5 +63,11 @@ namespace HeshmastNews.Controllers
         {
             return _roleService.GetSubPermissionList();
         }
+
+        [HttpPut("addPermissionToRole")]
+        public bool AddPermissionToRole(AddPermissionToRoleDTO model)
+        {
+            return _roleService.AddPermissionToRole(model);
+        }
     }
 }

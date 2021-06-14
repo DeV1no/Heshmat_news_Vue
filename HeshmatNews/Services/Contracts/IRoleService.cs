@@ -13,6 +13,6 @@ namespace dadachMovie.Services.Contracts
         List<PermissionViewModelDTO> GetPermissionList();
         List<PermissionViewModelDTO> GetParentPermissionList();
         List<PermissionViewModelDTO> GetSubPermissionList();
-       
+        bool AddPermissionToRole(AddPermissionToRoleDTO model);
     }
 }

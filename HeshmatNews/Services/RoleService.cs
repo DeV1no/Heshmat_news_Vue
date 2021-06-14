@@ -5,6 +5,7 @@ using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs.Role;
 using HeshmastNews.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HeshmastNews.Services
 {
@@ -105,6 +106,23 @@ namespace HeshmastNews.Services
             return permission;
         }
 
-        
+        public bool AddPermissionToRole(AddPermissionToRoleDTO model)
+        {
+            var roleDb = _context.Roles.Include(p => p.Permissions)
+                .SingleOrDefault(r => r.Id == model.RoleId);
+            if (roleDb == null)
+                return false;
+            foreach (var item in model.PermissionIds)
+            {
+                var permissionDb = _context.Permission.SingleOrDefault(p => p.PermissionId == item);
+                if (permissionDb == null)
+                    return false;
+                roleDb.Permissions.Add(permissionDb);
+            }
+
+            _context.Roles.Update(roleDb);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }
