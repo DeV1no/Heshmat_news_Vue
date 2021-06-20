@@ -42,7 +42,6 @@ namespace HeshmastNews
             services.AddTransient<IFileStorageService, InAppStorageService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<INewsService, NewsService>();
-            services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IRoleService, RoleService>();
 
             //Spa Static files config

@@ -34,11 +34,11 @@ namespace HeshmastNews.HeshmatMapper
             CreateMap<Role, RoleCreateDTO>().ReverseMap();
             CreateMap<RoleSaveDTO, Role>().ReverseMap();
             //Comments Maps
-            CreateMap<NewsComment, CommentDTO>().ReverseMap();
+            /*CreateMap<NewsComment, CommentDTO>().ReverseMap();
 
             CreateMap<UnAcceptedCommentDTO, NewsComment>()
                 .ForMember(e => e.User,
-                    e => e.MapFrom(c => c.UserName ?? "")).ReverseMap();
+                    e => e.MapFrom(c => c.UserName ?? "")).ReverseMap();*/
         }
     }
 }

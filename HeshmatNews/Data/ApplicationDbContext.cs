@@ -18,7 +18,6 @@ namespace HeshmastNews.Data
         public DbSet<News> News { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<NewsComment> NewsComments { get; set; }
         public DbSet<Permission> Permission { get; set; }
        
 

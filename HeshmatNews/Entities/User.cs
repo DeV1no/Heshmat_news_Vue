@@ -34,7 +34,6 @@ namespace HeshmastNews.Entities
         [NotMapped] public DateTime TokenExpires { get; set; }
 
         // Relation ship 
-        public NewsComment NewsComment { get; set; }
         public List<Role> Roles { get; set; }
     }
 }
