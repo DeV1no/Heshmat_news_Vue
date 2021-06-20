@@ -17,5 +17,7 @@ namespace dadachMovie.Services.Contracts
         List<PermissionViewModelDTO> GetSubPermissionList();
         bool AddPermissionToRole(AddPermissionToRoleDTO model);
         RoleSaveDTO GetRoleSave(int roleId);
+        bool UserCheckPermission(int permissionId, string userName);
+
     }
 }

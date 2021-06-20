@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using AutoMapper;
 using dadachMovie.DTOs.Role;
 using dadachMovie.Services.Contracts;
@@ -77,6 +78,7 @@ namespace HeshmastNews.Services
 
                 roleDb.Permissions.Add(permissionDb);
             }
+
             _context.Update(roleDb);
             _context.SaveChanges();
             return roleDb.Id;
@@ -152,6 +154,26 @@ namespace HeshmastNews.Services
             var roleDb = _context.Roles.Include(p => p.Permissions)
                 .FirstOrDefault(r => r.Id == roleId);
             return _mapper.Map<RoleSaveDTO>(roleDb);
+        }
+
+        public bool UserCheckPermission(int permissionId, string userName)
+        {
+            /*
+                        int userId = _context.Users.Single(u => u.UserName == userName).Id;
+                        List<int> UserRoles = _context.Roles
+                            .Where(r => r.Users == userId).Select(r => r.RoleId).ToList();*/
+            var userDb = _context.Users.Include(x => x.Roles)
+                .FirstOrDefault(x => x.UserName == userName);
+            if (!userDb.Roles.Any())
+                return false;
+            /*List<int> RolesPermission = _context.Permission
+                .Where(r => r.PermissionId == permissionId)
+                .Select(p => p.).ToList();*/
+            var permission = _context.Permission.FirstOrDefault(x => x.PermissionId == permissionId);
+
+            var checker = userDb.Roles.Any(x => x.Permissions.Find(q => q.PermissionId == permissionId) == permission);
+
+            return  checker;
         }
     }
 }
