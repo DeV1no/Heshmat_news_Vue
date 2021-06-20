@@ -32,7 +32,7 @@ namespace HeshmastNews.Services
                     NewsTitle = n.NewsTitle,
                     NewsBody = n.NewsBody,
                     Poster =$"http://localhost:5000/news/image/{n.Poster}",
-                    Tags = n.Tags,
+                
                     Category = n.CategoryId,
                     CreatedDate = n.CreatedDate.ToShamsi(),
                     Categories = n.Category
@@ -66,7 +66,7 @@ namespace HeshmastNews.Services
             {
                 NewsTitle = news.NewsTitle,
                 NewsBody = news.NewsBody,
-                Tags = news.Tags,
+              
                 Poster =  poster,
                 CategoryId = news.CategoryId,
                 SubGroup = news.SubGroup
@@ -105,7 +105,7 @@ namespace HeshmastNews.Services
            {
                NewsTitle = news.NewsTitle,
                NewsBody = news.NewsBody,
-               Tags = news.Tags,
+            
                Poster =  poster,
                CategoryId = news.CategoryId,
                SubGroup = news.SubGroup

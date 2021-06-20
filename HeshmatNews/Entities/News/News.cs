@@ -15,7 +15,7 @@ namespace HeshmastNews.Entities
         public string NewsBody { get; set; }
         public DateTime CreatedDate { get; set; }
         public string Poster { get; set; }
-        public string Tags { get; set; }
+       
         public DateTime? UpdateTime { get; set; }
 
         public News()
@@ -26,6 +26,7 @@ namespace HeshmastNews.Entities
         //RelationShip
         [ForeignKey("CategoryId")] public Category Category { get; set; }
         [ForeignKey("SubGroup")] public Category Group { get; set; }
-       //  public NewsComment NewsComment { get; set; }
+        public User User { get; set; }
+        public List<Tag> Tags { get; set; }
     }
 }

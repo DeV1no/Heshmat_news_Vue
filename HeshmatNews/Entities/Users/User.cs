@@ -35,5 +35,6 @@ namespace HeshmastNews.Entities
 
         // Relation ship 
         public List<Role> Roles { get; set; }
+        public List<News> NewsList { get; set; }
     }
 }

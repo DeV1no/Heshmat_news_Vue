@@ -61,11 +61,11 @@ namespace dadachMovie.Migrations
                     b.Property<int?>("SubGroup")
                         .HasColumnType("int");
 
-                    b.Property<string>("Tags")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("NewsId");
 
@@ -73,44 +73,9 @@ namespace dadachMovie.Migrations
 
                     b.HasIndex("SubGroup");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("News");
-                });
-
-            modelBuilder.Entity("HeshmastNews.Entities.NewsComment", b =>
-                {
-                    b.Property<int>("CommentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("CommentBody")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("NewsId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsersId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isAccepted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("CommentId");
-
-                    b.HasIndex("NewsId");
-
-                    b.HasIndex("UsersId")
-                        .IsUnique();
-
-                    b.ToTable("NewsComments");
                 });
 
             modelBuilder.Entity("HeshmastNews.Entities.Permission", b =>
@@ -185,6 +150,20 @@ namespace dadachMovie.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("HeshmastNews.Entities.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("TagName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("HeshmastNews.Entities.User", b =>
@@ -272,6 +251,21 @@ namespace dadachMovie.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("NewsTag", b =>
+                {
+                    b.Property<int>("NewsListNewsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("NewsListNewsId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("NewsTag");
+                });
+
             modelBuilder.Entity("PermissionRole", b =>
                 {
                     b.Property<int>("PermissionsPermissionId")
@@ -321,24 +315,13 @@ namespace dadachMovie.Migrations
                         .WithMany("SubGroups")
                         .HasForeignKey("SubGroup");
 
+                    b.HasOne("HeshmastNews.Entities.User", "User")
+                        .WithMany("NewsList")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Category");
 
                     b.Navigation("Group");
-                });
-
-            modelBuilder.Entity("HeshmastNews.Entities.NewsComment", b =>
-                {
-                    b.HasOne("HeshmastNews.Entities.News", "News")
-                        .WithMany()
-                        .HasForeignKey("NewsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HeshmastNews.Entities.User", "User")
-                        .WithOne("NewsComment")
-                        .HasForeignKey("HeshmastNews.Entities.NewsComment", "UsersId");
-
-                    b.Navigation("News");
 
                     b.Navigation("User");
                 });
@@ -348,6 +331,21 @@ namespace dadachMovie.Migrations
                     b.HasOne("HeshmastNews.Entities.Permission", null)
                         .WithMany("permissions")
                         .HasForeignKey("ParentId");
+                });
+
+            modelBuilder.Entity("NewsTag", b =>
+                {
+                    b.HasOne("HeshmastNews.Entities.News", null)
+                        .WithMany()
+                        .HasForeignKey("NewsListNewsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HeshmastNews.Entities.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PermissionRole", b =>
@@ -396,7 +394,7 @@ namespace dadachMovie.Migrations
 
             modelBuilder.Entity("HeshmastNews.Entities.User", b =>
                 {
-                    b.Navigation("NewsComment");
+                    b.Navigation("NewsList");
                 });
 #pragma warning restore 612, 618
         }
