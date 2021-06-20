@@ -1,5 +1,6 @@
 using System.Linq;
 using AutoMapper;
+using dadachMovie.DTOs.Role;
 using HeshmastNews.Convertor;
 using HeshmastNews.DTOs.Comment;
 using HeshmastNews.DTOs.Role;
@@ -22,22 +23,22 @@ namespace HeshmastNews.HeshmatMapper
                 .ForMember(x => x.RegisterDate,
                     opt
                         => opt.MapFrom(r => DateConvertor.ToShamsi(r.RegisterDate)))
-            .ForMember(x => x.RoleNames,
-                opt => opt.MapFrom(
-                    r =>r.Roles.Select(r=>r.RoleName))).ReverseMap();
+                .ForMember(x => x.RoleNames,
+                    opt => opt.MapFrom(
+                        r => r.Roles.Select(r => r.RoleName))).ReverseMap();
             //Role Mapper
             CreateMap<RoleDTO, Role>().ReverseMap();
             CreateMap<Role, RoleDTO>().ReverseMap();
             CreateMap<Role, RoleDTO>().ReverseMap();
             CreateMap<PermissionViewModelDTO, Permission>().ReverseMap();
-            CreateMap< Role,CreateRoleDTO>().ReverseMap();
+            CreateMap<Role, RoleCreateDTO>().ReverseMap();
+            CreateMap<RoleSaveDTO, Role>().ReverseMap();
             //Comments Maps
             CreateMap<NewsComment, CommentDTO>().ReverseMap();
 
             CreateMap<UnAcceptedCommentDTO, NewsComment>()
                 .ForMember(e => e.User,
-                    e => e
-                        .MapFrom(c => c.UserName ?? "")).ReverseMap();
+                    e => e.MapFrom(c => c.UserName ?? "")).ReverseMap();
         }
     }
 }

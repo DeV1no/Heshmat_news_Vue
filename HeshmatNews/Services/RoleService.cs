@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using dadachMovie.DTOs.Role;
 using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs.Role;
@@ -24,6 +25,7 @@ namespace HeshmastNews.Services
         {
             var roleDb = _context.Roles.ToList();
             var Roles = new List<RoleDTO>();
+
             foreach (var item in roleDb)
             {
                 Roles.Add(_mapper.Map<RoleDTO>(item));
@@ -38,9 +40,20 @@ namespace HeshmastNews.Services
             return _mapper.Map<RoleDTO>(roleDb);
         }
 
-        public int AddRole(RoleDTO model)
+        public int AddRole(RoleCreateDTO model)
         {
-            var roleMDl = _mapper.Map<Role>(model);
+            var permissions = new List<Permission>();
+            foreach (var item in model.PermissionsId)
+            {
+                var permissionDb = _context.Permission.FirstOrDefault(x => x.PermissionId == item);
+                permissions.Add(permissionDb);
+            }
+
+            var roleMDl = new Role
+            {
+                RoleName = model.RoleName,
+                Permissions = permissions
+            };
             var isExisted = _context.Roles.Any(r => r.RoleName == roleMDl.RoleName);
             if (isExisted)
                 return 0;
@@ -49,15 +62,24 @@ namespace HeshmastNews.Services
             return roleMDl.Id;
         }
 
-        public int UpdateRole(RoleDTO model)
+        public int UpdateRole(RoleUpdateDTO model)
         {
-            var roleMDl = _mapper.Map<Role>(model);
-            var isExisted = _context.Roles.Any(r => r.Id == roleMDl.Id);
-            if (!isExisted)
+            var roleDb = _context.Roles.Include(x => x.Permissions).FirstOrDefault(r => r.Id == model.Id);
+            if (roleDb == null)
                 return 0;
-            _context.Update(roleMDl);
+            var permissions = new List<Permission>();
+            roleDb.Permissions.Clear();
+            roleDb.RoleName = model.RoleName;
+
+            foreach (var item in model.PermissionsId)
+            {
+                var permissionDb = _context.Permission.FirstOrDefault(x => x.PermissionId == item);
+
+                roleDb.Permissions.Add(permissionDb);
+            }
+            _context.Update(roleDb);
             _context.SaveChanges();
-            return roleMDl.Id;
+            return roleDb.Id;
         }
 
         public bool RemoveRole(int roleID)
@@ -123,6 +145,13 @@ namespace HeshmastNews.Services
             _context.Roles.Update(roleDb);
             _context.SaveChanges();
             return true;
+        }
+
+        public RoleSaveDTO GetRoleSave(int roleId)
+        {
+            var roleDb = _context.Roles.Include(p => p.Permissions)
+                .FirstOrDefault(r => r.Id == roleId);
+            return _mapper.Map<RoleSaveDTO>(roleDb);
         }
     }
 }

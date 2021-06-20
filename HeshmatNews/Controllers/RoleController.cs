@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using dadachMovie.DTOs.Role;
 using dadachMovie.Services.Contracts;
 using HeshmastNews.DTOs.Role;
+using HeshmastNews.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HeshmastNews.Controllers
@@ -29,13 +31,13 @@ namespace HeshmastNews.Controllers
         }
 
         [HttpPost]
-        public int AddRole([FromBody] RoleDTO model)
+        public int AddRole([FromBody] RoleCreateDTO model)
         {
             return _roleService.AddRole(model);
         }
 
         [HttpPut]
-        public int UpdateRole([FromBody] RoleDTO model)
+        public int UpdateRole([FromBody] RoleUpdateDTO model)
         {
             return _roleService.UpdateRole(model);
         }
@@ -68,6 +70,12 @@ namespace HeshmastNews.Controllers
         public bool AddPermissionToRole(AddPermissionToRoleDTO model)
         {
             return _roleService.AddPermissionToRole(model);
+        }
+
+        [HttpGet("save/{roleId:int}")]
+        public RoleSaveDTO GetRoleSave(int roleId)
+        {
+            return _roleService.GetRoleSave(roleId);
         }
     }
 }

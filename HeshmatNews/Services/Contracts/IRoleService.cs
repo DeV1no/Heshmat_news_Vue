@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using dadachMovie.DTOs.Role;
 using HeshmastNews.DTOs.Role;
+using HeshmastNews.Entities;
 
 namespace dadachMovie.Services.Contracts
 {
@@ -7,12 +9,13 @@ namespace dadachMovie.Services.Contracts
     {
         List<RoleDTO> GetAllRoles();
         RoleDTO GetRole(int roleID);
-        int AddRole(RoleDTO model);
-        int UpdateRole(RoleDTO model);
+        int AddRole(RoleCreateDTO model);
+        int UpdateRole(RoleUpdateDTO model);
         bool RemoveRole(int RoleId);
         List<PermissionViewModelDTO> GetPermissionList();
         List<PermissionViewModelDTO> GetParentPermissionList();
         List<PermissionViewModelDTO> GetSubPermissionList();
         bool AddPermissionToRole(AddPermissionToRoleDTO model);
+        RoleSaveDTO GetRoleSave(int roleId);
     }
 }

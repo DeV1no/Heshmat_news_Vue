@@ -27,11 +27,15 @@
       </div>
       <div class="card text-center bg-warning text-white mb-3">
         <div class="card-body">
-          <h3>اخبار</h3>
+          <h3>نفش ها</h3>
           <h4 class="display-4 ">
-            <span class="d-block"> <i class="fa fa-pencil "></i> 6 </span>
+            <span class="d-block">
+              <i class="fa fa-universal-access"></i> 6
+            </span>
           </h4>
-          <nuxt-link to="/admin/newspanel" class="btn btn-outline-light btn-sm"
+          <nuxt-link
+            to="/admin/roles/list"
+            class="btn btn-outline-light btn-sm"
             >مشاهده</nuxt-link
           >
         </div>
@@ -39,9 +43,7 @@
       <div class="card text-center bg-danger text-white mb-3">
         <div class="card-body">
           <h3>کاربران</h3>
-          <h4 class="display-4">
-            <!-- <i class="fa fa-users"></i> {{ usersCount }} -->
-          </h4>
+          <h4 class="display-4"><i class="fa fa-users"></i> 2</h4>
           <nuxt-link to="/admin/users/list" class="btn btn-outline-light btn-sm"
             >مشاهده</nuxt-link
           >
