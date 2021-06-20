@@ -2,6 +2,7 @@ using System.Linq;
 using AutoMapper;
 using dadachMovie.DTOs.Role;
 using HeshmastNews.Convertor;
+using HeshmastNews.DTOs;
 using HeshmastNews.DTOs.Comment;
 using HeshmastNews.DTOs.Role;
 using HeshmastNews.DTOs.User;
@@ -13,6 +14,11 @@ namespace HeshmastNews.HeshmatMapper
     {
         public HeshmatMapper()
         {
+            //CateGories Map
+            CreateMap<Category, CategoryVewModelDTO>().ReverseMap();
+            CreateMap<CategoryCreateDTO, Category>().ReverseMap();
+            CreateMap<CategoryUpdateDTO, Category>().ReverseMap();
+
             //User Maps 
             CreateMap<User, UserLoginViewModelDTO>().ReverseMap();
             CreateMap<UserRegisterViewModelDTO, UserRegisterDTO>().ReverseMap();

@@ -26,35 +26,35 @@ namespace HeshmastNews.Controllers
 
 
         [HttpGet(Name = "getCategories")]
-        public List<Category> Get()
+        public List<CategoryVewModelDTO> Get()
         {
             return _categoryService.GetAllCategories();
         }
         
-        [HttpGet("getSubCategories")]
-        public List<Category> GetCategories()
+        [HttpGet("getParentCategories")]
+        public List<CategoryVewModelDTO> GetParentCategories()
         {
-            return _categoryService.GetAllSubCategory();
+            return _categoryService.GetAllParrentCategory();
         }
 
       
         [HttpGet("{categoryId:int}", Name = "getCategory")]
-        public Category Get(int categoryId)
+        public CategoryVewModelDTO Get(int categoryId)
         {
             return _categoryService.GetCategoryById(categoryId);
         }
 
         [HttpPost]
         [Authorize]
-        public Category Post([FromBody] CategoryCreationDTO category)
+        public int Post([FromBody] CategoryCreateDTO model)
         {
-            return _categoryService.AddCategory(category);
+            return _categoryService.AddCategory(model);
         }
 
-        [HttpPut("{categoryId}", Name = "putCategories")]
-        public Category Put(int categoryId, [FromBody] CategoryCreationDTO category)
+        [HttpPut( Name = "putCategories")]
+        public int Put( [FromBody] CategoryUpdateDTO model)
         {
-            return _categoryService.UpdateCategory(categoryId,category);
+            return _categoryService.UpdateCategory(model);
         }
 
         [HttpDelete("{id}", Name = "deleteCategoires")]

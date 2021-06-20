@@ -6,11 +6,11 @@ namespace HeshmastNews.Services
 {
     public interface ICategoryService
     {
-        List<Category> GetAllCategories();
-        List<Category> GetAllSubCategory();
-        Category GetCategoryById(int Id);
-        Category AddCategory(CategoryCreationDTO category);
-        Category UpdateCategory(int categoryId, CategoryCreationDTO category);
+        List<CategoryVewModelDTO> GetAllCategories();
+        List<CategoryVewModelDTO> GetAllParrentCategory();
+        CategoryVewModelDTO GetCategoryById(int Id);
+        int AddCategory(CategoryCreateDTO model);
+        int UpdateCategory(CategoryUpdateDTO model);
         int DeleteCategory(int id);
     }
 }
