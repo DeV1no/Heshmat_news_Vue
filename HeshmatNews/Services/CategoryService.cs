@@ -81,6 +81,11 @@ namespace HeshmastNews.Services
         public int DeleteCategory(int id)
         {
             var category = _context.Categories.FirstOrDefault(x => x.CategoryId == id);
+            var isChildExisted=false;
+            if (category.ParentId==null)
+                isChildExisted = _context.Categories.Any(x => x.ParentId == category.CategoryId);
+            if (isChildExisted)
+                return -2;// child categrory is existed
             if (category == null)
                 return -1;
             _context.Categories.Remove(category);

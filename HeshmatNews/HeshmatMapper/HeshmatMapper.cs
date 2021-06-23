@@ -5,6 +5,7 @@ using HeshmastNews.Convertor;
 using HeshmastNews.DTOs;
 using HeshmastNews.DTOs.Comment;
 using HeshmastNews.DTOs.Role;
+using HeshmastNews.DTOs.Tag;
 using HeshmastNews.DTOs.User;
 using HeshmastNews.Entities;
 
@@ -45,6 +46,11 @@ namespace HeshmastNews.HeshmatMapper
             CreateMap<UnAcceptedCommentDTO, NewsComment>()
                 .ForMember(e => e.User,
                     e => e.MapFrom(c => c.UserName ?? "")).ReverseMap();*/
+
+            // Tag Mapper
+            CreateMap<TagViewModelDTO, Tag>().ReverseMap();
+            CreateMap< Tag,TagDTO>().ReverseMap();
+            CreateMap< Tag,TagUpdateDTO>().ReverseMap();
         }
     }
 }

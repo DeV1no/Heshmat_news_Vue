@@ -43,6 +43,7 @@ namespace HeshmastNews
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<ITagService, TagService>();
 
             //Spa Static files config
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
