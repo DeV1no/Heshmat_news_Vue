@@ -224,7 +224,7 @@ export default {
   },
   computed: {},
   async mounted() {
-    await this.GetSubCategories();
+    // await this.GetSubCategories();
     await this.logCheck();
     await this.autoLog();
     await this.getCurrentUser();

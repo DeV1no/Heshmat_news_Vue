@@ -14,12 +14,12 @@
       </div>
       <div class="card text-center bg-success text-white mb-3">
         <div class="card-body">
-          <h3>هنرمندان</h3>
-          <h4 class="display-4">
-            <!-- <i class="fa fa-eercast ml-1"></i>{{ peopleCount }} -->
+          <h3>گروه ها</h3>
+          <h4 class="display-4 ">
+            <span class="d-block"> <i class="fa  fa-list-alt "></i> 2</span>
           </h4>
           <nuxt-link
-            to="/admin/peoplepanel"
+            to="/admin/categories/list"
             class="btn btn-outline-light btn-sm"
             >مشاهده</nuxt-link
           >
@@ -33,9 +33,7 @@
               <i class="fa fa-universal-access"></i> 6
             </span>
           </h4>
-          <nuxt-link
-            to="/admin/roles/list"
-            class="btn btn-outline-light btn-sm"
+          <nuxt-link to="/admin/roles/list" class="btn btn-outline-light btn-sm"
             >مشاهده</nuxt-link
           >
         </div>
