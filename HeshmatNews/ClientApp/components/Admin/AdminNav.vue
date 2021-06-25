@@ -20,7 +20,7 @@
             <li class="nav-item px-2">
               <nuxt-link
                 to="/admin"
-                class="nav-link "
+                class="nav-link"
                 exact-active-class="active"
                 >داشبورد</nuxt-link
               >
@@ -28,17 +28,17 @@
             <li class="nav-item px-2">
               <nuxt-link
                 to="/admin/news/list"
-                class="nav-link "
+                class="nav-link"
                 exact-active-class="active"
                 >اخبار</nuxt-link
               >
             </li>
             <li class="nav-item px-2">
               <nuxt-link
-                to="/admin/peoplepanel"
+                to="/admin/tags/list"
                 class="nav-link"
                 exact-active-class="active"
-                >کاربران</nuxt-link
+                >برچسب ها</nuxt-link
               >
             </li>
 
@@ -56,7 +56,7 @@
             <li class="nav-item ">
               <a href="login.html" class="nav-link">
                 خوش آمدی
-                <!-- {{ currentUser.firstName }} {{ currentUser.lastName }} -->
+                {{ currentUser.name }} {{ currentUser.family }}
                 !
               </a>
             </li>
@@ -102,18 +102,42 @@
             </nuxt-link>
           </div>
           <div class="col-md-3">
-            <a
-              href="#"
-              class="btn btn-danger btn-block"
-              data-toggle="modal"
-              data-target="#addCategoryModal"
-            >
-              <i class="fa fa-plus"></i> افزودن ژانر
+            <a href="#" class="btn btn-danger btn-block" v-b-modal.tagModal>
+              <i class="fa fa-plus"></i>
+
+              افزودن برچسب
             </a>
           </div>
         </div>
       </div>
     </section>
+    <!-- Tag Modal -->
+
+    <b-modal
+      id="tagModal"
+      ref="tagModal"
+      title="افزودن برچسب"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="addTag"
+    >
+      <form class="mr-2">
+        <div class="row">
+          <div class="col-md-12">
+            <label for="basic-url">عنوان برچسب</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend"></div>
+              <input
+                type="text"
+                class="form-control"
+                name="cateGoryName"
+                v-model="mdl.tagName"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+    </b-modal>
   </div>
 </template>
 
@@ -122,11 +146,21 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      currentUser: {},
+      currentUser: {
+        id: null,
+        isActive: null,
+        name: null,
+        family: null,
+        role: null,
+        userName: null
+      },
       isLogin: false,
       tokenId: this.$store.getters.isAuthGet,
       token: '',
-      isAdmin: false
+      isAdmin: false,
+      mdl: {
+        tagName: null
+      }
     };
   },
   methods: {
@@ -163,6 +197,17 @@ export default {
           this.$store.dispatch('logOut');
         }
       }
+    },
+    addTag() {
+      axios.post('/api/Tag/AddTag', this.mdl).then(res => {
+        if (res.data > 0) {
+          this.$toast.success('اطلاعات با موفقیت ثبت شد').goAway(4500);
+          this.$refs.tagModal.hide();
+        } else this.$toast.error('لطفا نام برچسب را وارد نمایید').goAway(4500);
+      });
+    },
+    resetModal() {
+      this.mdl.tagName = null;
     }
   },
   async created() {

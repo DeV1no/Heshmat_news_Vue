@@ -20,6 +20,10 @@ namespace HeshmastNews.Controllers
         public List<TagViewModelDTO> GetTagList()
             => _tagService.GetTagList();
 
+        [HttpGet("GetTag/{tagId:int}")]
+        public TagViewModelDTO getTagById(int tagId)
+            => _tagService.GetTagById(tagId);
+
         [HttpPost("AddTag")]
         public int AddTag([FromBody] TagDTO model)
             => _tagService.AddTag(model);

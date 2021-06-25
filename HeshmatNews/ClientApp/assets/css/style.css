@@ -208,55 +208,6 @@ h6 {
 
 /* Navigation */
 
-/* #main-nav {
-    background: #fff;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-}
-
-#main-nav .container {
-    display: grid;
-    grid-template-columns: 6fr 3fr 2fr;
-    padding: 1rem;
-    align-items: center;
-}
-
-#main-nav .logo {
-    width: 180px;
-    justify-self: end;
-}
-
-#main-nav ul {
-    justify-self: start;
-    display: flex;
-}
-
-#main-nav ul li a {
-    font-weight: bold;
-}
-
-#main-nav ul li a.current {
-    background: var(--primary-color);
-    color: #fff;
-}
-
-#main-nav ul li a:hover {
-    background: var(--light-color);
-    color: var(--dark-color);
-}
-
-#main-nav .social {
-    justify-self: center;
-}
-
-#main-nav .social i {
-    color: #777;
-    margin-right: .5rem;
-} */
-
-/* Showcase */
-
 #showcase {
   color: #fff;
   background: #333;
@@ -476,4 +427,8 @@ p {
   transition: 0.5s;
   border-radius: 5px;
   padding: 0 0.5rem;
+}
+
+.corsur-pointer:hover {
+  cursor: pointer;
 }

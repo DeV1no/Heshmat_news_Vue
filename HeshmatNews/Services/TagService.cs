@@ -32,6 +32,12 @@ namespace HeshmastNews.Services
             return tags;
         }
 
+        public TagViewModelDTO GetTagById(int tagId)
+        {
+            var tagDb = _context.Tags.FirstOrDefault(x => x.Id == tagId);
+            return _mapper.Map<TagViewModelDTO>(tagDb);
+        }
+
         public int AddTag(TagDTO model)
         {
             var tag = _mapper.Map<Tag>(model);
