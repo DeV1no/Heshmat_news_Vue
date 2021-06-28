@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ using HeshmastNews.Data;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;
 using HeshmastNews.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,45 +22,48 @@ namespace HeshmastNews.Controllers
     public class NewsController : ControllerBase
     {
         private ApplicationDbContext _context;
-        private readonly IMapper _mapper;
+
         private readonly IFileStorageService _fileStorageService;
         private INewsService _newsService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public NewsController(
-            ApplicationDbContext context, IMapper mapper, IFileStorageService fileStorageService,
-            INewsService newsService)
+            ApplicationDbContext context, IFileStorageService fileStorageService,
+            INewsService newsService, IHttpContextAccessor httpContextAccessor)
 
         {
             _context = context;
-            _mapper = mapper;
             _fileStorageService = fileStorageService;
             _newsService = newsService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        [HttpGet]
-        [Produces(typeof(Paging<News>))]
-        public IActionResult Get()
-        {
-            return Ok (_newsService.GetAllNews());
-           
-        }
+        [HttpGet("NewsList")]
+        public List<NewsListViewModleDTO> GetNewsList()
+            => _newsService.GetNewsList();
+
+        [HttpGet("NewsHomeList")]
+        public List<NewsHomeViewModelDTO> GetNewsHomeList()
+            => _newsService.GetNewsHomeList();
 
         [HttpGet("{newsId}", Name = "getNews")]
         public News Get(int newsId)
         {
-            return _newsService.GetNewsById(newsId);;
+            return _newsService.GetNewsById(newsId);
         }
 
-        [HttpPost]
-        public News Post([FromForm] NewsCreationDTO newsCreationDto)
-        {
-            return _newsService.AddNews(newsCreationDto);
-        }
+        [HttpGet("SaveDTO/{newsId:int}")]
+        public NewsSaveDTO GetNewsSaveDTO(int newsId)
+            => _newsService.GetNewsSave(newsId);
 
-      
+        [HttpPost("AddNews")]
+        [Authorize]
+        public int Post([FromForm] NewsCreationDTO model)
+            => _newsService.AddNews(model, _httpContextAccessor.HttpContext.User.Identity.Name);
+
 
         [HttpPut("{id}")]
-        public  Task<ActionResult> Put(int id, [FromForm] NewsCreationDTO newsCreationDto)
+        public Task<ActionResult> Put(int id, [FromForm] NewsCreationDTO newsCreationDto)
         {
             // var newsDB = await _context.News.FirstOrDefaultAsync;
 
@@ -81,9 +87,7 @@ namespace HeshmastNews.Controllers
         }
 
         [HttpDelete("{newsId}")]
-        public int Delete(int newsId)
-        {
-            return _newsService.DeleteNews(newsId);
-        }
+        public bool Delete(int newsId)
+            => _newsService.DeleteNews(newsId);
     }
 }

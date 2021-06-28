@@ -1,5 +1,7 @@
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using AutoMapper;
+using dadachMovie.DTOs;
 using dadachMovie.DTOs.Role;
 using HeshmastNews.Convertor;
 using HeshmastNews.DTOs;
@@ -49,8 +51,28 @@ namespace HeshmastNews.HeshmatMapper
 
             // Tag Mapper
             CreateMap<TagViewModelDTO, Tag>().ReverseMap();
-            CreateMap< Tag,TagDTO>().ReverseMap();
-            CreateMap< Tag,TagUpdateDTO>().ReverseMap();
+            CreateMap<Tag, TagDTO>().ReverseMap();
+            CreateMap<Tag, TagUpdateDTO>().ReverseMap();
+            // News Mapper
+            CreateMap<News, NewsCreationDTO>().ReverseMap();
+            CreateMap<NewsListViewModleDTO, News>().ReverseMap()
+                .ForMember(x => x.CreatedDate,
+                    opt => opt.MapFrom(q => q.CreatedDate.ToShamsi()));
+            CreateMap<NewsHomeViewModelDTO, News>().ReverseMap()
+                .ForMember(x => x.CreatedDate,
+                    opt => opt.MapFrom(q => q.CreatedDate.ToShamsi()))
+                .ForMember(x => x.Poster,
+                    opt => opt.MapFrom(q => $"http://localhost:5000/news/image/{q.Poster}"))
+                .ForMember(x => x.Categories,
+                    opt => opt.MapFrom(q => q.Category));
+
+            CreateMap<NewsSaveDTO, News>().ReverseMap()
+                .ForMember(x => x.Poster,
+                    opt => opt.MapFrom(q => $"http://localhost:5000/news/image/{q.Poster}"))
+                .ForMember(x => x.CategoriesId,
+                    opt => opt.MapFrom(q => q.Category.Select(z => z.CategoryId).ToList()))
+                .ForMember(x => x.TagsId,
+                    opt => opt.MapFrom(q => q.Tags.Select(z => z.Id).ToList()));
         }
     }
 }

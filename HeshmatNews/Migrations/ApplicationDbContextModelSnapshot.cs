@@ -17,6 +17,21 @@ namespace dadachMovie.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
+            modelBuilder.Entity("CategoryNews", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId", "NewsId");
+
+                    b.HasIndex("NewsId");
+
+                    b.ToTable("CategoryNews");
+                });
+
             modelBuilder.Entity("HeshmastNews.Entities.Category", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -43,9 +58,6 @@ namespace dadachMovie.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
 
@@ -68,10 +80,6 @@ namespace dadachMovie.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("NewsId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("SubGroup");
 
                     b.HasIndex("UserId");
 
@@ -296,6 +304,21 @@ namespace dadachMovie.Migrations
                     b.ToTable("RoleUser");
                 });
 
+            modelBuilder.Entity("CategoryNews", b =>
+                {
+                    b.HasOne("HeshmastNews.Entities.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HeshmastNews.Entities.News", null)
+                        .WithMany()
+                        .HasForeignKey("NewsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HeshmastNews.Entities.Category", b =>
                 {
                     b.HasOne("HeshmastNews.Entities.Category", null)
@@ -305,23 +328,9 @@ namespace dadachMovie.Migrations
 
             modelBuilder.Entity("HeshmastNews.Entities.News", b =>
                 {
-                    b.HasOne("HeshmastNews.Entities.Category", "Category")
-                        .WithMany("News")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HeshmastNews.Entities.Category", "Group")
-                        .WithMany("SubGroups")
-                        .HasForeignKey("SubGroup");
-
                     b.HasOne("HeshmastNews.Entities.User", "User")
                         .WithMany("NewsList")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Group");
 
                     b.Navigation("User");
                 });
@@ -381,10 +390,6 @@ namespace dadachMovie.Migrations
             modelBuilder.Entity("HeshmastNews.Entities.Category", b =>
                 {
                     b.Navigation("Categories");
-
-                    b.Navigation("News");
-
-                    b.Navigation("SubGroups");
                 });
 
             modelBuilder.Entity("HeshmastNews.Entities.Permission", b =>

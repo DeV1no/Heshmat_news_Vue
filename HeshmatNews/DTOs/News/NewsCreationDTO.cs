@@ -11,9 +11,7 @@ namespace dadachMovie.DTOs
     public class NewsCreationDTO
     {
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public int CategoryId { get; set; }
-
-        public int? SubGroup { get; set; }
+        public List<int> CategoriesId { get; set; }
 
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string NewsTitle { get; set; }
@@ -21,13 +19,8 @@ namespace dadachMovie.DTOs
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string NewsBody { get; set; }
 
-
-        public string Tags { get; set; }
-
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public List<int> TagsId { get; set; }
 
         public IFormFile Poster { get; set; }
-
-        public DateTime UpdateDate { get; set; }
     }
 }

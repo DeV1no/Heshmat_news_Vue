@@ -8,7 +8,7 @@ namespace HeshmastNews.Entities
     public class News
     {
         public int NewsId { get; set; }
-        [Required] public int CategoryId { get; set; }
+       
         public int? SubGroup { get; set; }
 
         public string NewsTitle { get; set; }
@@ -24,8 +24,7 @@ namespace HeshmastNews.Entities
         }
 
         //RelationShip
-        [ForeignKey("CategoryId")] public Category Category { get; set; }
-        [ForeignKey("SubGroup")] public Category Group { get; set; }
+        public List<Category>  Category { get; set; }
         public User User { get; set; }
         public List<Tag> Tags { get; set; }
     }

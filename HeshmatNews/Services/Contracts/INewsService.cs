@@ -8,10 +8,12 @@ namespace HeshmastNews.Services
 {
     public interface INewsService
     {
-        List<NewsViewModelDTO> GetAllNews();
+        List<NewsListViewModleDTO> GetNewsList();
+        List<NewsHomeViewModelDTO> GetNewsHomeList();
+        NewsSaveDTO GetNewsSave(int newsId);
         News GetNewsById(int newwsId);
-        News AddNews(NewsCreationDTO news);
-        News UpdateNews(int newsId, NewsCreationDTO news);
-        int DeleteNews(int newsId);
+        int AddNews(NewsCreationDTO news, string userId);
+        int UpdateNews(NewsUpdateDTO model);
+       bool DeleteNews(int newsId);
     }
 }

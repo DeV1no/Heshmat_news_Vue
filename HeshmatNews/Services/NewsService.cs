@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AutoMapper;
 using dadachMovie.DTOs;
 using HeshmastNews.Convertor;
 using HeshmastNews.Data;
@@ -14,114 +15,149 @@ namespace HeshmastNews.Services
     public class NewsService : INewsService
     {
         private ApplicationDbContext _context;
+        private IMapper _mapper;
 
-        public NewsService(ApplicationDbContext context)
+        public NewsService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public List<NewsViewModelDTO> GetAllNews()
+
+        public List<NewsListViewModleDTO> GetNewsList()
         {
-            IQueryable<News> result = _context.News
-                .Include(n=>n.Category);
-            
-            var query = result
-                .Select(n => new NewsViewModelDTO()
-                {
-                    NewsId = n.NewsId,
-                    NewsTitle = n.NewsTitle,
-                    NewsBody = n.NewsBody,
-                    Poster =$"http://localhost:5000/news/image/{n.Poster}",
-                
-                    Category = n.CategoryId,
-                    CreatedDate = n.CreatedDate.ToShamsi(),
-                    Categories = n.Category
-                    
-                }).ToList();
-            return new List<NewsViewModelDTO>(query);
+            var newsDbList = _context.News.Include(x => x.User).ToList();
+            var newsList = new List<NewsListViewModleDTO>();
+            foreach (var item in newsDbList)
+            {
+                newsList.Add(_mapper.Map<NewsListViewModleDTO>(item));
+            }
+
+            return newsList;
         }
 
-        public News GetNewsById(int newsId)
+        public List<NewsHomeViewModelDTO> GetNewsHomeList()
         {
-            var news = _context.News
-                .Single(n => n.NewsId == newsId);
-            
-            news.Category = _context.Categories
-                .Single(c => c.CategoryId==news.CategoryId);
+            var newsDBList = _context.News
+                .Include(x => x.User).Include(x => x.Category).ToList();
+            var news = new List<NewsHomeViewModelDTO>();
+            foreach (var item in newsDBList)
+            {
+                news.Add(_mapper.Map<NewsHomeViewModelDTO>(item));
+            }
+
             return news;
         }
 
-        public News AddNews(NewsCreationDTO news)
+        public NewsSaveDTO GetNewsSave(int newsId)
+        {
+            var newsDb = _context.News
+                .Include(x => x.Category).Include(x => x.Tags)
+                .FirstOrDefault(x => x.NewsId == newsId);
+            return _mapper.Map<NewsSaveDTO>(newsDb);
+        }
+
+        public News GetNewsById(int newwsId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int AddNews(NewsCreationDTO model, string userId)
         {
             // IMG
-            var poster = NameGenerator.GenerateUniqCode() + Path.GetExtension(news.Poster.FileName);
+            var poster = NameGenerator.GenerateUniqCode() + Path.GetExtension(model.Poster.FileName);
             string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/news/image",
                 poster);
             using (var stream = new FileStream(imagePath, FileMode.Create))
             {
-                news.Poster.CopyTo(stream);
+                model.Poster.CopyTo(stream);
             }
 
-            var NewsCreationDTO = new News()
+
+            var taglist = new List<Tag>();
+            foreach (var id in model.TagsId)
             {
-                NewsTitle = news.NewsTitle,
-                NewsBody = news.NewsBody,
-              
-                Poster =  poster,
-                CategoryId = news.CategoryId,
-                SubGroup = news.SubGroup
+                taglist.Add(_context.Tags.FirstOrDefault(x => x.Id == id));
+            }
+
+            var categoryList = new List<Category>();
+            foreach (var id in model.CategoriesId)
+            {
+                categoryList.Add(_context.Categories.FirstOrDefault(x => x.CategoryId == id));
+            }
+
+            var newsDb = new News()
+            {
+                NewsTitle = model.NewsTitle,
+                NewsBody = model.NewsBody,
+                Poster = poster,
+                User = _context.Users.FirstOrDefault(x => x.Id.ToString() == userId),
+                Tags = taglist,
+                Category = categoryList
             };
-            _context.Add(NewsCreationDTO);
+            _context.Add(newsDb);
             _context.SaveChanges();
-            return NewsCreationDTO;
+            return newsDb.NewsId;
         }
 
-        public News UpdateNews(int newwsId, NewsCreationDTO news)
+        public int UpdateNews(NewsUpdateDTO model)
         {
-           news.UpdateDate = DateTime.Now;
-           var poster = "";
-           if (news.Poster != null)
-           {
-              
-                   string deleteimagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/image",
-                       news.Poster.FileName);
-                   if (File.Exists(deleteimagePath))
-                   {
-                       File.Delete(deleteimagePath);
-                   }
-                   
+            var newsDb = _context.News.FirstOrDefault(x => x.NewsId == model.NewsId);
+            if (newsDb == null)
+                return -1;
+            // IMG
+            string poster;
+            if (model.Poster != null)
+            {
+                poster = NameGenerator.GenerateUniqCode() + Path.GetExtension(model.Poster.FileName);
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/news/image",
+                    poster);
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    model.Poster.CopyTo(stream);
+                }
+            }
+            else
+            {
+                poster = newsDb.Poster;
+            }
 
-                   poster = NameGenerator.GenerateUniqCode() + Path.GetExtension(news.Poster.FileName);
-                   string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/news/image",
-                       poster);
 
-               using (var stream = new FileStream(imagePath, FileMode.Create))
-               {
-                   news.Poster.CopyTo(stream);
-               }
+            var taglist = new List<Tag>();
+            foreach (var id in model.TagsId)
+            {
+                taglist.Add(_context.Tags.FirstOrDefault(x => x.Id == id));
+            }
 
-           } 
-           var NewsCreationDTO = new News()
-           {
-               NewsTitle = news.NewsTitle,
-               NewsBody = news.NewsBody,
-            
-               Poster =  poster,
-               CategoryId = news.CategoryId,
-               SubGroup = news.SubGroup
-           };
-           _context.Add(NewsCreationDTO);
-           _context.SaveChanges();
-           return NewsCreationDTO;
-        
+            var categoryList = new List<Category>();
+            foreach (var id in model.CategoriesId)
+            {
+                categoryList.Add(_context.Categories.FirstOrDefault(x => x.CategoryId == id));
+            }
+
+            var news = new News()
+            {
+                NewsTitle = model.NewsTitle,
+                NewsBody = model.NewsBody,
+                Poster = poster,
+                User = newsDb.User,
+                Tags = taglist,
+                Category = categoryList,
+                UpdateTime = DateTime.Now
+            };
+            _context.Add(news);
+            _context.SaveChanges();
+            return news.NewsId;
         }
 
-        public int DeleteNews(int newsId)
+        public bool DeleteNews(int newsId)
         {
-            var news = _context.News.Find(newsId);
-            _context.News.Remove(news);
+            var newsDb = _context.News.FirstOrDefault(x => x.NewsId == newsId);
+            if (newsDb == null)
+                return false;
+            _context.Remove(newsDb);
             _context.SaveChanges();
-            return newsId;
+            return true;
         }
     }
 }
