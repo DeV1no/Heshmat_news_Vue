@@ -8,6 +8,7 @@ namespace HeshmastNews.Services
     {
         List<CategoryVewModelDTO> GetAllCategories();
         List<CategoryVewModelDTO> GetAllParrentCategory();
+        List<CategoryVewModelDTO> GetAllSubCategory();
         CategoryVewModelDTO GetCategoryById(int Id);
         int AddCategory(CategoryCreateDTO model);
         int UpdateCategory(CategoryUpdateDTO model);

@@ -44,6 +44,19 @@ namespace HeshmastNews.Services
             return category;
         }
 
+        public List<CategoryVewModelDTO> GetAllSubCategory()
+        {
+            var subCategoriesDbList = _context.Categories
+                .Where(x => x.ParentId != null).ToList();
+            var parentCategoriesList = new List<CategoryVewModelDTO>();
+
+            foreach (var item in subCategoriesDbList)
+            {
+                parentCategoriesList.Add(_mapper.Map<CategoryVewModelDTO>(item));
+            }
+            return parentCategoriesList;
+        }
+
 
         public CategoryVewModelDTO GetCategoryById(int categoryId)
         {
@@ -64,12 +77,13 @@ namespace HeshmastNews.Services
         public int UpdateCategory(CategoryUpdateDTO model)
         {
             var isExisted = _context.Categories.Any(x => x.CategoryId == model.CategoryId);
-            if (model.ParentId!=null)
+            if (model.ParentId != null)
             {
                 var isParentAExisted = _context.Categories.Any(x => x.ParentId == model.ParentId);
                 if (!isParentAExisted)
                     return -1;
             }
+
             if (!isExisted)
                 return -1;
             var category = _mapper.Map<Category>(model);
@@ -81,11 +95,11 @@ namespace HeshmastNews.Services
         public int DeleteCategory(int id)
         {
             var category = _context.Categories.FirstOrDefault(x => x.CategoryId == id);
-            var isChildExisted=false;
-            if (category.ParentId==null)
+            var isChildExisted = false;
+            if (category.ParentId == null)
                 isChildExisted = _context.Categories.Any(x => x.ParentId == category.CategoryId);
             if (isChildExisted)
-                return -2;// child categrory is existed
+                return -2; // child categrory is existed
             if (category == null)
                 return -1;
             _context.Categories.Remove(category);
