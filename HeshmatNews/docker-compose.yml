@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - '~/.dockerStorage/mariadb/heshmatnews:/var/lib/mysql'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+    command: '--lower_case_table_names=1'
+
+networks:
+  default:
+    name: heshmatnews

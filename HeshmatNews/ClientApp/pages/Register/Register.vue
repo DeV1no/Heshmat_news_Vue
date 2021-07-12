@@ -198,16 +198,20 @@ export default {
   },
   methods: {
     async uniqueUsernameChecker(userName) {
-      await axios
-        .post(`/api/User/isUniqueUserName?username=${userName}`)
-        .then(res => {
-          this.isUniqueUsername = res.data;
-        });
+      if (userName) {
+        await axios
+          .post(`/api/User/isUniqueUserName?username=${userName}`)
+          .then(res => {
+            this.isUniqueUsername = res.data;
+          });
+      }
     },
     async uniqueEmailChecker(email) {
-      await axios.post(`/api/User/isUniqueEmail?email=${email}`).then(res => {
-        this.isUniqueEmail = res.data;
-      });
+      if (email) {
+        await axios.post(`/api/User/isUniqueEmail?email=${email}`).then(res => {
+          this.isUniqueEmail = res.data;
+        });
+      }
     },
     async register() {
       try {
