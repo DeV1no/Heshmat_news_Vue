@@ -56,9 +56,17 @@ namespace HeshmastNews.HeshmatMapper
             // News Mapper
             CreateMap<News, NewsCreationDTO>().ReverseMap();
             CreateMap<NewsListViewModleDTO, News>().ReverseMap()
+                .ForMember(x => x.UserName,
+                    opt => opt.MapFrom(q => q.User.UserName))
                 .ForMember(x => x.CreatedDate,
                     opt => opt.MapFrom(q => q.CreatedDate.ToShamsi()));
             CreateMap<NewsHomeViewModelDTO, News>().ReverseMap()
+                .ForMember(x => x.UserName,
+                    opt => opt.MapFrom(q => q.User.UserName))
+                .ForMember(x => x.Name,
+                    opt => opt.MapFrom(q => q.User.Name))
+                .ForMember(x => x.Family,
+                    opt => opt.MapFrom(q => q.User.Family))
                 .ForMember(x => x.CreatedDate,
                     opt => opt.MapFrom(q => q.CreatedDate.ToShamsi()))
                 .ForMember(x => x.Poster,

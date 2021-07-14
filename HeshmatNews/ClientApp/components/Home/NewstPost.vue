@@ -11,10 +11,13 @@
               <div class="img-square-wrapper">
                 <img class="thumbnail-img" :src="news.poster" alt="" />
                 <div class="topicCategories">
-                  <a href=""
-                    ><label style="cursor:pointer">{{
-                      news.categories.cateGoryName
-                    }}</label></a
+                  <a
+                    href=""
+                    v-for="cat in news.categories"
+                    :key="cat.categoryId"
+                    ><label style="cursor:pointer">
+                      {{ cat.cateGoryName }}
+                    </label></a
                   >
                 </div>
               </div>
@@ -24,7 +27,7 @@
                 <div class="d-flex news-info text-muted">
                   <span>
                     <i class="fa fa-user "></i>
-                    اصغر صغری زاده
+                    {{ news.name + ' ' + news.family }}
                   </span>
 
                   <span class="mr-2">
@@ -60,7 +63,7 @@ export default {
   },
   methods: {
     GetNewstNews() {
-      axios.get('/api/news').then(res => {
+      axios.get('/api/news/NewsHomeList').then(res => {
         this.newsPost = res.data;
       });
     }

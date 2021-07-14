@@ -30,8 +30,8 @@
         </li>
         <li
           class="nav-item dropdown"
-          v-for="sub in subCategory"
-          :key="sub.categoryId"
+          v-for="parent in parentCategories"
+          :key="parent.categoryId"
         >
           <a
             class="nav-link dropdown-toggle"
@@ -42,17 +42,16 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            {{ sub.cateGoryName }}
+            {{ parent.cateGoryName }}
           </a>
 
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a
-              v-for="cat in sub.categories"
-              class="dropdown-item"
-              href="#"
-              :key="cat"
+              class="text-light mr-3"
+              v-for="sub in subCategoryMaker(parent.categoryId)"
+              :key="sub.categoryId"
             >
-              {{ cat.cateGoryName }}
+              {{ sub.cateGoryName }}
             </a>
           </div>
         </li>
@@ -168,12 +167,13 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      subCategory: [],
       isLogin: false,
       tokenId: this.$store.getters.isAuthGet,
       token: '',
       isAdmin: false,
-      currentUser: null
+      currentUser: null,
+      parentCategories: [],
+      subCategories: []
     };
   },
   methods: {
@@ -190,11 +190,7 @@ export default {
         this.isLogin = true;
       }
     },
-    async GetSubCategories() {
-      await axios.get(`/api/categories/getSubCategories`).then(res => {
-        this.subCategory = res.data;
-      });
-    },
+
     autoLog() {
       this.$store.dispatch('autoLog');
     },
@@ -220,15 +216,43 @@ export default {
           this.$store.dispatch('logOut');
         }
       }
+    },
+    async getParrentCategory() {
+      try {
+        await axios
+          .get('/api/categories/getParentCategories')
+          .then(res => (this.parentCategories = res.data));
+      } catch (err) {
+        console.log(err);
+        this.$toast.error('خطای پیشبینی نشده ای رخ داده است').goAway(4500);
+      }
+    },
+
+    async getSubCategories() {
+      try {
+        await axios
+          .get('/api/categories/getSubCategories')
+          .then(res => (this.subCategories = res.data));
+      } catch (err) {
+        console.log(err);
+        this.$toast.error('خطای پیشبینی نشده ای رخ داده است').goAway(4500);
+      }
+    },
+    subCategoryMaker(parentId) {
+      let filteredSubCategories = this.subCategories.filter(
+        q => q.parentId == parentId
+      );
+      return filteredSubCategories;
     }
   },
   computed: {},
   async mounted() {
-    // await this.GetSubCategories();
     await this.logCheck();
     await this.autoLog();
     await this.getCurrentUser();
     await this.activeChecker();
+    await this.getParrentCategory();
+    await this.getSubCategories();
   },
   async created() {
     this.token = localStorage.getItem('token');

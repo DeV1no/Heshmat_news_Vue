@@ -51,9 +51,10 @@
                         </nuxt-link>
 
                         <nuxt-link
+                          class="mr-2"
                           :to="{
-                            name: 'Admin-news-Form-id mr-2',
-                            params: { id: props.row.id }
+                            name: 'Admin-News-Form-id',
+                            params: { id: props.row.newsId }
                           }"
                         >
                           <span class="text-warning fs-13">

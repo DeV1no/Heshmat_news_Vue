@@ -63,28 +63,10 @@ namespace HeshmastNews.Controllers
 
 
         [HttpPut("{id}")]
-        public Task<ActionResult> Put(int id, [FromForm] NewsCreationDTO newsCreationDto)
-        {
-            // var newsDB = await _context.News.FirstOrDefaultAsync;
-
-
-            /*newsDB = _mapper.Map(newsCreationDto, newsDB);
-            if (newsCreationDto.Poster != null)
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    await newsCreationDto.Poster.CopyToAsync(memoryStream);
-                    var content = memoryStream.ToArray();
-                    var extension = Path.GetExtension(newsCreationDto.Poster.FileName);
-                    /*newsCreationDto.Poster =
-                        await _fileStorageService.EditFile(content, extension, containerName, newsDB.Poster,
-                            newsCreationDto.Poster.ContentType);#1#
-                }
-            }*/
-
-            //       await _context.SaveChangesAsync();
-            return null;
-        }
+        [Authorize]
+        public int Put(int id, [FromForm] NewsCreationDTO model)
+            => _newsService.UpdateNews(id,model);
+        
 
         [HttpDelete("{newsId}")]
         public bool Delete(int newsId)

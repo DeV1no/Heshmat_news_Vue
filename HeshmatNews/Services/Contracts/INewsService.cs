@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using dadachMovie.DTOs;
 using Gridify;
 using HeshmastNews.Entities;
@@ -13,7 +14,7 @@ namespace HeshmastNews.Services
         NewsSaveDTO GetNewsSave(int newsId);
         News GetNewsById(int newwsId);
         int AddNews(NewsCreationDTO news, string userId);
-        int UpdateNews(NewsUpdateDTO model);
+        int UpdateNews( int newsId,NewsCreationDTO model);
        bool DeleteNews(int newsId);
     }
 }

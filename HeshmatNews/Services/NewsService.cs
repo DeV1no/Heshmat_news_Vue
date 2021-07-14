@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using dadachMovie.DTOs;
 using HeshmastNews.Convertor;
 using HeshmastNews.Data;
 using HeshmastNews.Entities;
 using HeshmastNews.Generator;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HeshmastNews.Services
@@ -100,9 +102,9 @@ namespace HeshmastNews.Services
             return newsDb.NewsId;
         }
 
-        public int UpdateNews(NewsUpdateDTO model)
+        public int UpdateNews(int newsId,NewsCreationDTO model)
         {
-            var newsDb = _context.News.FirstOrDefault(x => x.NewsId == model.NewsId);
+            var newsDb = _context.News.FirstOrDefault(x => x.NewsId ==newsId);
             if (newsDb == null)
                 return -1;
             // IMG
@@ -121,14 +123,11 @@ namespace HeshmastNews.Services
             {
                 poster = newsDb.Poster;
             }
-
-
             var taglist = new List<Tag>();
             foreach (var id in model.TagsId)
             {
                 taglist.Add(_context.Tags.FirstOrDefault(x => x.Id == id));
             }
-
             var categoryList = new List<Category>();
             foreach (var id in model.CategoriesId)
             {
@@ -137,6 +136,7 @@ namespace HeshmastNews.Services
 
             var news = new News()
             {
+                NewsId = newsId,
                 NewsTitle = model.NewsTitle,
                 NewsBody = model.NewsBody,
                 Poster = poster,
@@ -145,7 +145,7 @@ namespace HeshmastNews.Services
                 Category = categoryList,
                 UpdateTime = DateTime.Now
             };
-            _context.Add(news);
+            _context.News.Update(news);
             _context.SaveChanges();
             return news.NewsId;
         }

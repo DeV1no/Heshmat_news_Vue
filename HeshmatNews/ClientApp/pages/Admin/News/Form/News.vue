@@ -10,7 +10,7 @@
               <div class="card-custom">
                 <div class="card-header-custom">
                   <i class="fa fa-universal-access"></i>
-                  مدیریت خبر
+                  اطلاعات خبر
                 </div>
                 <div class="card-body">
                   <form class="mr-2">
@@ -23,7 +23,7 @@
                             placeholder="عنوان خبر"
                             aria-label="عنوان خبر"
                             aria-describedby="basic-addon1"
-                            v-model="mdl.NewsTitle"
+                            v-model="mdl.newsTitle"
                           />
                         </div>
                       </div>
@@ -47,7 +47,6 @@
                             track-by="name"
                             @update="updateMultiValue"
                           ></multiselect>
-                          {{ groupValue }}
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -69,7 +68,6 @@
                             track-by="name"
                             @update="updateMultiValue"
                           ></multiselect>
-                          {{ tagValue }}
                         </div>
                       </div>
                       <div class="col-md-12">
@@ -78,7 +76,7 @@
                             >متن خبر</label
                           >
                           <textarea
-                            v-model="mdl.NewsBody"
+                            v-model="mdl.newsBody"
                             class="form-control"
                             id="exampleFormControlTextarea1"
                             rows="3"
@@ -98,18 +96,24 @@
                         />
                       </div>
                     </div>
-
-                    <nuxt-link
-                      class="btn btn-danger float-left ml-1"
-                      to="/admin/news"
-                      >بازگشت</nuxt-link
-                    >
-                    <button
-                      class="btn btn-success float-left "
-                      @click.prevent="SubData"
-                    >
-                      ثبت اطلاعات
-                    </button>
+                    <div class="previewImage">
+                      <img :src="previewImage" class="img-fluid" />
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 mt-4">
+                        <nuxt-link class="btn btn-danger ml-1" to="/admin/news">
+                          <i class="fa fa-undo"></i>
+                          بازگشت</nuxt-link
+                        >
+                        <button
+                          class="btn btn-success "
+                          @click.prevent="SubData"
+                        >
+                          <i class="fa fa-save"></i>
+                          ثبت اطلاعات
+                        </button>
+                      </div>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -139,10 +143,11 @@ export default {
       tagOptions: [],
       groupOptions: [],
       mdl: {
-        NewsTitle: '',
-        NewsBody: '',
-        Poster: ''
+        newsTitle: '',
+        newsBody: '',
+        poster: ''
       },
+      previewImage: null,
       TagsId: [],
       CategoriesId: []
     };
@@ -174,7 +179,7 @@ export default {
       return `${tagName}`;
     },
     onFileSelected(event) {
-      this.mdl.Poster = event.target.files[0];
+      this.mdl.poster = event.target.files[0];
     },
     categoryIdMaker() {
       this.groupValue.forEach(q => {
@@ -190,7 +195,6 @@ export default {
     SubData() {
       this.tagIdMaker();
       this.categoryIdMaker();
-      console.log(this.mdl);
       const form = new FormData();
       form.append('CategoriesId', this.CategoriesId);
       form.append('TagsId', this.TagsId);
@@ -199,34 +203,61 @@ export default {
       }
 
       try {
-        axios
-          .post('/api/news/AddNews', form, {
+        let ax;
+        if (!this.isEditMode)
+          ax = axios.post('/api/news/AddNews', form, {
             headers: {
               Authorization: ` Bearer ${this.token}`
             }
-          })
-          .then(res => {
-            if (res.data > 0) {
-              this.$toast.success('اطلاعات با موفقیت ثبت شد').goAway(4500);
-
-              this.$router.push('/admin/news/list');
-            } else {
-              this.$toast
-                .danger('خطای پیشبینی نشده ای رخ داده است ')
-                .goAway(4500);
+          });
+        else
+          ax = axios.put(`/api/news/${this.id}`, form, {
+            headers: {
+              Authorization: ` Bearer ${this.token}`
             }
           });
+        ax.then(res => {
+          if (res.data > 0) {
+            this.$toast.success('اطلاعات با موفقیت ثبت شد').goAway(4500);
+
+            this.$router.push('/admin/news/list');
+          } else {
+            this.$toast
+              .danger('خطای پیشبینی نشده ای رخ داده است ')
+              .goAway(4500);
+          }
+        });
       } catch (err) {
         console.log(err);
       }
+    },
+    editModeChecker() {
+      if (this.id) this.isEditMode = true;
+    },
+    getSaveData() {
+      axios.get(`/api/news/SaveDTO/${this.id}`).then(res => {
+        this.mdl = res.data;
+        this.previewImage = res.data.poster;
+        this.mdl.poster = '';
+      });
     }
   },
-  mounted() {
+  async mounted() {
     this.token = localStorage.getItem('token');
+    this.editModeChecker();
     this.getSubGroups();
     this.getTags();
+    if (this.isEditMode) {
+      await this.getSaveData();
+    }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.previewImage {
+  max-height: 480px;
+  max-width: 950px;
+  margin: 2rem auto 2rem auto;
+}
+</style>
