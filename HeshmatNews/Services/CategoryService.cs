@@ -19,6 +19,8 @@ namespace HeshmastNews.Services
             _mapper = mapper;
         }
 
+       
+
         public List<CategoryVewModelDTO> GetAllCategories()
         {
             var category = new List<CategoryVewModelDTO>();

@@ -42,9 +42,9 @@ namespace HeshmastNews.Controllers
         public List<NewsListViewModleDTO> GetNewsList()
             => _newsService.GetNewsList();
 
-        [HttpGet("NewsHomeList")]
-        public List<NewsHomeViewModelDTO> GetNewsHomeList()
-            => _newsService.GetNewsHomeList();
+        [HttpGet("NewsHomeList/{take:int}/{skip:int}")]
+        public List<NewsHomeViewModelDTO> GetNewsHomeList(int take, int skip)
+            => _newsService.GetNewsHomeList(take, skip);
 
         [HttpGet("{newsId}", Name = "getNews")]
         public News Get(int newsId)
@@ -65,8 +65,8 @@ namespace HeshmastNews.Controllers
         [HttpPut("{id}")]
         [Authorize]
         public int Put(int id, [FromForm] NewsCreationDTO model)
-            => _newsService.UpdateNews(id,model);
-        
+            => _newsService.UpdateNews(id, model);
+
 
         [HttpDelete("{newsId}")]
         public bool Delete(int newsId)

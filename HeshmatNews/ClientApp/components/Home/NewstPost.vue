@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     GetNewstNews() {
-      axios.get('/api/news/NewsHomeList').then(res => {
+      axios.get('/api/news/NewsHomeList/2/0').then(res => {
         this.newsPost = res.data;
       });
     }

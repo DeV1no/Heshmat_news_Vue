@@ -2382,6 +2382,38 @@
           "lib/netcoreapp3.1/VueCliMiddleware.dll": {}
         }
       },
+      "CategoryService_UnitTest/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Microsoft.NET.Test.Sdk": "16.9.4",
+          "NUnit": "3.13.1",
+          "NUnit3TestAdapter": "3.17.0",
+          "coverlet.collector": "3.0.2"
+        },
+        "compile": {
+          "bin/placeholder/CategoryService_UnitTest.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CategoryService_UnitTest.dll": {}
+        }
+      },
+      "CategoyService_UnitTest/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Microsoft.NET.Test.Sdk": "16.9.4",
+          "NUnit": "3.13.1",
+          "NUnit3TestAdapter": "3.17.0",
+          "coverlet.collector": "3.0.2"
+        },
+        "compile": {
+          "bin/placeholder/CategoyService_UnitTest.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CategoyService_UnitTest.dll": {}
+        }
+      },
       "TestProject1/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -8095,6 +8127,16 @@
         "vueclimiddleware.nuspec"
       ]
     },
+    "CategoryService_UnitTest/1.0.0": {
+      "type": "project",
+      "path": "../CategoryService_UnitTest/CategoryService_UnitTest.csproj",
+      "msbuildProject": "../CategoryService_UnitTest/CategoryService_UnitTest.csproj"
+    },
+    "CategoyService_UnitTest/1.0.0": {
+      "type": "project",
+      "path": "../CategoyService_UnitTest/CategoyService_UnitTest.csproj",
+      "msbuildProject": "../CategoyService_UnitTest/CategoyService_UnitTest.csproj"
+    },
     "TestProject1/1.0.0": {
       "type": "project",
       "path": "../TestProject1/TestProject1.csproj",
@@ -8105,6 +8147,8 @@
     "net5.0": [
       "AutoMapper >= 10.1.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.1.0",
+      "CategoryService_UnitTest >= 1.0.0",
+      "CategoyService_UnitTest >= 1.0.0",
       "Gridify >= 1.1.0",
       "Gridify.EntityFramework >= 1.1.0",
       "HtmlAgilityPack >= 1.11.30",
@@ -8151,6 +8195,12 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
+            "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoryService_UnitTest\\CategoryService_UnitTest.csproj": {
+              "projectPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoryService_UnitTest\\CategoryService_UnitTest.csproj"
+            },
+            "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoyService_UnitTest\\CategoyService_UnitTest.csproj": {
+              "projectPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoyService_UnitTest\\CategoyService_UnitTest.csproj"
+            },
             "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\TestProject1\\TestProject1.csproj": {
               "projectPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\TestProject1\\TestProject1.csproj"
             }

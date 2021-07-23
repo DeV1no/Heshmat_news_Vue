@@ -76,6 +76,8 @@
         <Folder Include="wwwroot\news\image" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\CategoryService_UnitTest\CategoryService_UnitTest.csproj" />
+      <ProjectReference Include="..\CategoyService_UnitTest\CategoyService_UnitTest.csproj" />
       <ProjectReference Include="..\TestProject1\TestProject1.csproj" />
     </ItemGroup>
 

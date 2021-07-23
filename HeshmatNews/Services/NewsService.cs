@@ -25,6 +25,10 @@ namespace HeshmastNews.Services
             _mapper = mapper;
         }
 
+        public NewsService()
+        {
+        }
+
 
         public List<NewsListViewModleDTO> GetNewsList()
         {
@@ -38,18 +42,20 @@ namespace HeshmastNews.Services
             return newsList;
         }
 
-        public List<NewsHomeViewModelDTO> GetNewsHomeList()
+        public List<NewsHomeViewModelDTO> GetNewsHomeList(int take, int skip)
         {
-            var newsDBList = _context.News
-                .Include(x => x.User).Include(x => x.Category).ToList();
-            var news = new List<NewsHomeViewModelDTO>();
-            foreach (var item in newsDBList)
+            var newsDbList = _context.News.Include(x => x.User)
+                .OrderBy(x => x.NewsId)
+                .Skip(skip).Take(take).ToList();
+            var newsList = new List<NewsHomeViewModelDTO>();
+            foreach (var item in newsDbList)
             {
-                news.Add(_mapper.Map<NewsHomeViewModelDTO>(item));
+                newsList.Add(_mapper.Map<NewsHomeViewModelDTO>(item));
             }
 
-            return news;
+            return newsList;
         }
+
 
         public NewsSaveDTO GetNewsSave(int newsId)
         {
@@ -102,9 +108,9 @@ namespace HeshmastNews.Services
             return newsDb.NewsId;
         }
 
-        public int UpdateNews(int newsId,NewsCreationDTO model)
+        public int UpdateNews(int newsId, NewsCreationDTO model)
         {
-            var newsDb = _context.News.FirstOrDefault(x => x.NewsId ==newsId);
+            var newsDb = _context.News.FirstOrDefault(x => x.NewsId == newsId);
             if (newsDb == null)
                 return -1;
             // IMG
@@ -123,11 +129,13 @@ namespace HeshmastNews.Services
             {
                 poster = newsDb.Poster;
             }
+
             var taglist = new List<Tag>();
             foreach (var id in model.TagsId)
             {
                 taglist.Add(_context.Tags.FirstOrDefault(x => x.Id == id));
             }
+
             var categoryList = new List<Category>();
             foreach (var id in model.CategoriesId)
             {
