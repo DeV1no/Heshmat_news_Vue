@@ -4,146 +4,6 @@
     "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\HeshmatNews\\HeshmatNews.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoryService_UnitTest\\CategoryService_UnitTest.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoryService_UnitTest\\CategoryService_UnitTest.csproj",
-        "projectName": "CategoryService_UnitTest",
-        "projectPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoryService_UnitTest\\CategoryService_UnitTest.csproj",
-        "packagesPath": "C:\\Users\\Lion\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoryService_UnitTest\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\Lion\\AppData\\Roaming\\NuGet\\NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "net5.0"
-        ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
-          "dependencies": {
-            "Microsoft.NET.Test.Sdk": {
-              "target": "Package",
-              "version": "[16.9.4, )"
-            },
-            "NUnit": {
-              "target": "Package",
-              "version": "[3.13.1, )"
-            },
-            "NUnit3TestAdapter": {
-              "target": "Package",
-              "version": "[3.17.0, )"
-            },
-            "coverlet.collector": {
-              "target": "Package",
-              "version": "[3.0.2, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoyService_UnitTest\\CategoyService_UnitTest.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoyService_UnitTest\\CategoyService_UnitTest.csproj",
-        "projectName": "CategoyService_UnitTest",
-        "projectPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoyService_UnitTest\\CategoyService_UnitTest.csproj",
-        "packagesPath": "C:\\Users\\Lion\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoyService_UnitTest\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\Lion\\AppData\\Roaming\\NuGet\\NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "net5.0"
-        ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
-          "dependencies": {
-            "Microsoft.NET.Test.Sdk": {
-              "target": "Package",
-              "version": "[16.9.4, )"
-            },
-            "NUnit": {
-              "target": "Package",
-              "version": "[3.13.1, )"
-            },
-            "NUnit3TestAdapter": {
-              "target": "Package",
-              "version": "[3.17.0, )"
-            },
-            "coverlet.collector": {
-              "target": "Package",
-              "version": "[3.0.2, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
     "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\HeshmatNews\\HeshmatNews.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -154,28 +14,20 @@
         "outputPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\HeshmatNews\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Lion\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Lion\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
-            "projectReferences": {
-              "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoryService_UnitTest\\CategoryService_UnitTest.csproj": {
-                "projectPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoryService_UnitTest\\CategoryService_UnitTest.csproj"
-              },
-              "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoyService_UnitTest\\CategoyService_UnitTest.csproj": {
-                "projectPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\CategoyService_UnitTest\\CategoyService_UnitTest.csproj"
-              },
-              "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\TestProject1\\TestProject1.csproj": {
-                "projectPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\TestProject1\\TestProject1.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -289,77 +141,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\TestProject1\\TestProject1.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\TestProject1\\TestProject1.csproj",
-        "projectName": "TestProject1",
-        "projectPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\TestProject1\\TestProject1.csproj",
-        "packagesPath": "C:\\Users\\Lion\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lion\\Desktop\\Heshmat_news_Vue\\TestProject1\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\Lion\\AppData\\Roaming\\NuGet\\NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "net5.0"
-        ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
-          "dependencies": {
-            "Microsoft.NET.Test.Sdk": {
-              "target": "Package",
-              "version": "[16.9.4, )"
-            },
-            "NUnit": {
-              "target": "Package",
-              "version": "[3.13.1, )"
-            },
-            "NUnit3TestAdapter": {
-              "target": "Package",
-              "version": "[3.17.0, )"
-            },
-            "coverlet.collector": {
-              "target": "Package",
-              "version": "[3.0.2, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

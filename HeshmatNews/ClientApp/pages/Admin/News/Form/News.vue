@@ -27,7 +27,22 @@
                           />
                         </div>
                       </div>
-
+                      <div class="col-md-12">
+                        <div class="form-check">
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            انتخاب سردبیر
+                          </label>
+                          <input
+                            class="form-check-input mr-2"
+                            type="checkbox"
+                            v-model="mdl.isChoseClerck"
+                            id="isChoseClerck"
+                          />
+                        </div>
+                      </div>
                       <div class="col-md-6">
                         <div>
                           <label class="typo__label"> </label>
@@ -101,7 +116,10 @@
                     </div>
                     <div class="row">
                       <div class="col-md-12 mt-4">
-                        <nuxt-link class="btn btn-danger ml-1" to="/admin/news">
+                        <nuxt-link
+                          class="btn btn-danger ml-1"
+                          to="/admin/news/List"
+                        >
                           <i class="fa fa-undo"></i>
                           بازگشت</nuxt-link
                         >
@@ -145,7 +163,8 @@ export default {
       mdl: {
         newsTitle: '',
         newsBody: '',
-        poster: ''
+        poster: '',
+        isChoseClerck: false
       },
       previewImage: null,
       TagsId: [],

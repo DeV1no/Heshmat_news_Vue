@@ -9,5 +9,7 @@ namespace dadachMovie.DTOs
         public string NewsBody { get; set; }
         public List<int> TagsId { get; set; }
         public string Poster { get; set; }
+        public bool  isChoseClerck{ get; set; }
+
     }
 }

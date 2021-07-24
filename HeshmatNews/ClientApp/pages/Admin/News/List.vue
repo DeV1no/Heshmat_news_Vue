@@ -111,6 +111,11 @@ export default {
           label: 'نویسنده (نام کاربری)',
           field: 'userName'
         },
+
+        {
+          label: 'انتخاب سردبیر ؟',
+          field: this.isChoseClerck
+        },
         {
           label: '',
           field: 'actions',
@@ -121,6 +126,9 @@ export default {
     };
   },
   methods: {
+    isChoseClerck(row) {
+      return row.isChoseClerck ? 'بله' : 'خیر';
+    },
     getNewsList() {
       axios.get('/api/news/NewsList').then(res => (this.news = res.data));
     },

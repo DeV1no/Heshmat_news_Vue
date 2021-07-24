@@ -8,5 +8,6 @@ namespace dadachMovie.DTOs
         public string NewsTitle { get; set; }
         public string CreatedDate { get; set; }
         public string UserName { get; set; }
+        public bool  isChoseClerck{ get; set; }
     }
 }

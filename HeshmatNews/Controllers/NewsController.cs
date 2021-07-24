@@ -46,11 +46,14 @@ namespace HeshmastNews.Controllers
         public List<NewsHomeViewModelDTO> GetNewsHomeList(int take, int skip)
             => _newsService.GetNewsHomeList(take, skip);
 
+        [HttpGet("NewsChoseClerkList/{take:int}/{skip:int}")]
+        public List<NewsHomeViewModelDTO> GetNewsChoseClerkList(int take, int skip)
+            => _newsService.GetNewsChoseClerkList(take, skip);
+
         [HttpGet("{newsId}", Name = "getNews")]
         public News Get(int newsId)
-        {
-            return _newsService.GetNewsById(newsId);
-        }
+            => _newsService.GetNewsById(newsId);
+
 
         [HttpGet("SaveDTO/{newsId:int}")]
         public NewsSaveDTO GetNewsSaveDTO(int newsId)

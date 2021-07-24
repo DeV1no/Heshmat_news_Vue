@@ -79,6 +79,9 @@ namespace dadachMovie.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isChoseClerck")
+                        .HasColumnType("tinyint(1)");
+
                     b.HasKey("NewsId");
 
                     b.HasIndex("UserId");

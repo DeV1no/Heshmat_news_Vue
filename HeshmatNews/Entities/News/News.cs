@@ -17,6 +17,7 @@ namespace HeshmastNews.Entities
         public string Poster { get; set; }
        
         public DateTime? UpdateTime { get; set; }
+        public bool  isChoseClerck{ get; set; }
 
         public News()
         {

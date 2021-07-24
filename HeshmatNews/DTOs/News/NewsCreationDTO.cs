@@ -22,5 +22,6 @@ namespace dadachMovie.DTOs
         public List<int> TagsId { get; set; }
 
         public IFormFile Poster { get; set; }
+        public bool isChoseClerck { get; set; }
     }
 }

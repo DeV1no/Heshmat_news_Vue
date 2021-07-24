@@ -30,11 +30,11 @@ namespace HeshmastNews.Services
         }
 
 
-        public List<NewsListViewModleDTO> GetNewsList()
+          public List<NewsListViewModleDTO> GetNewsList()
         {
             var newsDbList = _context.News.Include(x => x.User).ToList();
             var newsList = new List<NewsListViewModleDTO>();
-            foreach (var item in newsDbList)
+              foreach (var item in newsDbList)
             {
                 newsList.Add(_mapper.Map<NewsListViewModleDTO>(item));
             }
@@ -44,7 +44,22 @@ namespace HeshmastNews.Services
 
         public List<NewsHomeViewModelDTO> GetNewsHomeList(int take, int skip)
         {
+            var newsDbList = _context.News.Include(x => x.User) 
+                .OrderBy(x => x.NewsId)
+                .Skip(skip).Take(take).ToList();
+             var newsList = new List<NewsHomeViewModelDTO>(); 
+            foreach (var item in newsDbList)
+            {
+                newsList.Add(_mapper.Map<NewsHomeViewModelDTO>(item));
+            }
+
+            return newsList;
+        }
+
+        public List<NewsHomeViewModelDTO> GetNewsChoseClerkList(int take, int skip)
+        {
             var newsDbList = _context.News.Include(x => x.User)
+                .Where(x => x.isChoseClerck)
                 .OrderBy(x => x.NewsId)
                 .Skip(skip).Take(take).ToList();
             var newsList = new List<NewsHomeViewModelDTO>();

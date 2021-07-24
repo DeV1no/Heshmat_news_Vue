@@ -11,6 +11,7 @@ namespace HeshmastNews.Services
     {
         List<NewsListViewModleDTO> GetNewsList();
         List<NewsHomeViewModelDTO> GetNewsHomeList(int take,int skip);
+        List<NewsHomeViewModelDTO> GetNewsChoseClerkList(int take,int skip);
         NewsSaveDTO GetNewsSave(int newsId);
         News GetNewsById(int newwsId);
         int AddNews(NewsCreationDTO news, string userId);

@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     GetClerkNews() {
-      axios.get('/api/news?PageSize=6').then(res => {
+      axios.get('/api/news/NewsChoseClerkList/5/0').then(res => {
         this.clerkNews = res.data;
       });
     }
