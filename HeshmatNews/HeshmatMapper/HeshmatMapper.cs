@@ -6,6 +6,7 @@ using dadachMovie.DTOs.Role;
 using HeshmastNews.Convertor;
 using HeshmastNews.DTOs;
 using HeshmastNews.DTOs.Comment;
+using HeshmastNews.DTOs.News;
 using HeshmastNews.DTOs.Role;
 using HeshmastNews.DTOs.Tag;
 using HeshmastNews.DTOs.User;
@@ -73,6 +74,24 @@ namespace HeshmastNews.HeshmatMapper
                     opt => opt.MapFrom(q => $"http://localhost:5000/news/image/{q.Poster}"))
                 .ForMember(x => x.Categories,
                     opt => opt.MapFrom(q => q.Category));
+
+            CreateMap<NewsSingleDTO, News>().ReverseMap()
+               .ForMember(x => x.UserName,
+                   opt => opt.MapFrom(q => q.User.UserName))
+               .ForMember(x => x.Name,
+                   opt => opt.MapFrom(q => q.User.Name))
+               .ForMember(x => x.Family,
+                   opt => opt.MapFrom(q => q.User.Family))
+               .ForMember(x => x.CreatedDate,
+                   opt => opt.MapFrom(q => q.CreatedDate.ToShamsi()))
+               .ForMember(x => x.Poster,
+                   opt => opt.MapFrom(q => $"http://localhost:5000/news/image/{q.Poster}"))
+               .ForMember(x => x.Categories,
+                   opt => opt.MapFrom(q => q.Category))
+
+                .ForMember(x => x.Tags,
+                   opt => opt.MapFrom(q => q.Tags))
+               ;
 
             CreateMap<NewsSaveDTO, News>().ReverseMap()
                 .ForMember(x => x.Poster,

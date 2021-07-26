@@ -8,6 +8,7 @@ using Gridify;
 using HeshmastNews.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs;
+using HeshmastNews.DTOs.News;
 using HeshmastNews.Entities;
 using HeshmastNews.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -49,6 +50,10 @@ namespace HeshmastNews.Controllers
         [HttpGet("NewsChoseClerkList/{take:int}/{skip:int}")]
         public List<NewsHomeViewModelDTO> GetNewsChoseClerkList(int take, int skip)
             => _newsService.GetNewsChoseClerkList(take, skip);
+
+        [HttpGet("NewsSingle/{newsId:int}")]
+        public Task<NewsSingleDTO> GetSingleNess(int newsId)
+            => _newsService.GetSingleNews(newsId);
 
         [HttpGet("{newsId}", Name = "getNews")]
         public News Get(int newsId)

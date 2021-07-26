@@ -9,7 +9,14 @@
           <div class="card mt-1" v-for="news in newsPost" :key="news.newsId">
             <div class="card-horizontal">
               <div class="img-square-wrapper">
-                <img class="thumbnail-img" :src="news.poster" alt="" />
+                <nuxt-link
+                  :to="{
+                    name: 'News-id',
+                    params: { id: news.newsId }
+                  }"
+                >
+                  <img class="thumbnail-img" :src="news.poster" alt="" />
+                </nuxt-link>
                 <div class="topicCategories">
                   <a
                     href=""
@@ -41,8 +48,19 @@
                 </div>
                 <hr />
                 <p class="card-text">
-                  {{ news.newsBody }}
+                  {{ news.newsBody.substring(0, 500) + '...' }}
                 </p>
+                <div>
+                  <nuxt-link
+                    class="text-primary float-left"
+                    :to="{
+                      name: 'News-id',
+                      params: { id: news.newsId }
+                    }"
+                  >
+                    مشاهده
+                  </nuxt-link>
+                </div>
               </div>
             </div>
           </div>
@@ -63,7 +81,7 @@ export default {
   },
   methods: {
     GetNewstNews() {
-      axios.get('/api/news/NewsHomeList/2/0').then(res => {
+      axios.get('/api/news/NewsHomeList/10/0').then(res => {
         this.newsPost = res.data;
       });
     }

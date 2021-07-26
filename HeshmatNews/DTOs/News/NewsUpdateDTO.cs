@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace dadachMovie.DTOs
+namespace HeshmastNews.DTOs.News
 {
     public class NewsUpdateDTO:NewsCreationDTO
     {

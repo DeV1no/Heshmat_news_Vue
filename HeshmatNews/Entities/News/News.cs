@@ -28,5 +28,6 @@ namespace HeshmastNews.Entities
         public List<Category>  Category { get; set; }
         public User User { get; set; }
         public List<Tag> Tags { get; set; }
+        public string Source{ get; set; }
     }
 }

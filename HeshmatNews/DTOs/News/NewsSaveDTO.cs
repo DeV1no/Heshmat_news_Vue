@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace dadachMovie.DTOs
+namespace HeshmastNews.DTOs.News
 {
     public class NewsSaveDTO
     {

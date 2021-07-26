@@ -17,7 +17,14 @@
                 <p class="copy">
                   {{ news.newsBody }}
                 </p>
-                <button class="btn">مشاهده خبر</button>
+                <nuxt-link
+                  :to="{
+                    name: 'News-id',
+                    params: { id: news.newsId }
+                  }"
+                >
+                  <button class="btn">مشاهده خبر</button>
+                </nuxt-link>
               </div>
             </div>
           </main>

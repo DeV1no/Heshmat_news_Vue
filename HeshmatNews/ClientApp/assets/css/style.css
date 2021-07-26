@@ -9,6 +9,9 @@
 .red-color {
   color: #c72727 !important ;
 }
+a {
+  text-decoration: none !important;
+}
 .card-custom {
   box-shadow: rgba(0, 0, 0, 0.15) 1.25px 1.25px 1.5px;
 }

@@ -6,7 +6,7 @@ using HeshmastNews.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace dadachMovie.DTOs
+namespace HeshmastNews.DTOs
 {
     public class NewsCreationDTO
     {
@@ -23,5 +23,8 @@ namespace dadachMovie.DTOs
 
         public IFormFile Poster { get; set; }
         public bool isChoseClerck { get; set; }
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public string Source { get; set; }
+
     }
 }

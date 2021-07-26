@@ -99,7 +99,20 @@
                         </div>
                       </div>
 
-                      <div class="custom-file mb-2">
+                      <div class="col-md-12">
+                        <div class="input-group mb-3">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="منبع خبر"
+                            aria-label="منبع خبر"
+                            aria-describedby="basic-addon1"
+                            v-model="mdl.source"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="custom-file mb-2 col-md-12">
                         <label class="custom-file-label " for="customFile"
                           >تصویر را انتخاب کنید</label
                         >
@@ -164,7 +177,8 @@ export default {
         newsTitle: '',
         newsBody: '',
         poster: '',
-        isChoseClerck: false
+        isChoseClerck: false,
+        source: ''
       },
       previewImage: null,
       TagsId: [],

@@ -5,8 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using dadachMovie.DTOs;
-using HeshmastNews.Convertor;
 using HeshmastNews.Data;
+using HeshmastNews.DTOs;
+using HeshmastNews.DTOs.News;
 using HeshmastNews.Entities;
 using HeshmastNews.Generator;
 using Microsoft.AspNetCore.Mvc;
@@ -30,11 +31,11 @@ namespace HeshmastNews.Services
         }
 
 
-          public List<NewsListViewModleDTO> GetNewsList()
+        public List<NewsListViewModleDTO> GetNewsList()
         {
             var newsDbList = _context.News.Include(x => x.User).ToList();
             var newsList = new List<NewsListViewModleDTO>();
-              foreach (var item in newsDbList)
+            foreach (var item in newsDbList)
             {
                 newsList.Add(_mapper.Map<NewsListViewModleDTO>(item));
             }
@@ -44,10 +45,10 @@ namespace HeshmastNews.Services
 
         public List<NewsHomeViewModelDTO> GetNewsHomeList(int take, int skip)
         {
-            var newsDbList = _context.News.Include(x => x.User) 
+            var newsDbList = _context.News.Include(x => x.User)
                 .OrderBy(x => x.NewsId)
                 .Skip(skip).Take(take).ToList();
-             var newsList = new List<NewsHomeViewModelDTO>(); 
+            var newsList = new List<NewsHomeViewModelDTO>();
             foreach (var item in newsDbList)
             {
                 newsList.Add(_mapper.Map<NewsHomeViewModelDTO>(item));
@@ -175,12 +176,24 @@ namespace HeshmastNews.Services
 
         public bool DeleteNews(int newsId)
         {
-            var newsDb = _context.News.FirstOrDefault(x => x.NewsId == newsId);
+            var newsDb = _context.News
+                .Include(x => x.Category).Include(x => x.Category)
+                .FirstOrDefault(x => x.NewsId == newsId);
             if (newsDb == null)
                 return false;
             _context.Remove(newsDb);
             _context.SaveChanges();
             return true;
+        }
+
+        public async Task<NewsSingleDTO> GetSingleNews(int newsId)
+        {
+            var newsDb = await _context.News
+                .Include(x => x.Category).Include(x => x.User)
+                .Include(x => x.Tags)
+                .FirstOrDefaultAsync(x => x.NewsId == newsId);
+
+            return _mapper.Map<NewsSingleDTO>(newsDb);
         }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using HeshmastNews.Entities;
 
-namespace dadachMovie.DTOs
+namespace HeshmastNews.DTOs
 {
     public class NewsViewModelDTO
     {
