@@ -29,8 +29,14 @@
                 </div>
               </div>
               <div class="card-body">
-                <h4 class="card-title">{{ news.newsTitle }}</h4>
-
+                <nuxt-link
+                  :to="{
+                    name: 'News-id',
+                    params: { id: news.newsId }
+                  }"
+                >
+                  <h4 class="card-title">{{ news.newsTitle }}</h4>
+                </nuxt-link>
                 <div class="d-flex news-info text-muted">
                   <span>
                     <i class="fa fa-user "></i>
@@ -68,14 +74,33 @@
         <div class="col-md-12 mt-3 mb-0">
           <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-              <li class="page-item ">
-                <a class="page-link" href="#" tabindex="-1">بعد</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
               <li class="page-item">
                 <a class="page-link" href="#">قبل</a>
+              </li>
+              <!-- <nuxt-link
+                v-for="num in pagination"
+                :to="{
+                  name: 'Home-id',
+                  params: { id: `${num}#newst-post` }
+                }"
+                class="page-link"
+                active-class="active"
+                :key="num"
+              > -->
+              <a
+                class="page-link"
+                v-for="num in pagination"
+                :key="num"
+                :href="`/Home/${num}#newst-post`"
+              >
+                <li class="page-item">
+                  {{ num }}
+                </li>
+              </a>
+              <!-- </nuxt-link> -->
+
+              <li class="page-item ">
+                <a class="page-link" href="#" tabindex="-1">بعد</a>
               </li>
             </ul>
           </nav>
@@ -91,18 +116,48 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      newsPost: []
+      id: null,
+      showItemInpage: 4,
+      newsPost: [],
+      totallNews: null,
+      pagination: []
     };
   },
   methods: {
     GetNewstNews() {
-      axios.get('/api/news/NewsHomeList/10/0').then(res => {
-        this.newsPost = res.data;
+      axios
+        .get(`/api/news/NewsHomeList/${this.showItemInpage}/${this.id}`)
+        .then(res => {
+          this.newsPost = res.data;
+        });
+    },
+    getTotallNews() {
+      axios.get('/api/news/count').then(res => {
+        this.totallNews = res.data;
+        this.totallPageMaker();
       });
+    },
+    idMaker() {
+      if (this.$route.params.id == null || this.$route.params.id == 1)
+        this.id = 0;
+      else this.id = this.$route.params.id;
+    },
+    totallPageMaker() {
+      let pageNum = Math.ceil(this.totallNews / this.showItemInpage);
+      this.pageMaker(pageNum);
+    },
+
+    pageMaker(p) {
+      this.pagination = [];
+      for (let i = 1; i <= p; i++) {
+        this.pagination.push(i);
+      }
     }
   },
-  mounted() {
-    this.GetNewstNews();
+  async mounted() {
+    this.idMaker();
+    await this.GetNewstNews();
+    await this.getTotallNews();
   }
 };
 </script>
@@ -128,5 +183,9 @@ export default {
 }
 .page-link {
   color: #333;
+}
+.active {
+  background-color: rgb(55, 55, 211) !important;
+  color: #fff !important;
 }
 </style>

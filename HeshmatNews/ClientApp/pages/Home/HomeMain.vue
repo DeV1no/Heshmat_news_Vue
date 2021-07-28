@@ -5,7 +5,9 @@
         <top-post />
       </div>
       <div class="col-md-7">
-        <newst-post />
+        <transition name="fade">
+          <newst-post id="newst-post" />
+        </transition>
       </div>
       <div class="col-md-3">
         <last-videos />
@@ -32,4 +34,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+</style>
