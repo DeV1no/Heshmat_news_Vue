@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using dadachMovie.DTOs.Category;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;
@@ -33,10 +34,17 @@ namespace HeshmastNews.Controllers
         [HttpGet("getParentCategories")]
         public List<CategoryVewModelDTO> GetParentCategories()
             => _categoryService.GetAllParrentCategory();
-        
+
         [HttpGet("getSubCategories")]
-        public List<CategoryVewModelDTO> GetSubCategories()
+        public Task<List<CategoryVewModelDTO>> GetSubCategories()
             => _categoryService.GetAllSubCategory();
+
+
+
+
+        [HttpGet("getSubCategoriesWithCount/{skip:int}/{take:int}")]
+        public Task<List<SubCategoryWithCountDTO>> SubCategoryWithCount(int skip, int take)
+           => _categoryService.SubCategoryWithCount(skip, take);
 
 
         [HttpGet("{categoryId:int}", Name = "getCategory")]

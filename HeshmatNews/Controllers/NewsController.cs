@@ -54,6 +54,9 @@ namespace HeshmastNews.Controllers
         [HttpGet("NewsSingle/{newsId:int}")]
         public Task<NewsSingleDTO> GetSingleNess(int newsId)
             => _newsService.GetSingleNews(newsId);
+        [HttpGet("Count")]
+        public Task<int> NewsTotallCount()
+            => _newsService.GetTotallNewsCount();
 
         [HttpGet("{newsId}", Name = "getNews")]
         public News Get(int newsId)

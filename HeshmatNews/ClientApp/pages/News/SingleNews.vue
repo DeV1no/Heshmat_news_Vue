@@ -381,6 +381,7 @@
           </nuxt-link>
         </div>
       </div>
+      <div class="col-md-12"><footer-app /></div>
     </div>
     <loading v-if="isSaving" />
   </div>
@@ -464,7 +465,7 @@ small {
   color: #cac703;
 }
 .news-body {
-  font-size: 13px;
+  font-size: 15px;
 }
 .category-link {
   color: #1d2024;

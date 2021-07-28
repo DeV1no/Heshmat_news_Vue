@@ -5,6 +5,7 @@ import AdminSide from './Admin/AdminAside';
 import NavBar from './Home/nav-bar.vue';
 import Loading from './Loading';
 import Multiselect from 'vue-multiselect';
+import FooterApp from './Home/footer-app';
 
 const components = {
   AdminFooter,
@@ -12,7 +13,8 @@ const components = {
   AdminSide,
   NavBar,
   Loading,
-  Multiselect
+  Multiselect,
+  FooterApp
 };
 
 Object.entries(components).forEach(([name, component]) => {

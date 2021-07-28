@@ -59,6 +59,7 @@ a {
 body {
   line-height: 1.5;
   background: var(--light-color);
+  background-color: #ebebeb;
 }
 
 .corrent {

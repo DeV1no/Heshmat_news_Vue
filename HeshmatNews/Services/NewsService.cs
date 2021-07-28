@@ -46,7 +46,7 @@ namespace HeshmastNews.Services
         public List<NewsHomeViewModelDTO> GetNewsHomeList(int take, int skip)
         {
             var newsDbList = _context.News.Include(x => x.User)
-                .OrderBy(x => x.NewsId)
+                .OrderByDescending(x => x.CreatedDate)
                 .Skip(skip).Take(take).ToList();
             var newsList = new List<NewsHomeViewModelDTO>();
             foreach (var item in newsDbList)
@@ -195,5 +195,9 @@ namespace HeshmastNews.Services
 
             return _mapper.Map<NewsSingleDTO>(newsDb);
         }
+
+        public async Task<int> GetTotallNewsCount()
+             => await _context.News.CountAsync();
+
     }
 }

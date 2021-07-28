@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
+using dadachMovie.DTOs.Category;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;
@@ -19,7 +21,6 @@ namespace HeshmastNews.Services
             _mapper = mapper;
         }
 
-       
 
         public List<CategoryVewModelDTO> GetAllCategories()
         {
@@ -46,7 +47,8 @@ namespace HeshmastNews.Services
             return category;
         }
 
-        public List<CategoryVewModelDTO> GetAllSubCategory()
+
+        public async Task<List<CategoryVewModelDTO>> GetAllSubCategory()
         {
             var subCategoriesDbList = _context.Categories
                 .Where(x => x.ParentId != null).ToList();
@@ -56,7 +58,30 @@ namespace HeshmastNews.Services
             {
                 parentCategoriesList.Add(_mapper.Map<CategoryVewModelDTO>(item));
             }
+
             return parentCategoriesList;
+        }
+
+        public async Task<List<SubCategoryWithCountDTO>> SubCategoryWithCount(int skip, int take)
+        {
+            var subCategoryList = await _context.Categories
+                .Where(x => x.ParentId != null).OrderBy(x => x.CategoryId)
+                .Skip(skip).Take(take).ToListAsync();
+            var SubCategoryWithCount = new List<SubCategoryWithCountDTO>();
+            foreach (var item in subCategoryList)
+            {
+                var categoryUse = _context.News.Include(x => x.Category
+                    .Select(x => x.CategoryId == item.CategoryId)).Count();
+                var preSubCategory = new SubCategoryWithCountDTO
+                {
+                    CategoryId = item.CategoryId,
+                    CateGoryName = item.CateGoryName,
+                    UseCount = categoryUse
+                };
+                SubCategoryWithCount.Add(preSubCategory);
+            }
+
+            return SubCategoryWithCount;
         }
 
 

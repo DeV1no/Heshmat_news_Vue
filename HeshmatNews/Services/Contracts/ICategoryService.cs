@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using dadachMovie.DTOs.Category;
 using HeshmastNews.DTOs;
 using HeshmastNews.Entities;
 
@@ -8,7 +10,8 @@ namespace HeshmastNews.Services
     {
         List<CategoryVewModelDTO> GetAllCategories();
         List<CategoryVewModelDTO> GetAllParrentCategory();
-        List<CategoryVewModelDTO> GetAllSubCategory();
+        Task<List<CategoryVewModelDTO>> GetAllSubCategory();
+        Task<List<SubCategoryWithCountDTO>> SubCategoryWithCount(int skip, int take);
         CategoryVewModelDTO GetCategoryById(int Id);
         int AddCategory(CategoryCreateDTO model);
         int UpdateCategory(CategoryUpdateDTO model);

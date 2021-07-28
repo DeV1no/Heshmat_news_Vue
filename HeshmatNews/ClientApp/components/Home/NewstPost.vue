@@ -65,6 +65,21 @@
             </div>
           </div>
         </div>
+        <div class="col-md-12 mt-3 mb-0">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item ">
+                <a class="page-link" href="#" tabindex="-1">بعد</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">قبل</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
     <div class="overflow-auto"></div>
@@ -110,5 +125,8 @@ export default {
 .thumbnail-img {
   width: 250px !important;
   height: 250px !important;
+}
+.page-link {
+  color: #333;
 }
 </style>

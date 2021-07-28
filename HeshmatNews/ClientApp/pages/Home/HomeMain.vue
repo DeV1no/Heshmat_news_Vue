@@ -11,6 +11,9 @@
         <last-videos />
       </div>
     </div>
+    <div class="col-md-12">
+      <footer-app />
+    </div>
   </div>
 </template>
 
@@ -18,11 +21,13 @@
 import NewstPost from '../../components/Home/NewstPost.vue';
 import TopPost from '../../components/Home/TopPost.vue';
 import LastVideos from '../../components/Home/LastVideos.vue';
+import FooterApp from '../../components/Home/footer-app.vue';
 export default {
   components: {
     TopPost,
     NewstPost,
-    LastVideos
+    LastVideos,
+    FooterApp
   }
 };
 </script>
