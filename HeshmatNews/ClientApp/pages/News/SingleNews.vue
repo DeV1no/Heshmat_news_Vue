@@ -174,32 +174,13 @@
             دسته بندی ها
           </h5>
           <ul class="m-0 cat-list">
-            <li>
+            <li v-for="item in categoryDetails" :key="item.categoryId">
               <i class="fa fa-chevron-left"></i>
               <a href="" class="list-link">
-                سینما خارجی
-                <span class="  badge-num badge-primary">2</span>
-              </a>
-            </li>
-            <li>
-              <i class="fa fa-chevron-left"></i>
-              <a href="" class="list-link">
-                سینما داخلی
-                <span class="  badge-num badge-primary">2</span>
-              </a>
-            </li>
-            <li>
-              <i class="fa fa-chevron-left"></i>
-              <a href="" class="list-link">
-                سریال خارجی
-                <span class="  badge-num badge-primary">2</span>
-              </a>
-            </li>
-            <li>
-              <i class="fa fa-chevron-left"></i>
-              <a href="" class="list-link">
-                سریال خارجی
-                <span class="  badge-num badge-primary">2</span>
+                {{ item.cateGoryName }}
+                <span class="  badge-num badge-primary">
+                  {{ item.useCount }}
+                </span>
               </a>
             </li>
           </ul>
@@ -405,10 +386,24 @@ export default {
         userName: null,
         createdDate: null,
         source: null
-      }
+      },
+      categoryDetails: []
     };
   },
   methods: {
+    getCategoryDetails() {
+      try {
+        this.isSaving = true;
+        axios
+          .get(`/api/categories/getSubCategoriesWithCount/0/10`)
+          .then(res => (this.categoryDetails = res.data));
+      } catch (err) {
+        console.log(err);
+        this.$toast.danger('خطای پیشبینی نشده ای رخ داده است ').goAway(4500);
+      } finally {
+        this.isSaving = false;
+      }
+    },
     getModel() {
       try {
         this.isSaving = true;
@@ -425,6 +420,7 @@ export default {
   },
   async mounted() {
     await this.getModel();
+    await this.getCategoryDetails();
   }
 };
 </script>

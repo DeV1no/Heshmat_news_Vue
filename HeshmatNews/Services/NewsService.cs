@@ -117,7 +117,10 @@ namespace HeshmastNews.Services
                 Poster = poster,
                 User = _context.Users.FirstOrDefault(x => x.Id.ToString() == userId),
                 Tags = taglist,
-                Category = categoryList
+                Category = categoryList,
+                isChoseClerck=model.isChoseClerck,
+                Source=model.Source
+
             };
             _context.Add(newsDb);
             _context.SaveChanges();

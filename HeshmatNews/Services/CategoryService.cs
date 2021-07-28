@@ -68,15 +68,17 @@ namespace HeshmastNews.Services
                 .Where(x => x.ParentId != null).OrderBy(x => x.CategoryId)
                 .Skip(skip).Take(take).ToListAsync();
             var SubCategoryWithCount = new List<SubCategoryWithCountDTO>();
+
+            var news = _context.News.Include(x => x.Category);
             foreach (var item in subCategoryList)
             {
-                var categoryUse = _context.News.Include(x => x.Category
-                    .Select(x => x.CategoryId == item.CategoryId)).Count();
+
+                var categoryUse = news.SelectMany(x => x.Category.Where(x => x.CategoryId == item.CategoryId)).CountAsync();
                 var preSubCategory = new SubCategoryWithCountDTO
                 {
                     CategoryId = item.CategoryId,
                     CateGoryName = item.CateGoryName,
-                    UseCount = categoryUse
+                    UseCount = await categoryUse
                 };
                 SubCategoryWithCount.Add(preSubCategory);
             }
