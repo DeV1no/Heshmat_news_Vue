@@ -13,6 +13,8 @@ namespace HeshmastNews.Services
     {
         List<NewsListViewModleDTO> GetNewsList();
         List<NewsHomeViewModelDTO> GetNewsHomeList(int take, int skip);
+        List<NewsHomeViewModelDTO> GetNewsByCategoryId(int take, int skip, int categoryId);
+        Task<List<NewsHomeViewModelDTO>> GetNewsByTagIdList(int take, int skip, int tagId);
         List<NewsHomeViewModelDTO> GetNewsChoseClerkList(int take, int skip);
         Task<NewsSingleDTO> GetSingleNews(int newsId);
         Task<int> GetTotallNewsCount();

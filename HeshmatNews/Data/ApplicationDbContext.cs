@@ -20,9 +20,24 @@ namespace HeshmastNews.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Permission { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<CategoryNews> CategoryNews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CategoryNews>().HasKey(x => new {x.CategoryId, x.NewsId});
+
+            modelBuilder.Entity<CategoryNews>().HasOne(x => x.Category)
+                .WithMany(x => x.CategoryNews).HasForeignKey(x => x.CategoryId);
+
+            modelBuilder.Entity<CategoryNews>().HasOne(x => x.News)
+                .WithMany(x => x.CategoryNews).HasForeignKey(x => x.NewsId);
+
+            modelBuilder.Entity<CategoryNews>().HasIndex(x => x.NewsId);
+            modelBuilder.Entity<CategoryNews>().HasIndex(x => x.CategoryId);
+
+            modelBuilder.Entity<CategoryNews>().Property(x => x.NewsId);
+            modelBuilder.Entity<CategoryNews>().Property(x => x.CategoryId);
+
             SeedData(modelBuilder);
 
             base.OnModelCreating(modelBuilder);

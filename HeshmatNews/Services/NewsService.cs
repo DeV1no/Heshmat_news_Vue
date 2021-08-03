@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using AutoMapper;
 using dadachMovie.DTOs;
@@ -76,7 +77,7 @@ namespace HeshmastNews.Services
         public NewsSaveDTO GetNewsSave(int newsId)
         {
             var newsDb = _context.News
-                .Include(x => x.Category).Include(x => x.Tags)
+                .Include(x => x.CategoryNews).ThenInclude(x => x.Category).Include(x => x.Tags)
                 .FirstOrDefault(x => x.NewsId == newsId);
             return _mapper.Map<NewsSaveDTO>(newsDb);
         }
@@ -117,10 +118,9 @@ namespace HeshmastNews.Services
                 Poster = poster,
                 User = _context.Users.FirstOrDefault(x => x.Id.ToString() == userId),
                 Tags = taglist,
-                Category = categoryList,
-                isChoseClerck=model.isChoseClerck,
-                Source=model.Source
-
+                //  CategoryNews = categoryList,
+                isChoseClerck = model.isChoseClerck,
+                Source = model.Source
             };
             _context.Add(newsDb);
             _context.SaveChanges();
@@ -169,9 +169,10 @@ namespace HeshmastNews.Services
                 Poster = poster,
                 User = newsDb.User,
                 Tags = taglist,
-                Category = categoryList,
+
                 UpdateTime = DateTime.Now
             };
+
             _context.News.Update(news);
             _context.SaveChanges();
             return news.NewsId;
@@ -180,7 +181,6 @@ namespace HeshmastNews.Services
         public bool DeleteNews(int newsId)
         {
             var newsDb = _context.News
-                .Include(x => x.Category).Include(x => x.Category)
                 .FirstOrDefault(x => x.NewsId == newsId);
             if (newsDb == null)
                 return false;
@@ -192,7 +192,7 @@ namespace HeshmastNews.Services
         public async Task<NewsSingleDTO> GetSingleNews(int newsId)
         {
             var newsDb = await _context.News
-                .Include(x => x.Category).Include(x => x.User)
+                .Include(x => x.CategoryNews).ThenInclude(x => x.Category).Include(x => x.User)
                 .Include(x => x.Tags)
                 .FirstOrDefaultAsync(x => x.NewsId == newsId);
 
@@ -200,7 +200,40 @@ namespace HeshmastNews.Services
         }
 
         public async Task<int> GetTotallNewsCount()
-             => await _context.News.CountAsync();
+            => await _context.News.CountAsync();
 
+        public async Task<List<NewsHomeViewModelDTO>> GetNewsByTagIdList(int take, int skip, int tagId)
+        {
+            var newsDbList = _context.News
+                 .Include(x => x.User)
+                 .Include(x => x.Tags.Where(q => q.Id == tagId))
+                 .OrderByDescending(x => x.CreatedDate)
+                 .Skip(skip).Take(take).ToList();
+            var newsList = new List<NewsHomeViewModelDTO>();
+            foreach (var item in newsDbList)
+            {
+                newsList.Add(_mapper.Map<NewsHomeViewModelDTO>(item));
+            }
+
+            return newsList;
+        }
+
+
+
+        public List<NewsHomeViewModelDTO> GetNewsByCategoryId(int take, int skip, int categoryId)
+        {
+            var newsDbList = _context.News
+                .Include(x => x.User)
+                .Include(x => x.CategoryNews.Where(x => x.CategoryId == categoryId))
+                .OrderByDescending(x => x.CreatedDate)
+                .Skip(skip).Take(take).ToList();
+            var newsList = new List<NewsHomeViewModelDTO>();
+            foreach (var item in newsDbList)
+            {
+                newsList.Add(_mapper.Map<NewsHomeViewModelDTO>(item));
+            }
+
+            return newsList;
+        }
     }
 }

@@ -55,8 +55,14 @@ namespace HeshmastNews.HeshmatMapper
             CreateMap<Tag, TagDTO>().ReverseMap();
             CreateMap<Tag, TagUpdateDTO>().ReverseMap();
             // News Mapper
-            CreateMap<News, NewsCreationDTO>().ReverseMap();
+            /*CreateMap<News, NewsCreationDTO>().ReverseMap()
+                .ForMember(x => x.CategoryNews.Select(x => x.Category),
+               opt => opt.MapFrom(q => q.CategoriesId));*/
+            
+
+
             CreateMap<NewsListViewModleDTO, News>().ReverseMap()
+
                 .ForMember(x => x.UserName,
                     opt => opt.MapFrom(q => q.User.UserName))
                 .ForMember(x => x.CreatedDate,
@@ -73,7 +79,7 @@ namespace HeshmastNews.HeshmatMapper
                 .ForMember(x => x.Poster,
                     opt => opt.MapFrom(q => $"http://localhost:5000/news/image/{q.Poster}"))
                 .ForMember(x => x.Categories,
-                    opt => opt.MapFrom(q => q.Category));
+                    opt => opt.MapFrom(q => q.CategoryNews.Select(x => x.Category)));
 
             CreateMap<NewsSingleDTO, News>().ReverseMap()
                .ForMember(x => x.UserName,
@@ -86,18 +92,18 @@ namespace HeshmastNews.HeshmatMapper
                    opt => opt.MapFrom(q => q.CreatedDate.ToShamsi()))
                .ForMember(x => x.Poster,
                    opt => opt.MapFrom(q => $"http://localhost:5000/news/image/{q.Poster}"))
-               .ForMember(x => x.Categories,
-                   opt => opt.MapFrom(q => q.Category))
 
                 .ForMember(x => x.Tags,
                    opt => opt.MapFrom(q => q.Tags))
-               ;
+                 .ForMember(x => x.Categories,
+                   opt => opt.MapFrom(q => q.CategoryNews.Select(x => x.Category)));
+
 
             CreateMap<NewsSaveDTO, News>().ReverseMap()
                 .ForMember(x => x.Poster,
                     opt => opt.MapFrom(q => $"http://localhost:5000/news/image/{q.Poster}"))
                 .ForMember(x => x.CategoriesId,
-                    opt => opt.MapFrom(q => q.Category.Select(z => z.CategoryId).ToList()))
+                    opt => opt.MapFrom(q => q.CategoryNews.Select(z => z.CategoryId).ToList()))
                 .ForMember(x => x.TagsId,
                     opt => opt.MapFrom(q => q.Tags.Select(z => z.Id).ToList()));
         }

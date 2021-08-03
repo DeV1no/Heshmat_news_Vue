@@ -51,6 +51,14 @@ namespace HeshmastNews.Controllers
         public List<NewsHomeViewModelDTO> GetNewsChoseClerkList(int take, int skip)
             => _newsService.GetNewsChoseClerkList(take, skip);
 
+        [HttpGet("NewsByTagId/{take:int}/{skip:int}/{tagId:int}")]
+        public Task<List<NewsHomeViewModelDTO>> GetNewsByTagIdList(int take, int skip, int tagId)
+           => _newsService.GetNewsByTagIdList(take, skip, tagId);
+
+        [HttpGet("NewsByCategoryId/{take:int}/{skip:int}/{categoryId:int}")]
+        public async Task<List<NewsHomeViewModelDTO>> GetNewsByCategoryIdList(int take, int skip, int categoryId)
+          => _newsService.GetNewsByCategoryId(take, skip, categoryId);
+
         [HttpGet("NewsSingle/{newsId:int}")]
         public Task<NewsSingleDTO> GetSingleNess(int newsId)
             => _newsService.GetSingleNews(newsId);

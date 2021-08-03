@@ -15,7 +15,7 @@
               <div class="content">
                 <h2 class="title">{{ news.newsTitle }}</h2>
                 <p class="copy">
-                  {{ news.newsBody }}
+                  {{ news.newsBody.substring(0, 20) + '...' }}
                 </p>
                 <nuxt-link
                   :to="{

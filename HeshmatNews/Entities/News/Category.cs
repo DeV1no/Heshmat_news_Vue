@@ -11,8 +11,10 @@ namespace HeshmastNews.Entities
         public int? ParentId { get; set; }
 
         // RelationShip
-        [ForeignKey("ParentId")] public List<Category> Categories { get; set; }
-        public List<News> News { get; set; }
+        [ForeignKey("ParentId")] public List<Category> Categories { get; set; }//Subcategories
+        
+        public List<CategoryNews> CategoryNews { get; set; }
+
        
     }
 }
