@@ -86,6 +86,7 @@
               <div class="row">
                 <form action="" class="form-group mt-2  col-md-12 bg-light p-3">
                   <textarea
+                    v-model="commentMDl.body"
                     name=""
                     id=""
                     cols="20"
@@ -94,7 +95,7 @@
                     placeholder="نظر خود را بنویسید"
                   ></textarea>
                   <div class="row">
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                       <input
                         type="name"
                         class="form-control"
@@ -114,9 +115,12 @@
                         class="form-control"
                         placeholder="تارنما"
                       />
-                    </div>
+                    </div> -->
                   </div>
-                  <button class="btn btn-primary float-left mt-2">
+                  <button
+                    class="btn btn-primary float-left mt-2"
+                    @click.prevent="addComment()"
+                  >
                     <i class="fa fa-paper-plane" aria-hidden="true"></i>
 
                     ثبت نظر
@@ -373,6 +377,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      token: null,
       id: this.$route.params.id,
       isSaving: false,
       mdl: {
@@ -386,6 +391,10 @@ export default {
         userName: null,
         createdDate: null,
         source: null
+      },
+      commentMDl: {
+        newsId: this.$route.params.id,
+        body: null
       },
       categoryDetails: []
     };
@@ -416,9 +425,27 @@ export default {
       } finally {
         this.isSaving = false;
       }
+    },
+    addComment() {
+      axios
+        .post('/api/comment/add', this.commentMDl, {
+          headers: {
+            Authorization: ` Bearer ${this.token}`
+          }
+        })
+        .then(res => {
+          if (res.data > 0)
+            this.$toast.success('نظر با موفقیت ثبت شد').goAway(4500);
+          else
+            this.$toast
+              .danger('خطای پیشبینی نشده ای رخ داده است ')
+              .goAway(4500);
+        });
     }
   },
   async mounted() {
+    this.token = localStorage.getItem('token');
+
     await this.getModel();
     await this.getCategoryDetails();
   }

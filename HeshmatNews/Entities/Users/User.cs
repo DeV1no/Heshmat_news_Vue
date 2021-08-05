@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using dadachMovie.Entities.News;
 using Microsoft.AspNetCore.Identity;
 
 namespace HeshmastNews.Entities
@@ -36,5 +37,7 @@ namespace HeshmastNews.Entities
         // Relation ship 
         public List<Role> Roles { get; set; }
         public List<News> NewsList { get; set; }
+        public List<Comment> Comments { get; set; }
+
     }
 }

@@ -1,3 +1,4 @@
+using dadachMovie.Entities.News;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,5 +29,6 @@ namespace HeshmastNews.Entities
         public List<Tag> Tags { get; set; }
         public string Source { get; set; }
         public List<CategoryNews> CategoryNews { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using AutoMapper;
+using dadachMovie.Services;
 using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.Entities;
@@ -44,6 +45,7 @@ namespace HeshmastNews
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ITagService, TagService>();
+            services.AddTransient<ICommentService, CommentService>();
 
             //Spa Static files config
             services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
@@ -180,7 +182,7 @@ namespace HeshmastNews
                 {
                     endpoints.MapToVueCliProxy(
                         "{*path}",
-                        new SpaOptions {SourcePath = "ClientApp"},
+                        new SpaOptions { SourcePath = "ClientApp" },
                         npmScript: (env.IsEnvironment("Backend") ? null : "serve"),
                         regex: "Compiled successfully",
                         forceKill: true

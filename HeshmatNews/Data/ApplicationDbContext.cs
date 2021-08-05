@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using dadachMovie.Entities.News;
 using HeshmastNews.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace HeshmastNews.Data
         public DbSet<Permission> Permission { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<CategoryNews> CategoryNews { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

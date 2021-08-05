@@ -3,9 +3,9 @@ using System.Linq.Dynamic.Core;
 using AutoMapper;
 using dadachMovie.DTOs;
 using dadachMovie.DTOs.Role;
+using dadachMovie.Entities.News;
 using HeshmastNews.Convertor;
 using HeshmastNews.DTOs;
-using HeshmastNews.DTOs.Comment;
 using HeshmastNews.DTOs.News;
 using HeshmastNews.DTOs.Role;
 using HeshmastNews.DTOs.Tag;
@@ -44,11 +44,8 @@ namespace HeshmastNews.HeshmatMapper
             CreateMap<Role, RoleCreateDTO>().ReverseMap();
             CreateMap<RoleSaveDTO, Role>().ReverseMap();
             //Comments Maps
-            /*CreateMap<NewsComment, CommentDTO>().ReverseMap();
+            CreateMap<Comment, AddCommentDTO>().ReverseMap();
 
-            CreateMap<UnAcceptedCommentDTO, NewsComment>()
-                .ForMember(e => e.User,
-                    e => e.MapFrom(c => c.UserName ?? "")).ReverseMap();*/
 
             // Tag Mapper
             CreateMap<TagViewModelDTO, Tag>().ReverseMap();
@@ -58,7 +55,7 @@ namespace HeshmastNews.HeshmatMapper
             /*CreateMap<News, NewsCreationDTO>().ReverseMap()
                 .ForMember(x => x.CategoryNews.Select(x => x.Category),
                opt => opt.MapFrom(q => q.CategoriesId));*/
-            
+
 
 
             CreateMap<NewsListViewModleDTO, News>().ReverseMap()
