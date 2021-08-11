@@ -194,6 +194,7 @@ namespace HeshmastNews.Services
             var newsDb = await _context.News
                 .Include(x => x.CategoryNews).ThenInclude(x => x.Category).Include(x => x.User)
                 .Include(x => x.Tags)
+                .Include(x => x.Comments)
                 .FirstOrDefaultAsync(x => x.NewsId == newsId);
 
             return _mapper.Map<NewsSingleDTO>(newsDb);

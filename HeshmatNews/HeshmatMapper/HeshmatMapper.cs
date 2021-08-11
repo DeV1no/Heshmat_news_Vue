@@ -2,6 +2,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using AutoMapper;
 using dadachMovie.DTOs;
+using dadachMovie.DTOs.Comment;
 using dadachMovie.DTOs.Role;
 using dadachMovie.Entities.News;
 using HeshmastNews.Convertor;
@@ -16,6 +17,7 @@ namespace HeshmastNews.HeshmatMapper
 {
     public class HeshmatMapper : Profile
     {
+
         public HeshmatMapper()
         {
             //CateGories Map
@@ -93,8 +95,17 @@ namespace HeshmastNews.HeshmatMapper
                 .ForMember(x => x.Tags,
                    opt => opt.MapFrom(q => q.Tags))
                  .ForMember(x => x.Categories,
-                   opt => opt.MapFrom(q => q.CategoryNews.Select(x => x.Category)));
+                   opt => opt.MapFrom(q => q.CategoryNews.Select(x => x.Category)))
 
+                  .ForMember(x => x.Comments,
+                   opt => opt.MapFrom(q => q.Comments));
+            CreateMap<CommentViewModelDTO, Comment>().ReverseMap()
+                .ForMember(x => x.Name,
+                opt => opt.MapFrom(q => q.User.Name))
+                  .ForMember(x => x.Family,
+                opt => opt.MapFrom(q => q.User.Family))
+                    .ForMember(x => x.CreatedDate,
+                opt => opt.MapFrom(q => q.CreatedDate.ToShamsi()));
 
             CreateMap<NewsSaveDTO, News>().ReverseMap()
                 .ForMember(x => x.Poster,

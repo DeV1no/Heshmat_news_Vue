@@ -127,7 +127,11 @@
                   </button>
                 </form>
               </div>
-              <div class="cm-card mr-2">
+              <div
+                class="cm-card mr-2"
+                v-for="comment in mdl.comments"
+                :key="comment.id"
+              >
                 <div class="card mt-2 cm-box">
                   <div class="cm-card-body card-body">
                     <div class="row">
@@ -138,13 +142,15 @@
                         />
                         <p class="text-secondary text-center d-flex mt-1">
                           <i class="fa fa-calendar ml-1"></i>
-                          25/12/1399
+                          {{ comment.createdDate }}
                         </p>
                       </div>
                       <div class="col-md-10">
                         <div class="row">
                           <div class="col-md-4">
-                            <strong>احمد مرتضوی</strong>
+                            <strong>{{
+                              comment.name + ' ' + comment.family
+                            }}</strong>
                           </div>
                           <div class="col-md-8 ">
                             <i
@@ -157,8 +163,8 @@
                         </div>
 
                         <div class="row mt-2">
-                          <div class="col-md-8">
-                            متن کامنت
+                          <div class="col-md-8 mr-4">
+                            {{ comment.body }}
                           </div>
                         </div>
                       </div>
@@ -390,7 +396,8 @@ export default {
         family: null,
         userName: null,
         createdDate: null,
-        source: null
+        source: null,
+        comments: []
       },
       commentMDl: {
         newsId: this.$route.params.id,
@@ -434,9 +441,11 @@ export default {
           }
         })
         .then(res => {
-          if (res.data > 0)
+          if (res.data > 0) {
+            this.commentMDl.body = null;
             this.$toast.success('نظر با موفقیت ثبت شد').goAway(4500);
-          else
+            this.getModel();
+          } else
             this.$toast
               .danger('خطای پیشبینی نشده ای رخ داده است ')
               .goAway(4500);

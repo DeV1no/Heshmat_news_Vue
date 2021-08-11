@@ -1,4 +1,6 @@
-﻿using HeshmastNews.DTOs;
+﻿using dadachMovie.DTOs;
+using dadachMovie.DTOs.Comment;
+using HeshmastNews.DTOs;
 using HeshmastNews.DTOs.Tag;
 using System;
 using System.Collections.Generic;
@@ -17,10 +19,11 @@ namespace HeshmastNews.DTOs.News
         public List<TagViewModelDTO> Tags { get; set; }
         public string Name { get; set; }
         public string Family { get; set; }
-        public string UserName { get; set; }//CreatedDate
+        public string UserName { get; set; }
         public string CreatedDate { get; set; }
         public string Source { get; set; }
+       public List<CommentViewModelDTO> Comments { get; set; }
 
-
+       //   public List<AddCommentDTO> Comments { get; set; }
     }
 }
