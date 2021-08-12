@@ -162,7 +162,7 @@
                           </div>
                         </div>
 
-                        <div class="row mt-2">
+                        <div class="row mt-2 dsd">
                           <div class="col-md-8 mr-4">
                             {{ comment.body }}
                           </div>
