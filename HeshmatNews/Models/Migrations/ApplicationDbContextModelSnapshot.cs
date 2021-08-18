@@ -240,6 +240,9 @@ namespace dadachMovie.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<int?>("Province")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime(6)");
 
@@ -429,7 +432,7 @@ namespace dadachMovie.Migrations
             modelBuilder.Entity("dadachMovie.Entities.News.Comment", b =>
                 {
                     b.HasOne("HeshmastNews.Entities.News", "News")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -455,6 +458,8 @@ namespace dadachMovie.Migrations
             modelBuilder.Entity("HeshmastNews.Entities.News", b =>
                 {
                     b.Navigation("CategoryNews");
+
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("HeshmastNews.Entities.Permission", b =>

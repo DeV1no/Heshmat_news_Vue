@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using dadachMovie.DTOs.User;
 using HeshmastNews.DTOs.User;
 using HeshmastNews.Entities;
 
@@ -19,5 +20,6 @@ namespace dadachMovie.Services.Contracts
         UserListViewModelDTO GetUserDataById(int userId);
         bool AddRoleToUser(int userId, List<int> roleId);
         bool RemoveRoleToFrom(int userId);
+        Task<bool> UpdateUserInformation(UpdateUserInformationDTO model);
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using dadachMovie.DTOs.User;
 using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs.User;
@@ -41,7 +42,7 @@ namespace HeshmastNews.Controllers
         {
             var user = _userService.Authenticate(model);
             if (user == null)
-                return BadRequest(new {message = "Username or password is incorrect"});
+                return BadRequest(new { message = "Username or password is incorrect" });
             return Ok(user);
         }
 
@@ -106,6 +107,9 @@ namespace HeshmastNews.Controllers
             return _userService.RemoveRoleToFrom(userId);
         }
 
+        [HttpPut("updateUserInformation")]
+        public async Task<bool> UpdateuserInformation([FromForm] UpdateUserInformationDTO model)
+            => await _userService.UpdateUserInformation(model);
         [HttpGet("getUserDetails/{userId:int}")]
         public UserListViewModelDTO GetUserDetails(int userId)
         {

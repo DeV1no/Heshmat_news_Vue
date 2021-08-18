@@ -119,6 +119,7 @@ namespace HeshmastNews.Services
                 User = _context.Users.FirstOrDefault(x => x.Id.ToString() == userId),
                 Tags = taglist,
                 //  CategoryNews = categoryList,
+            
                 isChoseClerck = model.isChoseClerck,
                 Source = model.Source
             };

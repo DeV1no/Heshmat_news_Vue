@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using dadachMovie.DTOs.Tag;
 using dadachMovie.Services.Contracts;
 using HeshmastNews.DTOs.Tag;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,9 @@ namespace HeshmastNews.Controllers
         public List<TagViewModelDTO> GetTagList()
             => _tagService.GetTagList();
 
+        [HttpGet("TagsWithCountList")]
+        public List<TagWithUseCountViewModel> GetTagWithUseCount()
+            => _tagService.GetTagWithCount();
         [HttpGet("GetTag/{tagId:int}")]
         public TagViewModelDTO getTagById(int tagId)
             => _tagService.GetTagById(tagId);

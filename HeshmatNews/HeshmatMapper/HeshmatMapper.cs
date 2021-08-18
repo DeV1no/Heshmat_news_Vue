@@ -4,6 +4,7 @@ using AutoMapper;
 using dadachMovie.DTOs;
 using dadachMovie.DTOs.Comment;
 using dadachMovie.DTOs.Role;
+using dadachMovie.DTOs.User;
 using dadachMovie.Entities.News;
 using HeshmastNews.Convertor;
 using HeshmastNews.DTOs;
@@ -38,6 +39,17 @@ namespace HeshmastNews.HeshmatMapper
                 .ForMember(x => x.RoleNames,
                     opt => opt.MapFrom(
                         r => r.Roles.Select(r => r.RoleName))).ReverseMap();
+
+            CreateMap<User, UpdateUserInformationDTO>()
+                  .ForMember(x => x.UserAvatar,
+                            opt => opt.Ignore())
+
+                            .ForMember(x => x.PreUserAvatar,
+                            opt => opt.MapFrom(q => q.UserAvatar))
+                .ReverseMap()
+       .ForAllMembers(m => m.Condition((source, target, sourceValue, targetValue) => sourceValue != null));
+
+
             //Role Mapper
             CreateMap<RoleDTO, Role>().ReverseMap();
             CreateMap<Role, RoleDTO>().ReverseMap();

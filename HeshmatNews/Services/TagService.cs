@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using AutoMapper;
+using dadachMovie.DTOs.Tag;
 using dadachMovie.Services.Contracts;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs.Tag;
@@ -66,6 +69,47 @@ namespace HeshmastNews.Services
             _context.Tags.Remove(tagDb);
             _context.SaveChanges();
             return true;
+        }
+
+        public List<TagWithUseCountViewModel> GetTagWithCount()
+        {
+
+            var list = new List<TagWithUseCountViewModel>();
+
+
+
+
+            var query = from item in _context.News.SelectMany(x => x.Tags)
+                        select item;
+
+            foreach (var item in query)
+            {
+                list.Add(new TagWithUseCountViewModel
+                {
+
+                    Id = item.Id,
+                    TagName = item.TagName,
+                    UseCount =/* query.GroupBy(x => x.NewsList).Any() ? query.GroupBy(x => x.NewsList).Count() : 0*/
+
+                    query.Where(x => x.Id == item.Id).GroupBy(x => x.NewsList).Count()
+                });
+            }
+
+
+            /*(from tag in _context.Tags
+                    join news in _context.News on tag.Id equals news.Tags.Select(x => x.Id).ToList().Count
+
+                    select new TagWithUseCountViewModel
+                    {
+                        Id = tag.Id,
+                        TagName = tag.TagName,
+                        UseCount = 1
+                    });*/
+
+
+            return list;
+
+
         }
     }
 }

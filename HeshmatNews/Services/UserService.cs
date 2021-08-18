@@ -23,6 +23,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using dadachMovie.DTOs.User;
+using HeshmastNews.Generator;
+using System.IO;
 
 namespace HeshmastNews.Services
 {
@@ -84,7 +87,7 @@ namespace HeshmastNews.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
-            user.TokenExpires = (DateTime) tokenDescriptor.Expires;
+            user.TokenExpires = (DateTime)tokenDescriptor.Expires;
             return _mapper.Map<UserLoginViewModelDTO>(user);
         }
 
@@ -199,6 +202,49 @@ namespace HeshmastNews.Services
             //   userDb.RoleId = null;
             _context.Users.Update(userDb);
             _context.SaveChanges();
+            return true;
+        }
+
+        public async Task<bool> UpdateUserInformation(UpdateUserInformationDTO model)
+        {
+
+            var userDb =
+             await (from user in _context.Users
+                    where user.Id == model.Id
+                    select user).AsNoTracking().FirstAsync();
+
+            // await _context.Users.FirstOrDefaultAsync(x => x.Id == model.Id).AsNoTracking();
+
+
+            if (userDb == null)
+                return false;
+
+            if (model.Password == null)
+                model.Password = userDb.Password;
+
+
+            if (model.UserAvatar == null)
+                model.PreUserAvatar = userDb.UserAvatar;
+            else
+            {
+                model.PreUserAvatar = NameGenerator.GenerateUniqCode() + Path.GetExtension(model.UserAvatar.FileName);
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/User/UserProfile",
+                     model.PreUserAvatar);
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    model.UserAvatar.CopyTo(stream);
+                }
+            }
+
+
+            var finalUserModel = _mapper.Map<User>(userDb);
+            finalUserModel = _mapper.Map<User>(model);
+            finalUserModel.UserName = userDb.UserName;
+            finalUserModel.IsActive = true;
+            finalUserModel.RegisterDate = DateTime.Now;
+            finalUserModel.SecretKey = CharRandomMaker.RandomString(10);
+            _context.Update(finalUserModel);
+            await _context.SaveChangesAsync();
             return true;
         }
     }
