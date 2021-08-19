@@ -115,5 +115,11 @@ namespace HeshmastNews.Controllers
         {
             return _userService.GetUserDataById(userId);
         }
+
+
+        [HttpGet("getUserProfileInfo/{userId:int}")]
+        public Task<UpdateUserInformationDTO> GetUserProfileInfo(int userId)
+            => _userService.GetUserProfileInfo(userId);
+
     }
 }

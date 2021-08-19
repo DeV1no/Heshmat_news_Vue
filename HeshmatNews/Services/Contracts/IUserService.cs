@@ -21,5 +21,6 @@ namespace dadachMovie.Services.Contracts
         bool AddRoleToUser(int userId, List<int> roleId);
         bool RemoveRoleToFrom(int userId);
         Task<bool> UpdateUserInformation(UpdateUserInformationDTO model);
+        Task<UpdateUserInformationDTO> GetUserProfileInfo(int userId);
     }
 }

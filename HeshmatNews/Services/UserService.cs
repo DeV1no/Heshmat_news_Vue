@@ -101,6 +101,7 @@ namespace HeshmastNews.Services
             //  userObj.RoleId = 1;
             userObj.SecretKey = CharRandomMaker.RandomString(10);
             userObj.RegisterDate = DateTime.Now;
+            userObj.UserAvatar = "defult.png";
             _context.Users.Add(userObj);
             _context.SaveChanges();
             var userView = _mapper.Map<UserRegisterViewModelDTO>(model);
@@ -247,5 +248,21 @@ namespace HeshmastNews.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<UpdateUserInformationDTO> GetUserProfileInfo(int userId)
+        {
+
+            var userDb =
+                  await (
+                  from user in _context.Users
+                  where user.Id == userId
+                  select user
+                        ).AsNoTracking().FirstOrDefaultAsync();
+
+
+            return _mapper.Map<UpdateUserInformationDTO>(userDb);
+
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Linq.Dynamic.Core;
 using AutoMapper;
 using dadachMovie.DTOs;
@@ -50,6 +50,17 @@ namespace HeshmastNews.HeshmatMapper
        .ForAllMembers(m => m.Condition((source, target, sourceValue, targetValue) => sourceValue != null));
 
 
+            CreateMap<UpdateUserInformationDTO, User>().ReverseMap()
+               
+                .ForMember(x => x.PreUserAvatar,
+               opt => opt.MapFrom(q => $"http://localhost:5000/user/userProfile/{q.UserAvatar}.jpg"))
+                .ForMember(x => x.RegisterDate,
+               opt => opt.MapFrom(q => q.RegisterDate.ToShamsi()))
+                    .ForMember(x => x.Password,
+                            opt => opt.Ignore())
+                         .ForMember(x => x.UserAvatar,
+                            opt => opt.Ignore())
+             ;
             //Role Mapper
             CreateMap<RoleDTO, Role>().ReverseMap();
             CreateMap<Role, RoleDTO>().ReverseMap();

@@ -25,5 +25,6 @@ namespace dadachMovie.DTOs.User
 
         public IFormFile UserAvatar { get; set; }
         public string PreUserAvatar { get; set; }
+        public string RegisterDate { get; set; }
     }
 }
