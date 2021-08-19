@@ -135,17 +135,21 @@
                 <div class="card mt-2 cm-box">
                   <div class="cm-card-body card-body">
                     <div class="row">
-                      <div class="col-md-2">
-                        <img
-                          src="http://localhost:5000/series/54ba415a-c1d9-4460-aa3d-ebd75ab2788e.jpg"
-                          class="img img-rounded img-fluid"
-                        />
-                        <p class="text-secondary text-center d-flex mt-1">
-                          <i class="fa fa-calendar ml-1"></i>
-                          {{ comment.createdDate }}
-                        </p>
+                      <div class="col-md-3">
+                        <div class="mr-2">
+                          <img
+                            :src="comment.avatar"
+                            class="img img-rounded commentDate img-fluid commentAvatar"
+                          />
+                          <p
+                            class="text-secondary commentDate text-center d-flex mt-1"
+                          >
+                            <i class="fa fa-calendar ml-1"></i>
+                            {{ comment.createdDate }}
+                          </p>
+                        </div>
                       </div>
-                      <div class="col-md-10">
+                      <div class="col-md-9">
                         <div class="row">
                           <div class="col-md-4">
                             <strong>{{
@@ -776,5 +780,9 @@ button.btn.btn-success {
 }
 .author-sicial-media.float-left.mr-auto img {
   width: 22px;
+}
+.commentAvatar {
+  width: 80px;
+  height: 50px;
 }
 </style>
