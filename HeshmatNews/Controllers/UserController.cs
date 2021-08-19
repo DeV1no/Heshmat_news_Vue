@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -117,9 +118,10 @@ namespace HeshmastNews.Controllers
         }
 
 
-        [HttpGet("getUserProfileInfo/{userId:int}")]
-        public Task<UpdateUserInformationDTO> GetUserProfileInfo(int userId)
-            => _userService.GetUserProfileInfo(userId);
+        [HttpGet("getUserProfileInfo")]
+        public Task<UpdateUserInformationDTO> GetUserProfileInfo()
+            => _userService.GetUserProfileInfo(
+                Convert.ToInt32(_httpContextAccessor.HttpContext.User.Identity.Name));
 
     }
 }
