@@ -90,6 +90,19 @@
           </nuxt-link>
         </li>
         <li class="nav-item">
+          <nuxt-link
+            class="nav-link"
+            active-class="active"
+            exact
+            href=""
+            v-if="isLogin"
+            to="/user/profile"
+          >
+            پروفایل
+          </nuxt-link>
+        </li>
+
+        <li class="nav-item">
           <a
             class="nav-link"
             active-class="active"
