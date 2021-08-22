@@ -101,7 +101,7 @@ namespace HeshmastNews.Services
             //  userObj.RoleId = 1;
             userObj.SecretKey = CharRandomMaker.RandomString(10);
             userObj.RegisterDate = DateTime.Now;
-            userObj.UserAvatar = "defult.png";
+            userObj.UserAvatar = "defult";
             _context.Users.Add(userObj);
             _context.SaveChanges();
             var userView = _mapper.Map<UserRegisterViewModelDTO>(model);
@@ -214,28 +214,15 @@ namespace HeshmastNews.Services
                     where user.Id == model.Id
                     select user).AsNoTracking().FirstAsync();
 
-            // await _context.Users.FirstOrDefaultAsync(x => x.Id == model.Id).AsNoTracking();
+           
 
-
-            if (userDb == null)
+            if (userDb == null )
                 return false;
 
-            if (model.Password == null)
+            if (model.Password == null || model.Password == "null")
                 model.Password = userDb.Password;
 
 
-            if (model.UserAvatar == null)
-                model.PreUserAvatar = userDb.UserAvatar;
-            else
-            {
-                model.PreUserAvatar = NameGenerator.GenerateUniqCode() + Path.GetExtension(model.UserAvatar.FileName);
-                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/User/UserProfile",
-                     model.PreUserAvatar);
-                using (var stream = new FileStream(imagePath, FileMode.Create))
-                {
-                    model.UserAvatar.CopyTo(stream);
-                }
-            }
 
 
             var finalUserModel = _mapper.Map<User>(userDb);
@@ -244,6 +231,19 @@ namespace HeshmastNews.Services
             finalUserModel.IsActive = true;
             finalUserModel.RegisterDate = DateTime.Now;
             finalUserModel.SecretKey = CharRandomMaker.RandomString(10);
+
+            if (model.UserAvatar == null)
+               finalUserModel.UserAvatar = userDb.UserAvatar;
+            else
+            {
+                finalUserModel.UserAvatar = NameGenerator.GenerateUniqCode() + Path.GetExtension(model.UserAvatar.FileName);
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/User/UserProfile",
+                     finalUserModel.UserAvatar);
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    model.UserAvatar.CopyTo(stream);
+                }
+            }
             _context.Update(finalUserModel);
             await _context.SaveChangesAsync();
             return true;

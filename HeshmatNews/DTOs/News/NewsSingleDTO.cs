@@ -20,6 +20,7 @@ namespace HeshmastNews.DTOs.News
         public string Name { get; set; }
         public string Family { get; set; }
         public string UserName { get; set; }
+        public string CreatorImage { get; set; }
         public string CreatedDate { get; set; }
         public string Source { get; set; }
        public List<CommentViewModelDTO> Comments { get; set; }

@@ -10,11 +10,7 @@
 
             <div class="row author-row">
               <div class="author-avatar">
-                <img
-                  class="author-img"
-                  src="http://localhost:5000/nehrnoosh.jpeg"
-                  alt=""
-                />
+                <img class="author-img" :src="mdl.creatorImage" alt="" />
               </div>
               <div class="author-detail">
                 <small class="d-block ">
@@ -401,7 +397,8 @@ export default {
         userName: null,
         createdDate: null,
         source: null,
-        comments: []
+        comments: [],
+        creatorImage: null
       },
       commentMDl: {
         newsId: this.$route.params.id,

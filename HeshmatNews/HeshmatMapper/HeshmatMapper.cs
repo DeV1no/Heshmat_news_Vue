@@ -53,7 +53,7 @@ namespace HeshmastNews.HeshmatMapper
             CreateMap<UpdateUserInformationDTO, User>().ReverseMap()
 
                 .ForMember(x => x.PreUserAvatar,
-               opt => opt.MapFrom(q => $"http://localhost:5000/user/userProfile/{q.UserAvatar}.jpg"))
+               opt => opt.MapFrom(q => $"http://localhost:5000/user/userProfile/{q.UserAvatar}"))
                 .ForMember(x => x.RegisterDate,
                opt => opt.MapFrom(q => q.RegisterDate.ToShamsi()))
                     .ForMember(x => x.Password,
@@ -110,6 +110,8 @@ namespace HeshmastNews.HeshmatMapper
                    opt => opt.MapFrom(q => q.User.Name))
                .ForMember(x => x.Family,
                    opt => opt.MapFrom(q => q.User.Family))
+                .ForMember(x => x.CreatorImage,
+                   opt => opt.MapFrom(q => $"http://localhost:5000/user/userprofile/{q.User.UserAvatar}"))
                .ForMember(x => x.CreatedDate,
                    opt => opt.MapFrom(q => q.CreatedDate.ToShamsi()))
                .ForMember(x => x.Poster,
