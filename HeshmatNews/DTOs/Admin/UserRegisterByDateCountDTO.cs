@@ -7,5 +7,8 @@ namespace dadachMovie.DTOs.Admin
 {
     public class UserRegisterByDateCountDTO
     {
+        public int UserCount { get; set; }
+        public string RegisterTimeString { get; set; }
+
     }
 }

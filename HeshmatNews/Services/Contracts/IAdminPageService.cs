@@ -9,6 +9,8 @@ namespace dadachMovie.Services.Contracts
     public interface IAdminPageService
     {
         public AdminPageItemCountsDTO GetAdminPageItemCounts();
+        public List<UserRegisterByDateCountDTO> GetUserRegisterByDateCountDTO();
+
     }
-   
+
 }

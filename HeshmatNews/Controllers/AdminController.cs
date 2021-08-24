@@ -22,6 +22,9 @@ namespace dadachMovie.Controllers
         [HttpGet("ItemCounts")]
         public AdminPageItemCountsDTO GetAdminItemCount()
             => _adminPageService.GetAdminPageItemCounts();
+        [HttpGet("UserRegisterByDate")]
+        public List<UserRegisterByDateCountDTO> UserRegisterByDate()
+            => _adminPageService.GetUserRegisterByDateCountDTO();
 
     }
 }
