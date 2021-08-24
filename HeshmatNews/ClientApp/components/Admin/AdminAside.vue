@@ -5,7 +5,9 @@
         <div class="card-body">
           <h3>اخبار</h3>
           <h4 class="display-4 ">
-            <span class="d-block"> <i class="fa fa-pencil "></i> 6 </span>
+            <span class="d-block">
+              <i class="fa fa-pencil "></i> {{ itemsCount.newsCount }}
+            </span>
           </h4>
           <nuxt-link to="/admin/news/list" class="btn btn-outline-light btn-sm"
             >مشاهده</nuxt-link
@@ -16,7 +18,10 @@
         <div class="card-body">
           <h3>گروه ها</h3>
           <h4 class="display-4 ">
-            <span class="d-block"> <i class="fa  fa-list-alt "></i> 2</span>
+            <span class="d-block">
+              <i class="fa  fa-list-alt "></i>
+              {{ itemsCount.categoryCount }}</span
+            >
           </h4>
           <nuxt-link
             to="/admin/categories/list"
@@ -30,7 +35,7 @@
           <h3>نفش ها</h3>
           <h4 class="display-4 ">
             <span class="d-block">
-              <i class="fa fa-universal-access"></i> 6
+              <i class="fa fa-universal-access"></i> {{ itemsCount.rolesCount }}
             </span>
           </h4>
           <nuxt-link to="/admin/roles/list" class="btn btn-outline-light btn-sm"
@@ -41,7 +46,9 @@
       <div class="card text-center bg-danger text-white mb-3">
         <div class="card-body">
           <h3>کاربران</h3>
-          <h4 class="display-4"><i class="fa fa-users"></i> 2</h4>
+          <h4 class="display-4">
+            <i class="fa fa-users"></i> {{ itemsCount.userCount }}
+          </h4>
           <nuxt-link to="/admin/users/list" class="btn btn-outline-light btn-sm"
             >مشاهده</nuxt-link
           >
@@ -52,42 +59,29 @@
 </template>
 
 <script>
-// import axios from 'axios';
-// export default {
-//   data() {
-//     return {
-//       usersCount: '',
-//       token: ''
-//     };
-//   },
-//   methods: {
-//     getUsers() {
-//       axios
-//         .get('/api/accounts/Users', {
-//           headers: {
-//             Authorization: ` Bearer ${this.token}`
-//           }
-//         })
-//         .then(res => {
-//           this.usersCount = res.data.totalItems;
-//         });
-//     }
-//   },
-//   mounted() {
-//     this.token = localStorage.getItem('token');
-//     this.$store.dispatch('GetPeoples');
-//     this.$store.dispatch('getMovie');
-//     this.getUsers();
-//   },
-//   computed: {
-//     peopleCount: function() {
-//       return this.$store.getters.GetPeopleCount;
-//     },
-//     movieCount: function() {
-//       return this.$store.getters.GetMovieTotal;
-//     }
-//   }
-// };
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      itemsCount: {
+        newsCount: null,
+        categoryCount: null,
+        rolesCount: null,
+        userCount: null
+      }
+    };
+  },
+  methods: {
+    async getItemsCount() {
+      await axios
+        .get('/api/admin/itemCounts')
+        .then(res => (this.itemsCount = res.data));
+    }
+  },
+  async mounted() {
+    await this.getItemsCount();
+  }
+};
 </script>
 
 <style scoped>
