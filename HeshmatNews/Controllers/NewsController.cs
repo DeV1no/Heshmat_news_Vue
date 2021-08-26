@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using dadachMovie.DTOs;
+using dadachMovie.DTOs.News;
 using Gridify;
 using HeshmastNews.Contracts;
 using HeshmastNews.Data;
@@ -85,6 +86,12 @@ namespace HeshmastNews.Controllers
         [Authorize]
         public int Put(int id, [FromForm] NewsCreationDTO model)
             => _newsService.UpdateNews(id, model);
+        [HttpPut("/addRateNews")]
+        [Authorize]
+
+        public async Task<bool> AddNewsRate(AddNewsRateDTO model)
+            => await _newsService.AddRateNews(model,
+                Convert.ToInt32(_httpContextAccessor.HttpContext.User.Identity.Name));
 
 
         [HttpDelete("{newsId}")]

@@ -17,6 +17,7 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.15.2",
     "nuxt": "^2.15.7",
+    "nuxt-highcharts": "^1.0.8",
     "vee-validate": "^3.4.10",
     "vue-good-table": "^2.21.10",
     "vue-multiselect": "^2.1.6",

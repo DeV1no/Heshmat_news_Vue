@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using dadachMovie.Entities;
 using dadachMovie.Entities.News;
 using Microsoft.AspNetCore.Identity;
 
@@ -32,13 +33,15 @@ namespace HeshmastNews.Entities
         public bool IsDelete { get; set; }
         public bool IsActive { get; set; }
         public string Token { get; set; }
-      
+
         [NotMapped] public DateTime TokenExpires { get; set; }
 
         // Relation ship 
         public List<Role> Roles { get; set; }
         public List<News> NewsList { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<UserRateNews> UserRateNews { get; set; }
+
 
     }
 }

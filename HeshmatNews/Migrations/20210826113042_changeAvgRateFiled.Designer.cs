@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace dadachMovie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210821162439_initDB")]
-    partial class initDB
+    [Migration("20210826113042_changeAvgRateFiled")]
+    partial class changeAvgRateFiled
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,6 +88,12 @@ namespace dadachMovie.Migrations
 
                     b.Property<bool>("isChoseClerck")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<double>("rateAverage")
+                        .HasColumnType("double");
+
+                    b.Property<int>("rateCount")
+                        .HasColumnType("int");
 
                     b.HasKey("NewsId");
 
@@ -193,9 +199,6 @@ namespace dadachMovie.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -208,9 +211,6 @@ namespace dadachMovie.Migrations
 
                     b.Property<string>("Family")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("InstagramAcount")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("IsActive")
@@ -258,9 +258,6 @@ namespace dadachMovie.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Token")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("TwitterAcount")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("TwoFactorEnabled")

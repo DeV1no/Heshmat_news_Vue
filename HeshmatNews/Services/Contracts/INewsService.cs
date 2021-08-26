@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using dadachMovie.DTOs;
+using dadachMovie.DTOs.News;
 using Gridify;
 using HeshmastNews.DTOs;
 using HeshmastNews.DTOs.News;
@@ -23,6 +24,7 @@ namespace HeshmastNews.Services
         int AddNews(NewsCreationDTO news, string userId);
         int UpdateNews(int newsId, NewsCreationDTO model);
         bool DeleteNews(int newsId);
+       Task<bool> AddRateNews(AddNewsRateDTO model,int userId);
 
 
     }

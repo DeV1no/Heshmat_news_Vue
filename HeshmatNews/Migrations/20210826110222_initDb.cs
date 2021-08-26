@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dadachMovie.Migrations
 {
-    public partial class initDB : Migration
+    public partial class initDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,9 +94,6 @@ namespace dadachMovie.Migrations
                     IsDelete = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Token = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    Address = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    TwitterAcount = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    InstagramAcount = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     NormalizedEmail = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
@@ -152,6 +149,8 @@ namespace dadachMovie.Migrations
                     Poster = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     isChoseClerck = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    rateAverage = table.Column<double>(type: "double", nullable: true),
+                    rateCount = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     Source = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true)
                 },

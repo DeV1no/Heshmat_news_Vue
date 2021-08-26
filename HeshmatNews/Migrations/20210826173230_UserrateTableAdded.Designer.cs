@@ -3,14 +3,16 @@ using System;
 using HeshmastNews.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace dadachMovie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210826173230_UserrateTableAdded")]
+    partial class UserrateTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -353,8 +355,8 @@ namespace dadachMovie.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Rate")
-                        .HasColumnType("double");
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
 
                     b.HasKey("NewsId", "UserId");
 

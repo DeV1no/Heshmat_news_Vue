@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using dadachMovie.Entities;
 using dadachMovie.Entities.News;
 using HeshmastNews.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -23,10 +24,12 @@ namespace HeshmastNews.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<CategoryNews> CategoryNews { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<UserRateNews> UserRateNews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CategoryNews>().HasKey(x => new {x.CategoryId, x.NewsId});
+            //CategoryNews
+            modelBuilder.Entity<CategoryNews>().HasKey(x => new { x.CategoryId, x.NewsId });
 
             modelBuilder.Entity<CategoryNews>().HasOne(x => x.Category)
                 .WithMany(x => x.CategoryNews).HasForeignKey(x => x.CategoryId);
@@ -39,6 +42,18 @@ namespace HeshmastNews.Data
 
             modelBuilder.Entity<CategoryNews>().Property(x => x.NewsId);
             modelBuilder.Entity<CategoryNews>().Property(x => x.CategoryId);
+            //UserRateNews
+            modelBuilder.Entity<UserRateNews>().HasKey(x => new { x.NewsId, x.UserId });
+            modelBuilder.Entity<UserRateNews>().HasOne(x => x.User)
+                .WithMany(x => x.UserRateNews).HasForeignKey(x => x.NewsId);
+            modelBuilder.Entity<UserRateNews>().HasOne(x => x.News)
+               .WithMany(x => x.UserRateNews).HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<UserRateNews>().HasIndex(x => x.NewsId);
+            modelBuilder.Entity<UserRateNews>().HasIndex(x => x.UserId);
+
+            modelBuilder.Entity<UserRateNews>().Property(x => x.NewsId);
+            modelBuilder.Entity<UserRateNews>().Property(x => x.UserId);
+
 
             SeedData(modelBuilder);
 
@@ -50,11 +65,11 @@ namespace HeshmastNews.Data
         //permissions
         private void SeedData(ModelBuilder modelBuilder)
         {
-            var adminPanel = new Permission() {PermissionId = 1, permissionTitle = "پنل مدیریت",};
-            var userManagment = new Permission() {PermissionId = 2, permissionTitle = "مدیریت کاربران", ParentId = 1};
-            var roleManagment = new Permission() {PermissionId = 6, permissionTitle = "مدیریت  نقش ها", ParentId = 1};
-            var addRole = new Permission() {PermissionId = 7, permissionTitle = "افزودن نقش", ParentId = 6};
-            var editRole = new Permission() {PermissionId = 8, permissionTitle = "ویرایش نقش", ParentId = 6};
+            var adminPanel = new Permission() { PermissionId = 1, permissionTitle = "پنل مدیریت", };
+            var userManagment = new Permission() { PermissionId = 2, permissionTitle = "مدیریت کاربران", ParentId = 1 };
+            var roleManagment = new Permission() { PermissionId = 6, permissionTitle = "مدیریت  نقش ها", ParentId = 1 };
+            var addRole = new Permission() { PermissionId = 7, permissionTitle = "افزودن نقش", ParentId = 6 };
+            var editRole = new Permission() { PermissionId = 8, permissionTitle = "ویرایش نقش", ParentId = 6 };
 
             modelBuilder.Entity<Permission>()
                 .HasData(new List<Permission>

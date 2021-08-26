@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +6,8 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using AutoMapper;
 using dadachMovie.DTOs;
+using dadachMovie.DTOs.News;
+using dadachMovie.Entities;
 using HeshmastNews.Data;
 using HeshmastNews.DTOs;
 using HeshmastNews.DTOs.News;
@@ -119,7 +121,7 @@ namespace HeshmastNews.Services
                 User = _context.Users.FirstOrDefault(x => x.Id.ToString() == userId),
                 Tags = taglist,
                 //  CategoryNews = categoryList,
-            
+
                 isChoseClerck = model.isChoseClerck,
                 Source = model.Source
             };
@@ -236,6 +238,51 @@ namespace HeshmastNews.Services
             }
 
             return newsList;
+        }
+
+        public async Task<bool> AddRateNews(AddNewsRateDTO model, int userId)
+        {
+            var newsDb = await _context.News
+                .SingleOrDefaultAsync(x => x.NewsId == model.newsId);
+            if (newsDb == null)
+                return false;
+            if (model.rate < 0 || model.rate > 5)
+                return false;
+
+            var userPreviousRate = await _context.UserRateNews
+                .SingleOrDefaultAsync(x => x.NewsId == model.newsId && x.UserId == userId);
+
+
+            double newRateAverage;
+            if (userPreviousRate != null)
+            {
+                //1st scenario : User Rated News Before 
+                var rateDispute = newsDb.rateCount - userPreviousRate.Rate;
+                newRateAverage = newsDb.rateAverage + (rateDispute / newsDb.rateCount);
+                userPreviousRate.Rate = model.rate;
+                _context.UserRateNews.Update(userPreviousRate);
+
+            }
+            else
+            {
+                //2nd scenario : User didnt Rate News Before 
+                newRateAverage = ((newsDb.rateAverage * newsDb.rateCount) + model.rate)
+               / (newsDb.rateCount + 1);
+                newsDb.rateCount += 1;
+                var userRate = new UserRateNews
+                {
+                    Rate = model.rate,
+                    NewsId = model.newsId,
+                    UserId = userId
+                };
+                _context.UserRateNews.Add(userRate);
+
+
+            }
+            newsDb.rateAverage = newRateAverage;
+            _context.News.Update(newsDb);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

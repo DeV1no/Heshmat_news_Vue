@@ -3,14 +3,16 @@ using System;
 using HeshmastNews.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace dadachMovie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210826110222_initDb")]
+    partial class initDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,7 +89,7 @@ namespace dadachMovie.Migrations
                     b.Property<bool>("isChoseClerck")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<double>("rateAverage")
+                    b.Property<double?>("rateAverage")
                         .HasColumnType("double");
 
                     b.Property<int>("rateCount")
@@ -345,26 +347,6 @@ namespace dadachMovie.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("dadachMovie.Entities.UserRateNews", b =>
-                {
-                    b.Property<int>("NewsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Rate")
-                        .HasColumnType("double");
-
-                    b.HasKey("NewsId", "UserId");
-
-                    b.HasIndex("NewsId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserRateNews");
-                });
-
             modelBuilder.Entity("HeshmastNews.Entities.Category", b =>
                 {
                     b.HasOne("HeshmastNews.Entities.Category", null)
@@ -471,25 +453,6 @@ namespace dadachMovie.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("dadachMovie.Entities.UserRateNews", b =>
-                {
-                    b.HasOne("HeshmastNews.Entities.User", "User")
-                        .WithMany("UserRateNews")
-                        .HasForeignKey("NewsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HeshmastNews.Entities.News", "News")
-                        .WithMany("UserRateNews")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("News");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("HeshmastNews.Entities.Category", b =>
                 {
                     b.Navigation("Categories");
@@ -502,8 +465,6 @@ namespace dadachMovie.Migrations
                     b.Navigation("CategoryNews");
 
                     b.Navigation("Comments");
-
-                    b.Navigation("UserRateNews");
                 });
 
             modelBuilder.Entity("HeshmastNews.Entities.Permission", b =>
@@ -516,8 +477,6 @@ namespace dadachMovie.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("NewsList");
-
-                    b.Navigation("UserRateNews");
                 });
 #pragma warning restore 612, 618
         }

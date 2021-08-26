@@ -1,3 +1,4 @@
+using dadachMovie.Entities;
 using dadachMovie.Entities.News;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,10 @@ namespace HeshmastNews.Entities
 {
     public class News
     {
+        public News()
+        {
+            this.CreatedDate = DateTime.Now;
+        }
         public int NewsId { get; set; }
 
         public int? SubGroup { get; set; }
@@ -18,11 +23,8 @@ namespace HeshmastNews.Entities
 
         public DateTime? UpdateTime { get; set; }
         public bool isChoseClerck { get; set; }
-
-        public News()
-        {
-            this.CreatedDate = DateTime.Now;
-        }
+        public double rateAverage { get; set; }
+        public int rateCount { get; set; }
 
         //RelationShip
         public User User { get; set; }
@@ -30,5 +32,6 @@ namespace HeshmastNews.Entities
         public string Source { get; set; }
         public List<CategoryNews> CategoryNews { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<UserRateNews> UserRateNews { get; set; }
     }
 }
