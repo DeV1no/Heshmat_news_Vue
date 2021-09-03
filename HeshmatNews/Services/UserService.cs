@@ -26,6 +26,7 @@ using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using dadachMovie.DTOs.User;
 using HeshmastNews.Generator;
 using System.IO;
+using dadachMovie.Entities.Users;
 
 namespace HeshmastNews.Services
 {
@@ -214,9 +215,9 @@ namespace HeshmastNews.Services
                     where user.Id == model.Id
                     select user).AsNoTracking().FirstAsync();
 
-           
 
-            if (userDb == null )
+
+            if (userDb == null)
                 return false;
 
             if (model.Password == null || model.Password == "null")
@@ -233,7 +234,7 @@ namespace HeshmastNews.Services
             finalUserModel.SecretKey = CharRandomMaker.RandomString(10);
 
             if (model.UserAvatar == null)
-               finalUserModel.UserAvatar = userDb.UserAvatar;
+                finalUserModel.UserAvatar = userDb.UserAvatar;
             else
             {
                 finalUserModel.UserAvatar = NameGenerator.GenerateUniqCode() + Path.GetExtension(model.UserAvatar.FileName);
@@ -264,5 +265,41 @@ namespace HeshmastNews.Services
 
         }
 
+        public async Task<bool> UserCategoryViewUpdater(int newsId, int userId)
+        {
+            var categoryList = await _context.CategoryNews
+                .Where(x => x.NewsId == newsId).ToListAsync();
+
+            var userFavoriteCategoryList = await _context.UserViewCategoryCounts
+                .Where(x => x.UserId == userId).ToListAsync();
+
+            foreach (var item in categoryList)
+            {
+                var userFavoriteCategory = userFavoriteCategoryList
+                    .SingleOrDefault(x => x.CategoryId == item.CategoryId);
+                if (userFavoriteCategory == null)
+                {
+                    var userCategoryViewCount = new UserViewCategoryCount
+                    {
+                        CategoryId = item.CategoryId,
+                        UserId = userId,
+                        Count = 1
+                    };
+                    _context.UserViewCategoryCounts.Add(userCategoryViewCount);
+                }
+                else
+                {
+                    var userCategoryViewCount = _context.UserViewCategoryCounts
+                        .Single(x => x.CategoryId == userFavoriteCategory.CategoryId);
+                    userCategoryViewCount.Count += 1;
+                    _context.UserViewCategoryCounts.Update(userCategoryViewCount);
+
+                }
+
+            }
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

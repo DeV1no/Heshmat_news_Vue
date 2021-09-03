@@ -312,3 +312,7 @@ C:\Users\Lion\Desktop\Heshmat_news_Vue\HeshmatNews\obj\Debug\net5.0\HeshmatNews.
 C:\Users\Lion\Desktop\Heshmat_news_Vue\HeshmatNews\obj\Debug\net5.0\ref\HeshmatNews.dll
 C:\Users\Lion\Desktop\Heshmat_news_Vue\HeshmatNews\obj\Debug\net5.0\HeshmatNews.pdb
 C:\Users\Lion\Desktop\Heshmat_news_Vue\HeshmatNews\obj\Debug\net5.0\HeshmatNews.genruntimeconfig.cache
+C:\Users\Lion\Desktop\Heshmat_news_Vue\HeshmatNews\bin\Debug\net5.0\MailKit.dll
+C:\Users\Lion\Desktop\Heshmat_news_Vue\HeshmatNews\bin\Debug\net5.0\MimeKit.dll
+C:\Users\Lion\Desktop\Heshmat_news_Vue\HeshmatNews\bin\Debug\net5.0\NETCore.MailKit.dll
+C:\Users\Lion\Desktop\Heshmat_news_Vue\HeshmatNews\bin\Debug\net5.0\BouncyCastle.Crypto.dll

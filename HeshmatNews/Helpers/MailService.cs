@@ -10,7 +10,7 @@ namespace dadachMovie.Helpers
 {
     public class MailService
     {
-        public void SendMail(string subject, string RecieverName, string reciverMail, string body)
+        public void SendMail(string subject, string reciverMail, string body)
         {
             var message = new MimeMessage();
             message.From.Add(MailboxAddress.Parse("from_address@example.com"));

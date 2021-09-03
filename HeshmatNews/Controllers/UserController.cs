@@ -119,8 +119,15 @@ namespace HeshmastNews.Controllers
 
 
         [HttpGet("getUserProfileInfo")]
+        [Authorize]
         public Task<UpdateUserInformationDTO> GetUserProfileInfo()
             => _userService.GetUserProfileInfo(
+                Convert.ToInt32(_httpContextAccessor.HttpContext.User.Identity.Name));
+
+        [HttpPut("userCategoryViewUpdater/{newsId:int}")]
+        [Authorize]
+        public async Task<bool> UserCategoryViewUpdater(int newsId)
+            => await _userService.UserCategoryViewUpdater(newsId,
                 Convert.ToInt32(_httpContextAccessor.HttpContext.User.Identity.Name));
 
     }

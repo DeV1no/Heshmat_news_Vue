@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using dadachMovie.Entities;
 using dadachMovie.Entities.News;
+using dadachMovie.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 
 namespace HeshmastNews.Entities
@@ -41,7 +42,7 @@ namespace HeshmastNews.Entities
         public List<News> NewsList { get; set; }
         public List<Comment> Comments { get; set; }
         public List<UserRateNews> UserRateNews { get; set; }
-
+        public List<UserViewCategoryCount> UserViewCategoryCounts { get; set; }
 
     }
 }

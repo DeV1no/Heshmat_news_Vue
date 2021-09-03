@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using dadachMovie.Entities;
 using dadachMovie.Entities.News;
+using dadachMovie.Entities.Users;
 using HeshmastNews.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace HeshmastNews.Data
         public DbSet<CategoryNews> CategoryNews { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserRateNews> UserRateNews { get; set; }
+        public DbSet<UserViewCategoryCount> UserViewCategoryCounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,7 +55,17 @@ namespace HeshmastNews.Data
 
             modelBuilder.Entity<UserRateNews>().Property(x => x.NewsId);
             modelBuilder.Entity<UserRateNews>().Property(x => x.UserId);
+            //UserViewCategoryCount
+            modelBuilder.Entity<UserViewCategoryCount>().HasKey(x => new { x.CategoryId, x.UserId });
+            modelBuilder.Entity<UserViewCategoryCount>().HasOne(x => x.User)
+                .WithMany(x => x.UserViewCategoryCounts).HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<UserViewCategoryCount>().HasOne(x => x.Category)
+                .WithMany(x => x.UserViewCategoryCounts).HasForeignKey(x => x.CategoryId);
+            modelBuilder.Entity<UserViewCategoryCount>().HasIndex(x => x.CategoryId);
+            modelBuilder.Entity<UserViewCategoryCount>().HasIndex(x => x.UserId);
 
+            modelBuilder.Entity<UserViewCategoryCount>().Property(x => x.CategoryId);
+            modelBuilder.Entity<UserViewCategoryCount>().Property(x => x.UserId);
 
             SeedData(modelBuilder);
 

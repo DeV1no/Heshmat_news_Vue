@@ -22,5 +22,6 @@ namespace dadachMovie.Services.Contracts
         bool RemoveRoleToFrom(int userId);
         Task<bool> UpdateUserInformation(UpdateUserInformationDTO model);
         Task<UpdateUserInformationDTO> GetUserProfileInfo(int userId);
+        Task<bool> UserCategoryViewUpdater(int newsId, int userId);
     }
 }

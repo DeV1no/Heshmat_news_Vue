@@ -76,6 +76,9 @@ namespace HeshmastNews.HeshmatMapper
             CreateMap<TagViewModelDTO, Tag>().ReverseMap();
             CreateMap<Tag, TagDTO>().ReverseMap();
             CreateMap<Tag, TagUpdateDTO>().ReverseMap();
+
+
+
             // News Mapper
             /*CreateMap<News, NewsCreationDTO>().ReverseMap()
                 .ForMember(x => x.CategoryNews.Select(x => x.Category),
@@ -84,11 +87,12 @@ namespace HeshmastNews.HeshmatMapper
 
 
             CreateMap<NewsListViewModleDTO, News>().ReverseMap()
-
                 .ForMember(x => x.UserName,
                     opt => opt.MapFrom(q => q.User.UserName))
                 .ForMember(x => x.CreatedDate,
                     opt => opt.MapFrom(q => q.CreatedDate.ToShamsi()));
+
+            //TODO: Fix Mapper
             CreateMap<NewsHomeViewModelDTO, News>().ReverseMap()
                 .ForMember(x => x.UserName,
                     opt => opt.MapFrom(q => q.User.UserName))
@@ -99,9 +103,18 @@ namespace HeshmastNews.HeshmatMapper
                 .ForMember(x => x.CreatedDate,
                     opt => opt.MapFrom(q => q.CreatedDate.ToShamsi()))
                 .ForMember(x => x.Poster,
-                    opt => opt.MapFrom(q => $"http://localhost:5000/news/image/{q.Poster}"))
-                .ForMember(x => x.Categories,
-                    opt => opt.MapFrom(q => q.CategoryNews.Select(x => x.Category)));
+                    opt => opt.MapFrom(q => $"http://localhost:5000/news/image/{q.Poster}"));
+
+            CreateMap<CategoryVewModelDTO, CategoryNews>().ReverseMap()
+                .ForMember(x => x.CateGoryName,
+                    opt => opt.MapFrom(q => q.Category.CategoryNews))
+
+                .ForMember(x => x.CategoryId,
+                    opt => opt.MapFrom(q => q.Category.CategoryId))
+                .ForMember(x => x.ParentId,
+                    opt => opt.MapFrom(q => q.Category.ParentId));
+
+            //
 
             CreateMap<NewsSingleDTO, News>().ReverseMap()
                .ForMember(x => x.UserName,
@@ -121,8 +134,7 @@ namespace HeshmastNews.HeshmatMapper
                    opt => opt.MapFrom(q => q.Tags))
                  .ForMember(x => x.Categories,
                    opt => opt.MapFrom(q => q.CategoryNews.Select(x => x.Category)))
-
-                  .ForMember(x => x.Comments,
+               .ForMember(x => x.Comments,
                    opt => opt.MapFrom(q => q.Comments));
             CreateMap<CommentViewModelDTO, Comment>().ReverseMap()
                 .ForMember(x => x.Name,

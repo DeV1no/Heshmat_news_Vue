@@ -3,14 +3,16 @@ using System;
 using HeshmastNews.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace dadachMovie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210903173529_UserViewCategoryCountTBL")]
+    partial class UserViewCategoryCountTBL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -512,13 +514,13 @@ namespace dadachMovie.Migrations
 
             modelBuilder.Entity("dadachMovie.Entities.Users.UserViewCategoryCount", b =>
                 {
-                    b.HasOne("HeshmastNews.Entities.Category", "Category")
+                    b.HasOne("HeshmastNews.Entities.User", "User")
                         .WithMany("UserViewCategoryCounts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HeshmastNews.Entities.User", "User")
+                    b.HasOne("HeshmastNews.Entities.Category", "Category")
                         .WithMany("UserViewCategoryCounts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

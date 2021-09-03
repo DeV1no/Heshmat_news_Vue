@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using dadachMovie.Entities.Users;
 
 namespace HeshmastNews.Entities
 {
@@ -12,9 +13,10 @@ namespace HeshmastNews.Entities
 
         // RelationShip
         [ForeignKey("ParentId")] public List<Category> Categories { get; set; }//Subcategories
-        
-        public List<CategoryNews> CategoryNews { get; set; }
 
-       
+        public List<CategoryNews> CategoryNews { get; set; }
+        public List<UserViewCategoryCount> UserViewCategoryCounts { get; set; }
+
+
     }
 }

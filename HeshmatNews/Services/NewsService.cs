@@ -79,7 +79,8 @@ namespace HeshmastNews.Services
         public NewsSaveDTO GetNewsSave(int newsId)
         {
             var newsDb = _context.News
-                .Include(x => x.CategoryNews).ThenInclude(x => x.Category).Include(x => x.Tags)
+                .Include(x => x.CategoryNews)
+                .ThenInclude(x => x.Category).Include(x => x.Tags)
                 .FirstOrDefault(x => x.NewsId == newsId);
             return _mapper.Map<NewsSaveDTO>(newsDb);
         }
@@ -107,11 +108,7 @@ namespace HeshmastNews.Services
                 taglist.Add(_context.Tags.FirstOrDefault(x => x.Id == id));
             }
 
-            var categoryList = new List<Category>();
-            foreach (var id in model.CategoriesId)
-            {
-                categoryList.Add(_context.Categories.FirstOrDefault(x => x.CategoryId == id));
-            }
+
 
             var newsDb = new News()
             {
@@ -126,6 +123,19 @@ namespace HeshmastNews.Services
                 Source = model.Source
             };
             _context.Add(newsDb);
+
+            var categoryList = new List<Category>();
+           
+            _context.SaveChanges();
+            foreach (var id in model.CategoriesId)
+            {
+                var movieCategory = new CategoryNews
+                {
+                    CategoryId = id,
+                    NewsId = newsDb.NewsId
+                };
+                _context.CategoryNews.Add(movieCategory);
+            }
             _context.SaveChanges();
             return newsDb.NewsId;
         }
