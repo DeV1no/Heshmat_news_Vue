@@ -277,29 +277,31 @@ namespace HeshmastNews.Services
             {
                 var userFavoriteCategory = userFavoriteCategoryList
                     .SingleOrDefault(x => x.CategoryId == item.CategoryId);
-                if (userFavoriteCategory == null)
-                {
-                    var userCategoryViewCount = new UserViewCategoryCount
-                    {
-                        CategoryId = item.CategoryId,
-                        UserId = userId,
-                        Count = 1
-                    };
-                    _context.UserViewCategoryCounts.Add(userCategoryViewCount);
-                }
-                else
-                {
-                    var userCategoryViewCount = _context.UserViewCategoryCounts
-                        .Single(x => x.CategoryId == userFavoriteCategory.CategoryId);
-                    userCategoryViewCount.Count += 1;
-                    _context.UserViewCategoryCounts.Update(userCategoryViewCount);
-
-                }
-
+                if (userFavoriteCategory == null) AddUserFaveGroup(userId, item);
+                else UpdateUserFaveGroup(userFavoriteCategory);
             }
 
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        private void UpdateUserFaveGroup(UserViewCategoryCount? userFavoriteCategory)
+        {
+            var userCategoryViewCount = _context.UserViewCategoryCounts
+                .Single(x => x.CategoryId == userFavoriteCategory.CategoryId);
+            userCategoryViewCount.Count += 1;
+            _context.UserViewCategoryCounts.Update(userCategoryViewCount);
+        }
+
+        private void AddUserFaveGroup(int userId, CategoryNews item)
+        {
+            var userCategoryViewCount = new UserViewCategoryCount
+            {
+                CategoryId = item.CategoryId,
+                UserId = userId,
+                Count = 1
+            };
+            _context.UserViewCategoryCounts.Add(userCategoryViewCount);
         }
     }
 }

@@ -451,13 +451,23 @@ export default {
               .danger('خطای پیشبینی نشده ای رخ داده است ')
               .goAway(4500);
         });
+    },
+    async userCategoryViewUpdater() {
+      if (this.token != null) {
+        await axios.put(`/api/user/usercategoryViewUpdater/${this.id}`, {
+          headers: {
+            Authorization: ` Bearer ${this.token}`
+          }
+        });
+      }
     }
   },
+  created() {},
   async mounted() {
     this.token = localStorage.getItem('token');
-
     await this.getModel();
     await this.getCategoryDetails();
+    this.userCategoryViewUpdater();
   }
 };
 </script>
